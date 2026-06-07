@@ -3,10 +3,35 @@
 [![CI](https://github.com/edwardlthompson/noclip-auto/actions/workflows/ci.yml/badge.svg)](https://github.com/edwardlthompson/noclip-auto/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows%2011-blue)](docs/MAC.md)
+[![Version](https://img.shields.io/badge/version-0.1.0-blue)](docs/CHANGELOG.md)
 
 **Automatically recover clipped highlights and shadows in Adobe Lightroom Classic.**
 
 NoClip Auto is a free, open-source plugin that runs a 3-phase tone pipeline until clipped pixels are eliminated. It works locally on your machine—no cloud, no uploads, no subscription.
+
+---
+
+## About
+
+| | |
+|---|---|
+| **Version** | 0.1.0 (pre-release) |
+| **License** | [Apache-2.0](LICENSE) |
+| **GitHub** | [edwardlthompson/noclip-auto](https://github.com/edwardlthompson/noclip-auto) |
+| **Changelog** | [docs/CHANGELOG.md](docs/CHANGELOG.md) |
+
+### Release notes (0.1.0)
+
+- Initial pre-release: 3-phase tone pipeline for highlight and shadow recovery
+- Batch and Develop workflows with dry-run mode and develop snapshots
+- Bundled Rust analyzer, performance tiers, and Plugin Manager preferences
+- GitHub Actions CI, smoke tests, and full project documentation
+
+See the full [changelog](docs/CHANGELOG.md) for version history.
+
+### Support development
+
+NoClip Auto is free and open source. If it saves you time in your workflow, consider [donating via Venmo](https://venmo.com/code?user_id=1857304970395648420) to support ongoing development.
 
 ---
 

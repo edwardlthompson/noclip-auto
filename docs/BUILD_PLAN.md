@@ -2,47 +2,23 @@
 
 Active milestone tasks only. Completed items are archived to [BUILD_PLAN_COMPLETED.md](BUILD_PLAN_COMPLETED.md) via `scripts/archive-completed-tasks.ps1`.
 
-**Current milestone:** M2 (Clipping analyzer) — M0/M1 scaffolding largely complete.
+**Current milestone:** M1 (Plugin scaffold) — M0 complete.
 
 **Labels:** `[AGENT]` scriptable · `[LR]` needs Lightroom via automation · `[HUMAN-ONLY]` H1–H3 only · `[PARALLEL-OK]` safe to parallelize
 
+**About metadata policy:** GitHub repo About = **short** (~100 chars, sidebar preview). README `## About` and Plugin Manager About = **long** (version, release notes, changelog, GitHub, Venmo). See [GITHUB_ABOUT.md](GITHUB_ABOUT.md).
+
 ---
 
-## M0 — Agent infrastructure, FOSS, GitHub
+## M0 — Agent infrastructure, FOSS, GitHub ✅ COMPLETE
 
-<!-- PARALLEL -->
-- [x] [AGENT] [PARALLEL-OK] LICENSE (Apache-2.0) + CONTRIBUTING.md + SECURITY.md + docs/FOSS.md
-- [x] [AGENT] [PARALLEL-OK] Create docs/BUILD_PLAN.md with M0–M6 sections
-- [x] [AGENT] [PARALLEL-OK] Create docs/AGENT_MEMORY.md + CHANGELOG.md + GATES.md + docs/GITHUB.md
-- [x] [AGENT] [PARALLEL-OK] Create .cursor/AGENTS.md with autopilot loop
-- [x] [AGENT] [PARALLEL-OK] Create .github/workflows/ci.yml
-- [x] [AGENT] [PARALLEL-OK] scripts/archive-completed-tasks.ps1 + run-milestone-gate.ps1 + foss-audit.ps1
-- [x] [AGENT] [PARALLEL-OK] scripts/smoke/m0_smoke.ps1 + README.md
-- [x] [AGENT] [PARALLEL-OK] scripts/detect-lr-env.ps1 + init-github-repo.ps1 + update-agent-memory.ps1
-- [x] [AGENT] [PARALLEL-OK] scripts/ensure-lr-running.ps1 + verify-lr-plugin.ps1 (stubs)
-<!-- END PARALLEL -->
-
-- [x] [AGENT] Run init-github-repo.ps1 (skip if remote exists); detect-lr-env.ps1 → update AGENT_MEMORY
-- [ ] [HUMAN-ONLY] H1: gh auth login — only if init-github-repo.ps1 exits NEEDS_GH_AUTH
-
-**Gate G0**
-- [x] BUILD_PLAN, AGENT_MEMORY, CHANGELOG, GATES, LR_TESTING, AGENTS.md exist
-- [ ] Gate GF (FOSS) passes
-- [ ] GitHub Actions green on main
-- [ ] Archive + run-milestone-gate scripts run without error
-- [x] README install path matches `%APPDATA%\Adobe\Lightroom\Modules\`
-- [ ] detect-lr-env.ps1 wrote LR version or NOT_INSTALLED to AGENT_MEMORY
+Gate G0 passed 2026-06-07. Archived tasks: [BUILD_PLAN_COMPLETED.md](BUILD_PLAN_COMPLETED.md).
 
 ---
 
 ## M1 — Plugin scaffold
 
 <!-- PARALLEL -->
-- [x] [AGENT] [PARALLEL-OK] NoClipAuto.lrdevplugin/Info.lua manifest
-- [x] [AGENT] [PARALLEL-OK] Init.lua (LrLogger, prefs stub)
-- [x] [AGENT] [PARALLEL-OK] ProcessLibrary.lua + ProcessDevelop.lua thin entries
-- [x] [AGENT] [PARALLEL-OK] PluginInfoProvider.lua prefs UI
-- [x] [AGENT] [PARALLEL-OK] Core/Platform.lua
 <!-- END PARALLEL -->
 
 - [ ] [AGENT] [LR] install-plugin.ps1 + verify-lr-plugin.ps1 (ensure-lr-running.ps1 first)
@@ -56,9 +32,6 @@ Active milestone tasks only. Completed items are archived to [BUILD_PLAN_COMPLET
 ## M2 — Clipping analyzer
 
 <!-- PARALLEL -->
-- [x] [AGENT] [PARALLEL-OK] Scaffold noclip-analyze/ Rust crate
-- [x] [AGENT] [PARALLEL-OK] Unit tests: synthetic black/white fixtures
-- [x] [AGENT] [PARALLEL-OK] Core/ClippingClient.lua — LrTasks.execute + JSON parse
 <!-- END PARALLEL -->
 
 - [ ] [AGENT] scripts/build-analyzer.ps1 — cargo build release-small + copy to bin/win-x64/
@@ -73,9 +46,6 @@ Active milestone tasks only. Completed items are archived to [BUILD_PLAN_COMPLET
 
 ## M3 — Preview render loop
 
-- [x] [AGENT] Core/PreviewRender.lua — tier-aware preview export
-- [x] [AGENT] Core/SettingsIO.lua — PV2012 helpers
-- [x] [AGENT] Core/PerformanceTier.lua
 
 **Gate G3**
 - [ ] Preview JPEG created for test photo `[AGENT] [LR]`
@@ -86,9 +56,6 @@ Active milestone tasks only. Completed items are archived to [BUILD_PLAN_COMPLET
 ## M4 — Tone pipeline
 
 <!-- PARALLEL -->
-- [x] [AGENT] [PARALLEL-OK] Core/Pipeline/Config.lua
-- [x] [AGENT] [PARALLEL-OK] PhaseExposure.lua, PhaseWhitesBlacks.lua, PhaseHighlightsShadows.lua
-- [x] [AGENT] [PARALLEL-OK] Orchestrator.lua — 3-phase loop
 <!-- END PARALLEL -->
 
 - [ ] [AGENT] verify-tone-quality.ps1 + tests/golden/ thresholds
@@ -102,8 +69,6 @@ Active milestone tasks only. Completed items are archived to [BUILD_PLAN_COMPLET
 
 ## M5 — Batch + Develop integration
 
-- [x] [AGENT] Core/BatchRunner.lua — progress, cancel, skip VIDEO
-- [x] [AGENT] Core/SingleRunner.lua — Develop active photo
 - [ ] [AGENT] High-tier export/analyze overlap in BatchRunner
 - [ ] [AGENT] Batch summary JSON (NoClipAuto-last-run.json) — implemented; verify in LR
 - [ ] [AGENT] Develop snapshot before apply — implemented; verify in LR
@@ -121,6 +86,7 @@ Active milestone tasks only. Completed items are archived to [BUILD_PLAN_COMPLET
 - [ ] [AGENT] Gate GS + GP pass (check-bundle-size, bench-analyzer)
 - [ ] [AGENT] package-release.ps1 + publish-release.ps1
 - [ ] [AGENT] Tag v1.0.0 win64 GitHub release
+- [ ] [AGENT] Confirm GitHub About still preview-safe after release (re-run `gh repo edit` if description drifted)
 
 **Gate G6**
 - [ ] Release zip ≤ 5 MB
@@ -143,9 +109,6 @@ Active milestone tasks only. Completed items are archived to [BUILD_PLAN_COMPLET
 ## Cross-cutting (perf + modularity)
 
 <!-- PARALLEL -->
-- [x] [AGENT] [PARALLEL-OK] PerformanceTier.lua + Config.lua
-- [x] [AGENT] [PARALLEL-OK] Pipeline phase split
-- [x] [AGENT] [PARALLEL-OK] Rust release-small + release-bench profiles
 - [ ] [AGENT] [PARALLEL-OK] check-bundle-size.ps1 + check-lua-size.ps1 in CI
 - [ ] [AGENT] [PARALLEL-OK] bench-analyzer.ps1 + GP gate thresholds
 <!-- END PARALLEL -->
@@ -157,4 +120,5 @@ Active milestone tasks only. Completed items are archived to [BUILD_PLAN_COMPLET
 - Algorithm: [ALGORITHM.md](ALGORITHM.md)
 - LR testing: [LR_TESTING.md](LR_TESTING.md)
 - Mac: [MAC.md](MAC.md)
+- GitHub metadata (short About): [GITHUB_ABOUT.md](GITHUB_ABOUT.md)
 - Full original plan: archived in repo history / Cursor plan file

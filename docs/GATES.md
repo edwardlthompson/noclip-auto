@@ -20,10 +20,14 @@ Must-pass checklists before advancing milestones.
 
 ## G0 — Infrastructure
 
-- [ ] BUILD_PLAN, AGENT_MEMORY, CHANGELOG, GATES, LR_TESTING, AGENTS.md exist
-- [ ] Gate GF passes
-- [ ] m0_smoke.ps1 exit 0
-- [ ] archive-completed-tasks.ps1 runs without error
+- [x] BUILD_PLAN, AGENT_MEMORY, CHANGELOG, GATES, LR_TESTING, AGENTS.md exist
+- [x] Gate GF passes
+- [x] m0_smoke.ps1 exit 0
+- [x] run-milestone-gate.ps1 -Milestone 0 exit 0
+- [x] GitHub About ≤ 120 chars (97 chars, preview-safe)
+- [x] GitHub Actions green on main
+
+**Passed:** 2026-06-07
 
 ## G1 — Plugin load
 

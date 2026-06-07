@@ -12,6 +12,7 @@ Thumbs.db
 
 # Temp
 *.tmp
+docs/lr-env.json
 NoClipAuto.lrdevplugin/bin/**/noclip-analyze*
 !NoClipAuto.lrdevplugin/bin/**/.gitkeep
 

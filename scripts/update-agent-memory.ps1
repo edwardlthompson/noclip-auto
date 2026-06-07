@@ -10,13 +10,13 @@ $memoryPath = Join-Path $root "docs\AGENT_MEMORY.md"
 if ($LrStatus) {
     $content = Get-Content $memoryPath -Raw
     $content = $content -replace '\| LR status \| .* \|', "| LR status | $LrStatus |"
-    Set-Content $memoryPath $content
+    Set-Content -Path $memoryPath -Value $content -NoNewline
 }
 
 if ($RepoUrl) {
     $content = Get-Content $memoryPath -Raw
     $content = $content -replace '\| GitHub repo \| .* \|', "| GitHub repo | $RepoUrl |"
-    Set-Content $memoryPath $content
+    Set-Content -Path $memoryPath -Value $content -NoNewline
     Write-Host "Updated AGENT_MEMORY with repo URL"
 }
 

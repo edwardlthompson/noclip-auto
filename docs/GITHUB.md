@@ -4,23 +4,25 @@
 
 **URL:** https://github.com/edwardlthompson/noclip-auto
 
-**About (description):**
+**About (short — GitHub sidebar, ~97 chars):**
 ```
-FOSS Lightroom Classic plugin that automatically recovers clipped highlights and shadows using a 3-phase tone pipeline. Batch and single-photo workflows. Local-only, no cloud. Windows primary. Apache-2.0.
+Auto-fix highlight and shadow clipping in Lightroom Classic. FOSS, local-only, Windows. Apache-2.0.
 ```
 
-See [GITHUB_ABOUT.md](GITHUB_ABOUT.md) for topics and metadata.
+**About (long — README + Plugin Manager):** version, release notes, changelog, GitHub, Venmo. See [GITHUB_ABOUT.md](GITHUB_ABOUT.md).
+
+**Donations:** [Venmo](https://venmo.com/code?user_id=1857304970395648420) (README and Plugin Manager only — not in GitHub About)
 
 ## CI
 
 Workflow: `.github/workflows/ci.yml`
 
-Jobs: rust-test, foss-audit, m0-smoke, m2-smoke, build-analyzer, size-gate
+Jobs: rust-test, foss-audit, m0-smoke, m2-smoke, build-analyzer, size-gate, build-analyzer-macos-arm64
 
-Badge (add to README after repo exists):
+Badge:
 
 ```markdown
-![CI](https://github.com/OWNER/noclip-auto/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/edwardlthompson/noclip-auto/actions/workflows/ci.yml/badge.svg)
 ```
 
 ## Releases
@@ -38,7 +40,3 @@ Badge (add to README after repo exists):
 ## Issues
 
 Templates in `.github/ISSUE_TEMPLATE/`.
-
-## Agent memory
-
-After repo creation, `init-github-repo.ps1` updates `docs/AGENT_MEMORY.md` with the repo URL.

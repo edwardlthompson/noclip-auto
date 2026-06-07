@@ -9,17 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Initial project scaffold: NoClip Auto Lightroom Classic plugin
-- Rust `noclip-analyze` clipped-pixel counter
+- (Changes after 0.1.0 will be listed here)
+
+### Changed
+
+- GitHub repo About shortened to 97 chars (preview-safe sidebar text)
+
+## [0.1.0] — 2026-06-07
+
+Pre-release. First public GitHub release.
+
+### Added
+
+- **M0 complete:** FOSS scaffold, GitHub repo, CI workflow, agent docs, smoke/gate scripts
+- Two-tier About metadata (short GitHub sidebar + long README/Plugin Manager)
+- Plugin Manager About with version, release notes, Changelog/GitHub/Venmo buttons
 - 3-phase tone pipeline (Exposure, Whites/Blacks, Highlights/Shadows)
-- Batch and Develop menu entries
-- Plugin Manager preferences (clip threshold, performance tier, dry run)
+- Batch and Develop menu workflows
+- Bundled `noclip-analyze` clipped-pixel counter (Rust)
+- Dry-run mode, develop snapshots, batch JSON report
 - Performance tiers (Low / Balanced / High)
-- Platform abstraction (Core/Platform.lua)
-- PowerShell automation scripts and smoke tests
-- GitHub Actions CI workflow
-- Documentation: BUILD_PLAN, ALGORITHM, GATES, MAC, LR_TESTING
-
-## [0.1.0] — TBD
-
-Pre-release development milestone.

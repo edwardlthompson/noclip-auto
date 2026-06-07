@@ -1,50 +1,57 @@
 # GitHub repository metadata
 
-Use this text when creating or editing the repository on GitHub.
+Two-tier About policy (see [BUILD_PLAN.md](BUILD_PLAN.md)):
 
-## About (description field — max 350 characters)
+| Tier | Where | Length | Contents |
+|------|-------|--------|----------|
+| **Short** | GitHub repo About (sidebar) | ~100 chars | One-line pitch; fits preview without truncation |
+| **Long** | README `## About`, Plugin Manager | Unlimited | Version, release notes, changelog, GitHub, Venmo |
 
-Copy into **Settings → General → About → Description**, or set via:
+GitHub allows **350 characters** in the About field, but the repo sidebar **preview truncates around 80–120 characters**. Keep the live description under **120 chars**.
 
-```powershell
-gh repo edit edwardlthompson/noclip-auto --description "FOSS Lightroom Classic plugin that automatically recovers clipped highlights and shadows using a 3-phase tone pipeline. Batch and single-photo workflows. Local-only, no cloud. Windows primary. Apache-2.0."
+## About — short (live on GitHub)
+
+```text
+Auto-fix highlight and shadow clipping in Lightroom Classic. FOSS, local-only, Windows. Apache-2.0.
 ```
 
-**Character count:** 214 / 350
+**Character count:** 97 / 350 (preview-safe)
 
-## Topics (recommended)
+Apply or update via:
+
+```powershell
+gh repo edit edwardlthompson/noclip-auto --description "Auto-fix highlight and shadow clipping in Lightroom Classic. FOSS, local-only, Windows. Apache-2.0."
+```
+
+**Do not** put the Venmo link in GitHub About — donation link lives in README and Plugin Manager only.
+
+## About — long (README and Plugin Manager)
+
+- [README.md](../README.md) — `## About` section
+- [Core/About.lua](../NoClipAuto.lrdevplugin/Core/About.lua) + [PluginInfoProvider.lua](../NoClipAuto.lrdevplugin/PluginInfoProvider.lua)
+
+## Topics
 
 ```
 lightroom
 lightroom-classic
 lightroom-plugin
-adobe-lightroom
-photo-editing
 photography
-tone-mapping
-exposure
+photo-editing
 open-source
 rust
 lua
 windows
 ```
 
-Set via:
-
-```powershell
-gh repo edit edwardlthompson/noclip-auto --add-topic lightroom --add-topic lightroom-classic --add-topic lightroom-plugin --add-topic photography --add-topic open-source --add-topic rust
-```
-
-## Website (optional)
-
-Leave blank until a release is published, or point to:
-
-```
-https://github.com/edwardlthompson/noclip-auto#readme
-```
-
 ## Repository URL
 
 ```
 https://github.com/edwardlthompson/noclip-auto
+```
+
+## Website (optional)
+
+```
+https://github.com/edwardlthompson/noclip-auto#readme
 ```
