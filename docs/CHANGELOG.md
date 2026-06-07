@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- GitHub repo About shortened to 97 chars (preview-safe sidebar text)
+- M1 smoke: restart LR after install for reliable plugin load verification
+- `wait-for-lr-plugin.ps1` — poll verify until plugin appears in logs
 
 ## [0.1.0] — 2026-06-07
 

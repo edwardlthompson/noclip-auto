@@ -2,7 +2,7 @@
 
 Active milestone tasks only. Completed items are archived to [BUILD_PLAN_COMPLETED.md](BUILD_PLAN_COMPLETED.md) via `scripts/archive-completed-tasks.ps1`.
 
-**Current milestone:** M1 (Plugin scaffold) — M0 complete.
+**Current milestone:** M2 (Clipping analyzer) — M1 complete.
 
 **Labels:** `[AGENT]` scriptable · `[LR]` needs Lightroom via automation · `[HUMAN-ONLY]` H1–H3 only · `[PARALLEL-OK]` safe to parallelize
 
@@ -16,16 +16,9 @@ Gate G0 passed 2026-06-07. Archived tasks: [BUILD_PLAN_COMPLETED.md](BUILD_PLAN_
 
 ---
 
-## M1 — Plugin scaffold
+## M1 — Plugin scaffold ✅ COMPLETE
 
-<!-- PARALLEL -->
-<!-- END PARALLEL -->
-
-- [ ] [AGENT] [LR] install-plugin.ps1 + verify-lr-plugin.ps1 (ensure-lr-running.ps1 first)
-
-**Gate G1**
-- [ ] verify-lr-plugin.ps1 exit 0 — no Lua errors in LrClassicLogs `[AGENT] [LR]`
-- [ ] m1_smoke.ps1 exit 0 `[AGENT] [LR]`
+Gate G1 passed 2026-06-07. Plugin installed to Modules folder; verify-lr-plugin and m1_smoke PASS.
 
 ---
 

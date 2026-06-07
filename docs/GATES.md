@@ -31,8 +31,11 @@ Must-pass checklists before advancing milestones.
 
 ## G1 — Plugin load
 
-- [ ] verify-lr-plugin.ps1 exit 0
-- [ ] m1_smoke.ps1 exit 0
+- [x] verify-lr-plugin.ps1 exit 0
+- [x] m1_smoke.ps1 exit 0
+- [x] Plugin installed to `%APPDATA%\Adobe\Lightroom\Modules\NoClipAuto.lrdevplugin\`
+
+**Passed:** 2026-06-07
 
 ## G2 — Analyzer
 

@@ -15,7 +15,7 @@ $errors = @()
 
 foreach ($log in $logs) {
     $content = Get-Content $log.FullName -Tail 500 -ErrorAction SilentlyContinue
-    if ($content -match "NoClipAuto|com\.noclipauto") {
+    if ($content -match "NoClipAuto|com\.noclipauto|NoClip Auto") {
         $found = $true
     }
     $luaErrors = $content | Select-String -Pattern "NoClipAuto.*error|NoClip Auto.*error" -SimpleMatch:$false
