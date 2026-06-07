@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - M1 smoke: restart LR after install for reliable plugin load verification
 - `wait-for-lr-plugin.ps1` — poll verify until plugin appears in logs
 
+### Added
+
+- `test_analyzer.ps1` — JSON schema + clip count validation on fixture JPEGs
+
 ## [0.1.0] — 2026-06-07
 
 Pre-release. First public GitHub release.

@@ -2,7 +2,7 @@
 
 Active milestone tasks only. Completed items are archived to [BUILD_PLAN_COMPLETED.md](BUILD_PLAN_COMPLETED.md) via `scripts/archive-completed-tasks.ps1`.
 
-**Current milestone:** M2 (Clipping analyzer) — M1 complete.
+**Current milestone:** M3 (Preview render loop) — M2 complete.
 
 **Labels:** `[AGENT]` scriptable · `[LR]` needs Lightroom via automation · `[HUMAN-ONLY]` H1–H3 only · `[PARALLEL-OK]` safe to parallelize
 
@@ -22,18 +22,9 @@ Gate G1 passed 2026-06-07. Plugin installed to Modules folder; verify-lr-plugin 
 
 ---
 
-## M2 — Clipping analyzer
+## M2 — Clipping analyzer ✅ COMPLETE
 
-<!-- PARALLEL -->
-<!-- END PARALLEL -->
-
-- [ ] [AGENT] scripts/build-analyzer.ps1 — cargo build release-small + copy to bin/win-x64/
-- [ ] [AGENT] scripts/generate-fixtures.ps1 + scripts/test_analyzer.ps1
-- [ ] [AGENT] Run m2_smoke.ps1 + cargo test
-
-**Gate G2**
-- [ ] noclip-analyze.exe exit 0 on fixture; clip metrics sane
-- [ ] Gate GS: exe ≤ 2 MB
+Gate G2 passed 2026-06-07. `cargo test`, `test_analyzer.ps1`, `m2_smoke.ps1` PASS; exe 1.5 MB (GS).
 
 ---
 

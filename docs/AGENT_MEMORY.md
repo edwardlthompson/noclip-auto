@@ -29,7 +29,7 @@ Persistent facts for agents. Rolling log — older events may move to AGENT_MEMO
 | 2026-06-07 | GitHub repo created: https://github.com/edwardlthompson/noclip-auto |
 | 2026-06-07 | Built noclip-analyze.exe (1.5 MB); m0/m2 smoke PASS; cargo test PASS |
 | 2026-06-07 | M0 gate passed: FOSS audit, m0 smoke, CI green, LR detected INSTALLED |
-| 2026-06-07 | M1 gate passed: plugin installed, verify-lr-plugin + m1_smoke PASS |
+| 2026-06-07 | M2 gate passed: cargo test, test_analyzer, m2_smoke; exe 1.5 MB |
 
 ## Blockers
 

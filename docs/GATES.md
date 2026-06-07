@@ -39,9 +39,13 @@ Must-pass checklists before advancing milestones.
 
 ## G2 — Analyzer
 
-- [ ] cargo test pass
-- [ ] m2_smoke.ps1 exit 0
-- [ ] noclip-analyze.exe on fixtures returns sane clip counts
+- [x] cargo test pass
+- [x] m2_smoke.ps1 exit 0
+- [x] test_analyzer.ps1 exit 0 on black/white/gray fixtures
+- [x] noclip-analyze.exe clip metrics sane (100% black/white, 0% gray)
+- [x] Gate GS (exe): 1.5 MB ≤ 2 MB
+
+**Passed:** 2026-06-07
 
 ## G3 — Preview
 
