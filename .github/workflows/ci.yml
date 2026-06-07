@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  rust-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Cargo test
+        run: cargo test
+        working-directory: noclip-analyze
+      - name: Cargo clippy
+        run: cargo clippy -- -D warnings
+        working-directory: noclip-analyze
+
+  foss-audit:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: FOSS audit
+        shell: pwsh
+        run: ./scripts/foss-audit.ps1
+
+  m0-smoke:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: M0 smoke
+        shell: pwsh
+        run: ./scripts/smoke/m0_smoke.ps1
+
+  build-analyzer:
+    runs-on: windows-latest
+    needs: [rust-test]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build analyzer
+        shell: pwsh
+        run: ./scripts/build-analyzer.ps1 -Profile release-small
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noclip-analyze-win-x64
+          path: NoClipAuto.lrdevplugin/bin/win-x64/noclip-analyze.exe
+
+  m2-smoke:
+    runs-on: windows-latest
+    needs: [build-analyzer]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build analyzer
+        shell: pwsh
+        run: ./scripts/build-analyzer.ps1 -Profile release-small
+      - name: M2 smoke
+        shell: pwsh
+        run: ./scripts/smoke/m2_smoke.ps1
+
+  size-gate:
+    runs-on: windows-latest
+    needs: [build-analyzer]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build analyzer
+        shell: pwsh
+        run: ./scripts/build-analyzer.ps1 -Profile release-small
+      - name: Size gate
+        shell: pwsh
+        run: |
+          ./scripts/check-bundle-size.ps1
+          ./scripts/check-lua-size.ps1
+
+  build-analyzer-macos-arm64:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build macOS arm64
+        run: cargo build --profile release-small --target aarch64-apple-darwin
+        working-directory: noclip-analyze
+      - name: Verify binary
+        run: file noclip-analyze/target/aarch64-apple-darwin/release-small/noclip-analyze

@@ -1,0 +1,14 @@
+{
+  "underexposed": {
+    "shadowClipPct_after_max": 0.05,
+    "shadowClipPct_reduction_factor": 0.5
+  },
+  "overexposed": {
+    "highlightClipPct_after_max": 0.05,
+    "highlightClipPct_reduction_factor": 0.5
+  },
+  "phase2_caps": {
+    "blacks_max_delta": 25,
+    "whites_max_delta": 25
+  }
+}

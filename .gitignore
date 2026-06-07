@@ -1,0 +1,19 @@
+# Rust build output
+**/target/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Temp
+*.tmp
+NoClipAuto.lrdevplugin/bin/**/noclip-analyze*
+!NoClipAuto.lrdevplugin/bin/**/.gitkeep
+
+# Logs
+*.log
