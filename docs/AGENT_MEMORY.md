@@ -18,7 +18,7 @@ Persistent facts for agents. Rolling log — older events may move to AGENT_MEMO
 | Key | Value |
 |-----|-------|
 | LR status | Unknown — run detect-lr-env.ps1 |
-| GitHub repo | Not initialized — run init-github-repo.ps1 |
+| GitHub repo | https://github.com/edwardlthompson/noclip-auto |
 | Analyzer path | `NoClipAuto.lrdevplugin/bin/win-x64/noclip-analyze.exe` |
 
 ## Recent events
@@ -26,7 +26,7 @@ Persistent facts for agents. Rolling log — older events may move to AGENT_MEMO
 | Date | Event |
 |------|-------|
 | 2026-06-07 | Initial repo scaffold: Lua plugin, Rust analyzer, docs, scripts |
-| 2026-06-07 | Built noclip-analyze.exe (1.5 MB); m0/m2 smoke PASS; cargo test PASS |
+| 2026-06-07 | GitHub repo created: https://github.com/edwardlthompson/noclip-auto |
 
 ## Blockers
 

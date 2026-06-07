@@ -1,11 +1,15 @@
 # GitHub — NoClip Auto
 
-## Repository setup
+## Repository
 
-```powershell
-# After H1 (gh auth) if needed
-.\scripts\init-github-repo.ps1 -Owner YOUR_GH_USER -Name noclip-auto
+**URL:** https://github.com/edwardlthompson/noclip-auto
+
+**About (description):**
 ```
+FOSS Lightroom Classic plugin that automatically recovers clipped highlights and shadows using a 3-phase tone pipeline. Batch and single-photo workflows. Local-only, no cloud. Windows primary. Apache-2.0.
+```
+
+See [GITHUB_ABOUT.md](GITHUB_ABOUT.md) for topics and metadata.
 
 ## CI
 

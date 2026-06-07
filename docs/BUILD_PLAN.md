@@ -22,7 +22,7 @@ Active milestone tasks only. Completed items are archived to [BUILD_PLAN_COMPLET
 - [x] [AGENT] [PARALLEL-OK] scripts/ensure-lr-running.ps1 + verify-lr-plugin.ps1 (stubs)
 <!-- END PARALLEL -->
 
-- [ ] [AGENT] Run init-github-repo.ps1 (skip if remote exists); detect-lr-env.ps1 → update AGENT_MEMORY
+- [x] [AGENT] Run init-github-repo.ps1 (skip if remote exists); detect-lr-env.ps1 → update AGENT_MEMORY
 - [ ] [HUMAN-ONLY] H1: gh auth login — only if init-github-repo.ps1 exits NEEDS_GH_AUTH
 
 **Gate G0**
