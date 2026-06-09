@@ -90,6 +90,26 @@ local function sectionsForTopOfDialog(f, propertyTable)
             integral = true,
           },
         },
+        f:static_text {
+          title = "Balance phase (optional, after clip prevention):",
+          font = "<system/small/bold>",
+        },
+        f:row {
+          f:static_text { title = "Enable balance phase:" },
+          f:checkbox { value = bind("enableBalancePhase") },
+        },
+        f:row {
+          f:static_text { title = "Target median luma (0–1):" },
+          f:edit_field {
+            value = bind("balanceTargetMedian"),
+            width_in_chars = 8,
+            precision = 2,
+          },
+        },
+        f:row {
+          f:static_text { title = "ETTR mode (brighter target):" },
+          f:checkbox { value = bind("balanceEttrMode") },
+        },
       },
     },
   }

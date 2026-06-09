@@ -1,0 +1,76 @@
+name: Release macOS
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Semver (e.g. 1.2.0)
+        required: true
+        default: "1.2.0"
+  push:
+    tags:
+      - "v1.1.0"
+      - "v1.1.0-*"
+      - "v1.2.0"
+      - "v1.2.0-*"
+
+permissions:
+  contents: write
+
+jobs:
+  release-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Prepare scripts
+        run: chmod +x scripts/*.sh scripts/smoke/*.sh
+
+      - name: Generate fixtures
+        run: ./scripts/generate-fixtures.sh
+
+      - name: M8 analyzer smoke
+        run: ./scripts/smoke/m7_smoke.sh
+
+      - name: Package macOS release
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          if [[ -z "$VERSION" ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+            VERSION="${VERSION%%-*}"
+          fi
+          ./scripts/package-release-macos.sh "$VERSION"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: noclip-auto-macos-release
+          path: dist/NoClipAuto-v*-macos-arm64.lrdevplugin.zip
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          if [[ -z "$VERSION" ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+            VERSION="${VERSION%%-*}"
+          fi
+          TAG="v${VERSION}"
+          ZIP="dist/NoClipAuto-v${VERSION}-macos-arm64.lrdevplugin.zip"
+          MACOS_NOTES="### macOS arm64 (UNVALIDATED)
+
+          Apple Silicon build. **Not validated by the maintainer** — see [docs/MAC.md](https://github.com/${{ github.repository }}/blob/main/docs/MAC.md).
+
+          Install: unzip into \`~/Library/Application Support/Adobe/Lightroom/Modules/\` or run \`scripts/install-plugin.sh\`."
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$ZIP" --clobber
+          else
+            gh release create "$TAG" "$ZIP" \
+              --title "NoClip Auto v${VERSION} (macOS arm64, UNVALIDATED)" \
+              --notes "$MACOS_NOTES" \
+              --prerelease
+          fi

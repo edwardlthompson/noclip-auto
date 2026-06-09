@@ -13,8 +13,12 @@ Thumbs.db
 # Temp
 *.tmp
 docs/lr-env.json
+NoClipAuto.lrdevplugin/smoke/m3-smoke.trigger
 NoClipAuto.lrdevplugin/bin/**/noclip-analyze*
 !NoClipAuto.lrdevplugin/bin/**/.gitkeep
 
 # Logs
 *.log
+
+# Release staging
+dist/

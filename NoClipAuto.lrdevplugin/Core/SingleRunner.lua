@@ -33,14 +33,21 @@ function SingleRunner.run()
   end
 
   if result.skipped then
-    LrDialogs.message("NoClip Auto", "Photo already has no significant clipping.")
+    LrDialogs.message(
+      "NoClip Auto",
+      string.format(
+        "Auto Tone applied. No clip adjustments needed. Shadow clip: %.2f%%. Highlight clip: %.2f%%.",
+        result.after.shadowClipPct,
+        result.after.highlightClipPct
+      )
+    )
     return
   end
 
   LrDialogs.message(
     "NoClip Auto",
     string.format(
-      "Done%s. Iterations: %d. Shadow clip: %.2f%% → %.2f%%. Highlight clip: %.2f%% → %.2f%%.",
+      "Done%s (Auto Tone + clip phases). Iterations: %d. Shadow clip: %.2f%% → %.2f%%. Highlight clip: %.2f%% → %.2f%%.",
       dryRun and " (dry run)" or "",
       result.iterations or 0,
       result.before.shadowClipPct,

@@ -2,6 +2,7 @@
 -- SPDX-License-Identifier: Apache-2.0
 
 local Config = require("Core.Pipeline.Config")
+local SettingsIO = require("Core.SettingsIO")
 local PreviewRender = require("Core.PreviewRender")
 local ClippingClient = require("Core.ClippingClient")
 local PhaseExposure = require("Core.Pipeline.PhaseExposure")
@@ -10,17 +11,40 @@ local PhaseHighlightsShadows = require("Core.Pipeline.PhaseHighlightsShadows")
 
 local PhaseRunner = {}
 
+local activePrefetch = nil
+local smokeAnalyzeFallback = false
+
+function PhaseRunner.setPrefetch(prefetch)
+  activePrefetch = prefetch
+end
+
+function PhaseRunner.setSmokeAnalyzeFallback(value)
+  smokeAnalyzeFallback = value == true
+end
+
 function PhaseRunner.measure(photo, previewSize)
-  local jpegPath, err = PreviewRender.exportPhoto(photo, previewSize)
+  local jpegPath, err
+  if activePrefetch then
+    jpegPath, err = activePrefetch:take(photo)
+  else
+    jpegPath, err = PreviewRender.exportPhoto(photo, previewSize)
+  end
   if not jpegPath then
     return nil, err
   end
-  local clipResult, analyzeErr = ClippingClient.analyze(jpegPath)
+  local analyzeOpts = smokeAnalyzeFallback and { allowZeroFallback = true } or nil
+  local clipResult, analyzeErr = ClippingClient.analyze(jpegPath, analyzeOpts)
   PreviewRender.cleanup(jpegPath)
   if not clipResult then
     return nil, analyzeErr
   end
   return clipResult
+end
+
+function PhaseRunner.syncSettings(settings, ctx)
+  if ctx and ctx.catalog and ctx.photo then
+    SettingsIO.syncToPhoto(ctx.catalog, ctx.photo, settings)
+  end
 end
 
 function PhaseRunner.logIteration(photoId, phase, iteration, clipResult, deltas)
@@ -35,7 +59,7 @@ function PhaseRunner.logIteration(photoId, phase, iteration, clipResult, deltas)
   ))
 end
 
-function PhaseRunner.runPhase1(photo, settings, previewSize, totalIter, maxIter)
+function PhaseRunner.runPhase1(photo, settings, previewSize, totalIter, maxIter, ctx)
   local noProgress = 0
   local lastShadow, lastHighlight = -1, -1
 
@@ -61,6 +85,7 @@ function PhaseRunner.runPhase1(photo, settings, previewSize, totalIter, maxIter)
     end
 
     settings = newSettings
+    PhaseRunner.syncSettings(settings, ctx)
     totalIter.count = totalIter.count + 1
 
     if clipResult.shadowClipPx == lastShadow and clipResult.highlightClipPx == lastHighlight then
@@ -78,7 +103,7 @@ function PhaseRunner.runPhase1(photo, settings, previewSize, totalIter, maxIter)
   return settings, totalIter, "phase_max"
 end
 
-function PhaseRunner.runPhase2(photo, settings, previewSize, totalIter, maxIter)
+function PhaseRunner.runPhase2(photo, settings, previewSize, totalIter, maxIter, ctx)
   local state = PhaseWhitesBlacks.newState(settings)
 
   for i = 1, Config.MAX_PHASE2_ITER do
@@ -99,6 +124,7 @@ function PhaseRunner.runPhase2(photo, settings, previewSize, totalIter, maxIter)
     PhaseRunner.logIteration(photo.localIdentifier, "whites_blacks", i, clipResult, deltas)
     settings = newSettings
     state = newState
+    PhaseRunner.syncSettings(settings, ctx)
 
     if phaseDone then
       return settings, totalIter, "phase_done"
@@ -110,7 +136,7 @@ function PhaseRunner.runPhase2(photo, settings, previewSize, totalIter, maxIter)
   return settings, totalIter, "phase_max"
 end
 
-function PhaseRunner.runPhase3(photo, settings, previewSize, totalIter, maxIter)
+function PhaseRunner.runPhase3(photo, settings, previewSize, totalIter, maxIter, ctx)
   for i = 1, Config.MAX_PHASE3_ITER do
     if totalIter.count >= maxIter then
       return settings, totalIter, "max_total"
@@ -128,6 +154,7 @@ function PhaseRunner.runPhase3(photo, settings, previewSize, totalIter, maxIter)
     local newSettings, deltas, phaseDone = PhaseHighlightsShadows.adjust(settings, clipResult)
     PhaseRunner.logIteration(photo.localIdentifier, "highlights_shadows", i, clipResult, deltas)
     settings = newSettings
+    PhaseRunner.syncSettings(settings, ctx)
 
     if phaseDone then
       return settings, totalIter, "phase_done"

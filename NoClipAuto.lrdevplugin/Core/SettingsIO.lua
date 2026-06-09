@@ -12,6 +12,13 @@ local PV2012_KEYS = {
   "ProcessVersion",
 }
 
+local PARAMETRIC_KEYS = {
+  "ParametricShadows",
+  "ParametricDarks",
+  "ParametricLights",
+  "ParametricHighlights",
+}
+
 function SettingsIO.ensurePV2012(settings)
   settings = settings or {}
   settings.ProcessVersion = "15.4"
@@ -43,6 +50,32 @@ end
 
 function SettingsIO.toneKeys()
   return PV2012_KEYS
+end
+
+function SettingsIO.parametricKeys()
+  return PARAMETRIC_KEYS
+end
+
+function SettingsIO.extractToneSettings(settings)
+  local out = SettingsIO.ensurePV2012({})
+  for _, key in ipairs(PV2012_KEYS) do
+    if settings[key] ~= nil then
+      out[key] = settings[key]
+    end
+  end
+  for _, key in ipairs(PARAMETRIC_KEYS) do
+    if settings[key] ~= nil then
+      out[key] = settings[key]
+    end
+  end
+  return out
+end
+
+function SettingsIO.syncToPhoto(catalog, photo, settings, historyName)
+  local toneOnly = SettingsIO.extractToneSettings(settings)
+  catalog:withWriteAccessDo(historyName or "NoClip Auto", function()
+    photo:applyDevelopSettings(toneOnly, historyName)
+  end, { timeout = 30 })
 end
 
 return SettingsIO

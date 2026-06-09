@@ -1,0 +1,1 @@
+{"fixture":"C:\\Users\\edwar\\NoClip Auto\\tests\\fixtures\\gray.jpg","dryRun":true,"count":10}

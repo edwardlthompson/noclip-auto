@@ -12,8 +12,9 @@ Start-Sleep -Seconds 3
 
 & (Join-Path $root "scripts\build-analyzer.ps1") -Profile release-small
 & (Join-Path $root "scripts\install-plugin.ps1") -Force
-& (Join-Path $root "scripts\ensure-lr-running.ps1") -TimeoutSec 180
-& (Join-Path $root "scripts\wait-for-lr-plugin.ps1") -WaitSec 240
+& (Join-Path $root "scripts\enable-lr-plugin.ps1") -Force
+& (Join-Path $root "scripts\wait-for-lr-ready.ps1") -TimeoutSec 360
+& (Join-Path $root "scripts\wait-for-lr-plugin.ps1") -WaitSec 120
 
 Write-Host "M1 smoke PASS"
 exit 0

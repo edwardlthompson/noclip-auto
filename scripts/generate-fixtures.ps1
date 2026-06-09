@@ -19,4 +19,11 @@ New-SolidJpeg (Join-Path $fixtures "black.jpg") ([System.Drawing.Color]::FromArg
 New-SolidJpeg (Join-Path $fixtures "white.jpg") ([System.Drawing.Color]::FromArgb(255, 255, 255))
 New-SolidJpeg (Join-Path $fixtures "gray.jpg") ([System.Drawing.Color]::FromArgb(128, 128, 128))
 
+$bench = New-Object System.Drawing.Bitmap 1920, 1080
+$g = [System.Drawing.Graphics]::FromImage($bench)
+$g.Clear([System.Drawing.Color]::FromArgb(128, 128, 128))
+$g.Dispose()
+$bench.Save((Join-Path $fixtures "bench-1080p.jpg"), [System.Drawing.Imaging.ImageFormat]::Jpeg)
+$bench.Dispose()
+
 Write-Host "Generated fixtures in $fixtures"

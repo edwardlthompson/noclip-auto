@@ -1,17 +1,30 @@
 # Algorithm — NoClip Auto
 
-3-phase tone pipeline driven by clipped-pixel counts only (no histogram UI).
+Tone pipeline driven by clipped-pixel counts and (optionally) histogram balance stats.
+
+## Pipeline order
+
+1. Snapshot **NoClip Auto (before)**
+2. **Phase 0 — Auto Tone** (always): batch uses Auto* flags + `flattenAutoNow`; Develop uses `LrDevelopController.setAutoTone()`
+3. Snapshot **NoClip Auto (auto tone)**
+4. Measure → **Phases 1–3** clip prevention (apply settings after each adjustment)
+5. **Phase 4 — Balance** (opt-in): median target + parametric stretch when not clipped
+6. Dry-run: restore initial develop settings at end
 
 ## Measurement loop
 
 Every adjustment iteration:
 
 1. Export preview JPEG (512–1024 px long edge per PerformanceTier)
-2. Run `noclip-analyze` → `{ shadowClipPx, highlightClipPx, shadowClipPct, highlightClipPct }`
-3. If both clip percentages below threshold (default 0.05%) → **done**
-4. Apply current phase rules → apply develop settings → repeat
+2. Run `noclip-analyze` → clip counts + v2 stats (`median_luma`, `p05_luma`, `p95_luma`, …)
+3. If both clip percentages below threshold (default 0.05%) → **done** (clip phases)
+4. Apply current phase rules → sync develop settings to catalog → repeat
 
 **Clipping definition:** luminance ≤ 2 (shadow), luminance ≥ 253 (highlight).
+
+## Phase 0 — Auto Tone
+
+Always runs before measurement. Not user-disableable in v1.2.0.
 
 ## Sliders (Process Version 2012)
 
@@ -49,6 +62,16 @@ Apply both per iteration if needed. Max 25 phase iterations.
 | Highlight clipped | Highlights **−** 2 |
 
 Max 20 phase iterations. Global max 60 total iterations per photo.
+
+## Phase 4 — Balance (optional)
+
+Enabled via Plugin Manager pref `enableBalancePhase` (default off). Runs only when clip phases leave the image unclipped.
+
+| Step | Action |
+|------|--------|
+| Median target | Adjust Exposure toward target median (default 0.45; ETTR mode → 0.55) |
+| S-curve stretch | If p95 − p05 < 0.55, widen via ParametricDarks (−) and ParametricLights (+) |
+| Verify | Re-measure; rollback iteration if clipping reappears |
 
 ## Safety rails
 

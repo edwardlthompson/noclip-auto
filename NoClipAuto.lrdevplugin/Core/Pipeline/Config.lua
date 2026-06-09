@@ -20,6 +20,8 @@ Config.MAX_PHASE2_ITER = 25
 Config.MAX_PHASE3_ITER = 20
 Config.MAX_NO_PROGRESS = 2
 
+-- v1.0.0: step sizes and caps match ALGORITHM.md; golden fixtures pass verify-tone-quality.ps1
+
 Config.SLIDER_KEYS = {
   exposure = "Exposure2012",
   whites = "Whites2012",

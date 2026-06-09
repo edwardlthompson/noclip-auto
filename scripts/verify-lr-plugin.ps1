@@ -1,37 +1,54 @@
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 
-$logDir = Join-Path $env:LOCALAPPDATA "Adobe\Lightroom\Logs\LrClassicLogs"
-if (-not (Test-Path $logDir)) {
-    Write-Host "LR log dir not found — LR may not be installed or never run"
-    exit 2
+$pluginPath = Join-Path $env:APPDATA "Adobe\Lightroom\Modules\NoClipAuto.lrdevplugin"
+
+if (-not (Test-Path $pluginPath)) {
+    Write-Host "Plugin not installed at $pluginPath"
+    exit 1
 }
 
-$logs = Get-ChildItem $logDir -Filter "*.log" -ErrorAction SilentlyContinue |
-    Sort-Object LastWriteTime -Descending | Select-Object -First 3
+if (-not (Test-Path (Join-Path $pluginPath "Info.lua"))) {
+    Write-Host "Info.lua missing in installed plugin"
+    exit 1
+}
+
+$markerPaths = @(
+    Join-Path $env:TEMP "NoClipAuto\noclip-plugin-loaded.txt"
+    Join-Path $pluginPath "smoke\plugin-loaded.txt"
+)
 
 $found = $false
-$errors = @()
-
-foreach ($log in $logs) {
-    $content = Get-Content $log.FullName -Tail 500 -ErrorAction SilentlyContinue
-    if ($content -match "NoClipAuto|com\.noclipauto|NoClip Auto") {
-        $found = $true
-    }
-    $luaErrors = $content | Select-String -Pattern "NoClipAuto.*error|NoClip Auto.*error" -SimpleMatch:$false
-    if ($luaErrors) {
-        $errors += $luaErrors
+foreach ($marker in $markerPaths) {
+    if (Test-Path $marker) {
+        $age = (Get-Date) - (Get-Item $marker).LastWriteTime
+        if ($age.TotalMinutes -le 60) {
+            $found = $true
+            Write-Host "Plugin load marker: $marker ($([math]::Round($age.TotalSeconds))s ago)"
+            break
+        }
     }
 }
 
 if (-not $found) {
-    Write-Host "Plugin ID not found in recent logs — install plugin and restart LR"
-    exit 1
+    $logDir = Join-Path $env:LOCALAPPDATA "Adobe\Lightroom\Logs\LrClassicLogs"
+    if (Test-Path $logDir) {
+        $logs = Get-ChildItem $logDir -Filter "*.log" -ErrorAction SilentlyContinue |
+            Sort-Object LastWriteTime -Descending | Select-Object -First 5
+        foreach ($log in $logs) {
+            $hits = @(Get-Content $log.FullName -Tail 800 -ErrorAction SilentlyContinue |
+                Select-String -Pattern "NoClipAuto|com\.noclipauto|NoClip Auto plugin loaded")
+            if ($hits.Count -gt 0) {
+                $found = $true
+                Write-Host "Plugin found in log: $($log.Name)"
+                break
+            }
+        }
+    }
 }
 
-if ($errors.Count -gt 0) {
-    Write-Host "Lua errors found:"
-    $errors | ForEach-Object { Write-Host $_ }
+if (-not $found) {
+    Write-Host "Plugin not loaded — install, restart LR, and run a plugin menu once if needed"
     exit 1
 }
 

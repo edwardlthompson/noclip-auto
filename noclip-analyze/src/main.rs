@@ -25,6 +25,9 @@ struct Args {
 
     #[arg(long, default_value = "auto")]
     threads: String,
+
+    #[arg(long)]
+    output: Option<PathBuf>,
 }
 
 fn main() {
@@ -50,7 +53,11 @@ fn run() -> Result<(), String> {
     let img = image::open(&input).map_err(|e| format!("open {}: {e}", input.display()))?;
     let result = analyze_image(&img, args.shadow_threshold, args.highlight_threshold);
     let json = serde_json::to_string(&result).map_err(|e| e.to_string())?;
-    println!("{json}");
+    if let Some(out) = &args.output {
+        std::fs::write(out, format!("{json}\n")).map_err(|e| format!("write {}: {e}", out.display()))?;
+    } else {
+        println!("{json}");
+    }
     Ok(())
 }
 

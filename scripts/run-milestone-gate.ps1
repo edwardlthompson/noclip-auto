@@ -38,6 +38,38 @@ switch ($Milestone) {
         if ($LASTEXITCODE -ne 0) { throw "cargo test failed" }
         Pop-Location
     }
+    3 {
+        Invoke-Smoke "m0"
+        Invoke-Smoke "m2"
+        Invoke-Smoke "m3"
+    }
+    4 {
+        Invoke-Smoke "m0"
+        Invoke-Smoke "m2"
+        Invoke-Smoke "m4"
+    }
+    5 {
+        Invoke-Smoke "m0"
+        Invoke-Smoke "m2"
+        Invoke-Smoke "m4"
+        Invoke-Smoke "m5"
+    }
+    6 {
+        Invoke-Smoke "m0"
+        Invoke-Smoke "m2"
+        Invoke-Smoke "m4"
+        Invoke-Smoke "m6"
+    }
+    7 {
+        Invoke-Smoke "m0"
+        Invoke-Smoke "m7"
+    }
+    8 {
+        Invoke-Smoke "m0"
+        Invoke-Smoke "m2"
+        Invoke-Smoke "m4"
+        Invoke-Smoke "m8"
+    }
     default {
         Invoke-Smoke "m0"
         if ($Milestone -ge 2) { Invoke-Smoke "m2" }

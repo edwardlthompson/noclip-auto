@@ -1,0 +1,12 @@
+{
+  "category": "underexposed",
+  "description": "Heavy shadow clip reduced below threshold after pipeline",
+  "before": {
+    "shadowClipPct": 0.12,
+    "highlightClipPct": 0.0
+  },
+  "after": {
+    "shadowClipPct": 0.04,
+    "highlightClipPct": 0.01
+  }
+}

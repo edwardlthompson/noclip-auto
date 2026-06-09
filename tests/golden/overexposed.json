@@ -1,0 +1,12 @@
+{
+  "category": "overexposed",
+  "description": "Heavy highlight clip reduced below threshold after pipeline",
+  "before": {
+    "shadowClipPct": 0.0,
+    "highlightClipPct": 0.18
+  },
+  "after": {
+    "shadowClipPct": 0.01,
+    "highlightClipPct": 0.03
+  }
+}

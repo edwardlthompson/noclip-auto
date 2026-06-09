@@ -17,3 +17,4 @@ if ($sizeMB -gt $MaxExeMB) {
 }
 
 Write-Host "Bundle size gate PASS: exe $([math]::Round($sizeMB, 2)) MB"
+exit 0

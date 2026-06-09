@@ -50,3 +50,21 @@ Archived completed tasks moved from [BUILD_PLAN.md](BUILD_PLAN.md) by `scripts/a
 - [x] [AGENT] [PARALLEL-OK] Pipeline phase split
 - [x] [AGENT] [PARALLEL-OK] Rust release-small + release-bench profiles
 
+
+## Archived 2026-06-08 12:24
+
+- [x] [AGENT] Core/PreviewRender.lua — LrExportSession preview JPEG export
+- [x] [AGENT] Core/PreviewSmoke.lua — automated smoke (import, export, analyze)
+- [x] [AGENT] M3SmokeHeadless.lua + ProcessM3Smoke.lua — headless smoke (menu + Init trigger)
+- [x] [AGENT] wait-for-lr-ready.ps1, enable-lr-plugin.ps1
+- [x] [AGENT] [LR] Preview JPEG created for test photo
+- [x] [AGENT] [LR] m3_smoke.ps1 exit 0
+
+
+## Archived 2026-06-08 12:28
+
+- [x] [AGENT] verify-tone-quality.ps1 + tests/golden/ thresholds
+- [x] [AGENT] m4_smoke.ps1
+- [x] Golden fixtures pass verify-tone-quality.ps1
+- [x] Phase 2 caps enforced (Blacks +25, Whites −25)
+

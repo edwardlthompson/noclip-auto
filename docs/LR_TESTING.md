@@ -10,10 +10,29 @@ Automated Lightroom testing via PowerShell scripts. **No manual UI checks** for 
 ## Script flow
 
 ```powershell
-.\scripts\ensure-lr-running.ps1      # Start LR, wait for log heartbeat
-.\scripts\install-plugin.ps1         # Copy plugin to Modules folder
-.\scripts\verify-lr-plugin.ps1       # Grep LrClassicLogs for plugin load
-.\scripts\run-milestone-gate.ps1 -Milestone 2
+.\scripts\install-plugin.ps1 -Force
+.\scripts\enable-lr-plugin.ps1 -Force   # Register path in LR preferences
+.\scripts\ensure-lr-running.ps1         # Start LR, wait for log heartbeat
+.\scripts\wait-for-lr-ready.ps1         # Wait for catalog + Library/Print module
+.\scripts\verify-lr-plugin.ps1          # Check plugin load marker / logs
+.\scripts\run-milestone-gate.ps1 -Milestone 3
+```
+
+## First-time plugin enable (one-time per machine)
+
+Lightroom disables new plugins until you enable them in Plug-in Manager. Automated UI enable is unreliable from agent shells; do this once manually:
+
+1. Open **File → Plug-in Manager**
+2. Select **NoClip Auto** (or **Add** → `%APPDATA%\Adobe\Lightroom\Modules\NoClipAuto.lrdevplugin`)
+3. Click **Enable**, then **Done**
+4. Re-run `m3_smoke.ps1`
+
+After enable, `%TEMP%\NoClipAuto\noclip-plugin-loaded.txt` is written on LR startup (from `Init.lua`).
+
+If smoke fails with enable instructions, run:
+
+```powershell
+.\scripts\print-lr-plugin-enable-help.ps1
 ```
 
 ## Smoke tests
@@ -26,6 +45,11 @@ Automated Lightroom testing via PowerShell scripts. **No manual UI checks** for 
 | m3_smoke.ps1 | Yes | Preview export |
 | m4_smoke.ps1 | Yes | Pipeline golden |
 | m5_smoke.ps1 | Yes | Batch run |
+| m8_smoke.ps1 | No | Analyzer v2 + golden regression |
+| m8_lr_smoke.ps1 | Yes | Auto Tone + Orchestrator dry-run (3 photos) |
+| m6_smoke.ps1 | No | Release gates (GS, GP, package) |
+| m7_smoke.ps1 | No | Mac scripts + CI/release workflow checks |
+| m7_smoke.sh | Yes (Mac) | Build macOS analyzer + fixture JSON |
 
 ## Log locations
 

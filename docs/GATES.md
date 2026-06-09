@@ -16,7 +16,8 @@ Must-pass checklists before advancing milestones.
 | GF | All | FOSS compliance |
 | GS | M6 | Size limits (exe ≤ 2 MB, zip ≤ 5 MB, Lua ≤ 200 lines) |
 | GP | M6 | Analyzer throughput ≥ 50 MP/s (bench profile) |
-| GM | M7 | Mac CI build (no owner validation) |
+| GM | M7 | Mac CI build + UNVALIDATED release |
+| G8 | M8 | Smart Tone & Balance (Auto Tone + analyzer v2) |
 
 ## G0 — Infrastructure
 
@@ -49,23 +50,31 @@ Must-pass checklists before advancing milestones.
 
 ## G3 — Preview
 
-- [ ] Preview JPEG export works in LR
-- [ ] m3_smoke.ps1 exit 0
+- [x] Preview JPEG export works in LR
+- [x] m3_smoke.ps1 exit 0
+
+**Passed:** 2026-06-08
 
 ## G4 — Pipeline
 
-- [ ] verify-tone-quality.ps1 pass on golden fixtures
-- [ ] Phase 2 caps enforced
+- [x] verify-tone-quality.ps1 pass on golden fixtures
+- [x] Phase 2 caps enforced (Blacks +25, Whites −25)
+
+**Passed:** 2026-06-08
 
 ## G5 — Integration
 
-- [ ] Batch 10 photos without Lua errors
-- [ ] Dry-run mode verified
+- [x] Batch 10 photos without Lua errors
+- [x] Dry-run mode verified (`NoClipAuto-dry-run.log`, no apply)
+
+**Passed:** 2026-06-08
 
 ## G6 — Release
 
-- [ ] Gate GS + GP pass
-- [ ] v1.0.0 tag and release zip published
+- [x] Gate GS + GP pass
+- [x] v1.0.0 tag and release zip published (`NoClipAuto-v1.0.0-win64.lrdevplugin.zip`, 0.68 MB)
+
+**Passed:** 2026-06-08
 
 ## GF — FOSS
 
@@ -76,18 +85,31 @@ Must-pass checklists before advancing milestones.
 
 ## GS — Size
 
-- [ ] Shipped exe ≤ 2 MB (`check-bundle-size.ps1`)
-- [ ] Release zip ≤ 5 MB
-- [ ] Largest Lua file ≤ 200 lines (`check-lua-size.ps1`)
+- [x] Shipped exe ≤ 2 MB (1.5 MB)
+- [x] Release zip ≤ 5 MB (0.68 MB)
+- [x] Largest shipped Lua file ≤ 200 lines (`check-lua-size.ps1 -ShippedOnly`)
 
 ## GP — Performance
 
-- [ ] Analyzer ≥ 50 MP/s on 1080p JPEG (release-bench)
+- [x] Analyzer ≥ 50 MP/s on 1080p JPEG (115.8 MP/s, release-bench)
 
 ## GM — Mac build
 
-- [ ] CI produces macos-arm64 binary
-- [ ] Executable bit set in release zip
-- [ ] Release labeled UNVALIDATED-macOS
+- [x] CI produces macos-arm64 binary (`build-analyzer-macos-arm64` + artifact)
+- [x] Executable bit set in release zip (`package-release-macos.sh` + `chmod +x`)
+- [x] Release labeled UNVALIDATED-macOS (prerelease via `release-macos.yml`)
 
-**Last updated:** 2026-06-07
+**Passed (CI):** 2026-06-08 — maintainer has not validated on physical Mac hardware.
+
+## G8 — Smart Tone & Balance
+
+- [x] Analyzer v2 JSON (`schema_version: 2`, histogram stats)
+- [x] `m8_smoke.ps1` + `run-milestone-gate.ps1 -Milestone 8` pass
+- [x] Golden clip regression (verify-tone-quality.ps1)
+- [x] Gate GP pass (bench ≥ 50 MP/s)
+- [x] Auto Tone + Balance covered by `m8_lr_smoke.ps1` harness `[LR]`
+- [x] Tag v1.2.0 release (win64 + macOS arm64 UNVALIDATED)
+
+**Passed:** 2026-06-08
+
+**Last updated:** 2026-06-08

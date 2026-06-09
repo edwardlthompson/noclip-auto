@@ -75,15 +75,32 @@ jobs:
         shell: pwsh
         run: |
           ./scripts/check-bundle-size.ps1
-          ./scripts/check-lua-size.ps1
+          ./scripts/check-lua-size.ps1 -ShippedOnly
+
+  bench-gate:
+    runs-on: windows-latest
+    needs: [build-analyzer]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build bench analyzer
+        shell: pwsh
+        run: ./scripts/bench-analyzer.ps1
 
   build-analyzer-macos-arm64:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
+      - name: Prepare scripts
+        run: chmod +x scripts/*.sh scripts/smoke/*.sh
       - name: Build macOS arm64
-        run: cargo build --profile release-small --target aarch64-apple-darwin
-        working-directory: noclip-analyze
-      - name: Verify binary
-        run: file noclip-analyze/target/aarch64-apple-darwin/release-small/noclip-analyze
+        run: ./scripts/build-analyzer-macos.sh release-small aarch64-apple-darwin
+      - name: Generate fixtures
+        run: ./scripts/generate-fixtures.sh
+      - name: M7 smoke
+        run: ./scripts/smoke/m7_smoke.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noclip-analyze-macos-arm64
+          path: NoClipAuto.lrdevplugin/bin/macos-arm64/noclip-analyze
