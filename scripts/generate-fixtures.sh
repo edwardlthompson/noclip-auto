@@ -5,21 +5,21 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 FIXTURES="$ROOT/tests/fixtures"
+VENV="$ROOT/.fixture-venv"
 mkdir -p "$FIXTURES"
 
-python3 - "$FIXTURES" <<'PY'
-import subprocess
+if [[ ! -x "$VENV/bin/python" ]]; then
+  python3 -m venv "$VENV"
+  "$VENV/bin/pip" install --upgrade pip pillow -q
+fi
+
+"$VENV/bin/python" - "$FIXTURES" <<'PY'
 import sys
 from pathlib import Path
+from PIL import Image
 
 fixtures = Path(sys.argv[1])
 fixtures.mkdir(parents=True, exist_ok=True)
-
-try:
-    from PIL import Image
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "pillow", "-q"])
-    from PIL import Image
 
 for name, rgb in [("black", (0, 0, 0)), ("white", (255, 255, 255)), ("gray", (128, 128, 128))]:
     Image.new("RGB", (10, 10), rgb).save(fixtures / f"{name}.jpg")
