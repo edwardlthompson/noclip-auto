@@ -68,3 +68,27 @@ Archived completed tasks moved from [BUILD_PLAN.md](BUILD_PLAN.md) by `scripts/a
 - [x] Golden fixtures pass verify-tone-quality.ps1
 - [x] Phase 2 caps enforced (Blacks +25, Whites −25)
 
+
+## Archived 2026-06-09 09:20
+
+### M8 — Smart Tone & Balance ✅
+
+Gate G8 passed 2026-06-08. v1.2.0 win64 + macOS (UNVALIDATED) released.
+
+- [x] Phase 0 Auto Tone (mandatory) + interim `SettingsIO.syncToPhoto`
+- [x] Analyzer v2 (`schema_version: 2`)
+- [x] Phase 4 Balance (opt-in pref)
+- [x] `m8_smoke.ps1`, `m8_lr_smoke.ps1`, Gate G8 automated
+- [x] Tag v1.2.0 release (win64 + macOS)
+
+
+## M9 — Lens profile pre-pass ✅
+
+Gate G9 passed 2026-06-09. v1.3.0 win64 + macOS (UNVALIDATED) released.
+
+- [x] `Core/Pipeline/LensProfile.lua` + SettingsIO lens extract/restore on dry-run
+- [x] Orchestrator Phase −1 (before Auto Tone) + snapshot `NoClip Auto (lens profile)`
+- [x] Pref `enableLensProfileCorrection` (default on) + Plugin Manager UI
+- [x] `m9_smoke.ps1`, `m9_lr_smoke.ps1`, `m5_menu_smoke.ps1`, Gate G9 automated
+- [x] Tag v1.3.0 release (win64 + macOS)
+

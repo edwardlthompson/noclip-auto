@@ -56,7 +56,8 @@ function PreviewRender.exportPhotoViaThumbnail(photo, previewSize)
 end
 
 function PreviewRender.exportPhoto(photo, previewSize)
-  if preferThumbnail then
+  local useFull = NoClipAuto.prefs and NoClipAuto.prefs.useFullSizePreview == true
+  if preferThumbnail or not useFull then
     return PreviewRender.exportPhotoViaThumbnail(photo, previewSize)
   end
 

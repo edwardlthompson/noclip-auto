@@ -1,0 +1,16 @@
+---
+description: Keep Plugin Manager setting hints and slider rows when editing prefs UI
+globs:
+  - NoClipAuto.lrdevplugin/PluginInfoProvider.lua
+  - NoClipAuto.lrdevplugin/Core/SettingsUI.lua
+  - NoClipAuto.lrdevplugin/Core/Prefs.lua
+alwaysApply: false
+---
+
+# Settings UI hints
+
+Read docs/SETTINGS_UI.md before editing Plugin Manager settings.
+
+- Every setting needs hint text (range, default, behavior).
+- Numeric settings use slider + edit_field in one row via Core/SettingsUI.lua.
+- Do not strip hints to fit the 200-line gate — extend SettingsUI.lua instead.

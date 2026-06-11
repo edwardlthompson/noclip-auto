@@ -47,6 +47,9 @@ If smoke fails with enable instructions, run:
 | m5_smoke.ps1 | Yes | Batch run |
 | m8_smoke.ps1 | No | Analyzer v2 + golden regression |
 | m8_lr_smoke.ps1 | Yes | Auto Tone + Orchestrator dry-run (3 photos) |
+| m9_smoke.ps1 | No | Lens module + M8 regression + package 1.3.0 |
+| m9_lr_smoke.ps1 | Yes | Lens profile + Auto Tone dry-run (3 photos) |
+| m5_menu_smoke.ps1 | Yes | Production ProcessLibrary via Plug-in Extras menu |
 | m6_smoke.ps1 | No | Release gates (GS, GP, package) |
 | m7_smoke.ps1 | No | Mac scripts + CI/release workflow checks |
 | m7_smoke.sh | Yes (Mac) | Build macOS analyzer + fixture JSON |

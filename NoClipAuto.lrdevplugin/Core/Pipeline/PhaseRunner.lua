@@ -43,7 +43,13 @@ end
 
 function PhaseRunner.syncSettings(settings, ctx)
   if ctx and ctx.catalog and ctx.photo then
-    SettingsIO.syncToPhoto(ctx.catalog, ctx.photo, settings)
+    SettingsIO.syncToPhoto(ctx.catalog, ctx.photo, settings, nil, true)
+  end
+end
+
+local function notifyProgress(ctx, caption, iterFraction)
+  if ctx and ctx.onProgress then
+    ctx.onProgress(caption, iterFraction or 0)
   end
 end
 
@@ -87,6 +93,7 @@ function PhaseRunner.runPhase1(photo, settings, previewSize, totalIter, maxIter,
     settings = newSettings
     PhaseRunner.syncSettings(settings, ctx)
     totalIter.count = totalIter.count + 1
+    notifyProgress(ctx, string.format("Exposure iter %d", i), totalIter.count / ctx.maxIter)
 
     if clipResult.shadowClipPx == lastShadow and clipResult.highlightClipPx == lastHighlight then
       noProgress = noProgress + 1
@@ -131,6 +138,7 @@ function PhaseRunner.runPhase2(photo, settings, previewSize, totalIter, maxIter,
     end
 
     totalIter.count = totalIter.count + 1
+    notifyProgress(ctx, string.format("Whites/Blacks iter %d", i), totalIter.count / ctx.maxIter)
   end
 
   return settings, totalIter, "phase_max"
@@ -161,6 +169,7 @@ function PhaseRunner.runPhase3(photo, settings, previewSize, totalIter, maxIter,
     end
 
     totalIter.count = totalIter.count + 1
+    notifyProgress(ctx, string.format("Highlights/Shadows iter %d", i), totalIter.count / ctx.maxIter)
   end
 
   return settings, totalIter, "phase_max"

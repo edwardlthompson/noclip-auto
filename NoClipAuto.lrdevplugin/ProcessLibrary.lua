@@ -1,15 +1,16 @@
 -- Copyright 2026 NoClip Auto contributors
 -- SPDX-License-Identifier: Apache-2.0
 
-local LrTasks = import "LrTasks"
-local LrFileUtils = import "LrFileUtils"
+local LrFunctionContext = import "LrFunctionContext"
+local LrDialogs = import "LrDialogs"
 local LrPathUtils = import "LrPathUtils"
+local LrTasks = import "LrTasks"
 
-LrTasks.startAsyncTask(function()
-  local trigger = LrPathUtils.child(LrPathUtils.child(_PLUGIN.path, "smoke"), "m3-smoke.trigger")
-  if LrFileUtils.exists(trigger) == "file" then
-    require("Core.PreviewSmoke").runFromTrigger(trigger)
-    return
-  end
-  require("Core.BatchRunner").run()
+LrFunctionContext.postAsyncTaskWithContext("NoClip Auto Library", function(context)
+  LrDialogs.attachErrorDialogToFunctionContext(context)
+  LrTasks.sleep(0.1)
+
+  local Loader = dofile(LrPathUtils.child(_PLUGIN.path, "Core/Loader.lua"))
+  Loader.setup(_PLUGIN.path)
+  require("Core.BatchRunner").run(context)
 end)

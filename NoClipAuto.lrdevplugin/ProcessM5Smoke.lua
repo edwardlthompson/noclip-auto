@@ -27,5 +27,7 @@ LrFunctionContext.postAsyncTaskWithContext("NoClip Auto M5 Smoke", function(cont
     LrTasks.sleep(2)
   end
 
+  local Loader = dofile(LrPathUtils.child(_PLUGIN.path, "Core/Loader.lua"))
+  Loader.setup(_PLUGIN.path)
   require("Core.BatchSmoke").runFromTrigger(trigger, true)
 end)

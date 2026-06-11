@@ -9,12 +9,12 @@ local LrTasks = import "LrTasks"
 
 local BatchRunner = require("Core.BatchRunner")
 local BatchReport = require("Core.BatchReport")
-local M8SmokeReport = require("Core.M8SmokeReport")
+local M9SmokeReport = require("Core.M9SmokeReport")
 local PhaseRunner = require("Core.Pipeline.PhaseRunner")
 local PreviewRender = require("Core.PreviewRender")
 local Platform = require("Core.Platform")
 
-local M8Smoke = {}
+local M9Smoke = {}
 
 local SMOKE_HIGH_TIER = {
   name = "High",
@@ -59,7 +59,7 @@ local function ensureSmokePhotos(catalog, count, fixturePath)
       paths[i] = fixturePath
     end
     if #paths > 0 then
-      catalog:withWriteAccessDo("NoClip Auto M8 import", function()
+      catalog:withWriteAccessDo("NoClip Auto M9 import", function()
         catalog:importPhotos(paths)
       end, { timeout = 300 })
       LrTasks.sleep(2)
@@ -81,13 +81,13 @@ local function ensureSmokePhotos(catalog, count, fixturePath)
 end
 
 local function fail(msg, triggerPath, dryRun, manualRun, count)
-  M8SmokeReport.write({ ok = false, error = msg, dryRun = dryRun, count = count or 0 }, triggerPath)
+  M9SmokeReport.write({ ok = false, error = msg, dryRun = dryRun, count = count or 0 }, triggerPath)
   if manualRun then
-    LrDialogs.message("NoClip Auto — M8 Smoke", "FAIL: " .. tostring(msg))
+    LrDialogs.message("NoClip Auto — M9 Smoke", "FAIL: " .. tostring(msg))
   end
 end
 
-function M8Smoke.runFromTrigger(triggerPath, manualRun)
+function M9Smoke.runFromTrigger(triggerPath, manualRun)
   local fixturePath
   local count = 3
   local dryRun = true
@@ -122,7 +122,7 @@ function M8Smoke.runFromTrigger(triggerPath, manualRun)
     return
   end
 
-  local valid, validErr = M8SmokeReport.validateResults(results, count)
+  local valid, validErr = M9SmokeReport.validateResults(results, count)
   if not valid then
     fail(validErr, triggerPath, dryRun, manualRun, #results)
     return
@@ -135,7 +135,7 @@ function M8Smoke.runFromTrigger(triggerPath, manualRun)
   end
 
   local processed, skipped = BatchReport.summarize(results)
-  M8SmokeReport.write({
+  M9SmokeReport.write({
     ok = true,
     count = #results,
     processed = processed,
@@ -143,18 +143,19 @@ function M8Smoke.runFromTrigger(triggerPath, manualRun)
     dryRun = dryRun,
     autoTone = true,
     schemaVersion2 = true,
+    lensProfile = true,
     overlap = true,
     reportPath = reportPath,
   }, triggerPath)
 
   if manualRun then
-    LrDialogs.message("NoClip Auto — M8 Smoke", string.format(
-      "PASS\nAuto Tone + analyzer v2 dry-run: %d photos\nReport: %s\nResult: %s",
+    LrDialogs.message("NoClip Auto — M9 Smoke", string.format(
+      "PASS\nLens profile + Auto Tone dry-run: %d photos\nReport: %s\nResult: %s",
       #results,
       reportPath or "",
-      M8SmokeReport.resultPath()
+      M9SmokeReport.resultPath()
     ))
   end
 end
 
-return M8Smoke
+return M9Smoke

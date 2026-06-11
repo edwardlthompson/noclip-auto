@@ -12,20 +12,15 @@ return {
 
   LrLibraryMenuItems = {
     { title = "NoClip Auto - Selected Photos", file = "ProcessLibrary.lua" },
-    { title = "NoClip Auto - M3 Smoke (dev)", file = "ProcessM3Smoke.lua" },
-    { title = "NoClip Auto - M5 Smoke (dev)", file = "ProcessM5Smoke.lua" },
-    { title = "NoClip Auto - M8 Smoke (dev)", file = "ProcessM8Smoke.lua" },
+    { title = "NoClip Auto - Active Photo", file = "ProcessDevelop.lua" },
   },
 
   LrExportMenuItems = {
     { title = "NoClip Auto - Selected Photos", file = "ProcessLibrary.lua" },
-  },
-
-  LrDevelopMenuItems = {
-    { title = "NoClip Auto - Active Photo", file = "ProcessDevelop.lua" },
+    { title = "NoClip Auto - Active Photo (File)", file = "ProcessDevelop.lua" },
   },
 
   LrPluginInfoProvider = "PluginInfoProvider.lua",
   URLHandler = "UrlHandler.lua",
-  VERSION = { major = 1, minor = 2, revision = 0, build = 0 },
+  VERSION = { major = 1, minor = 3, revision = 7, build = 0 },
 }

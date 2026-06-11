@@ -18,6 +18,7 @@ Must-pass checklists before advancing milestones.
 | GP | M6 | Analyzer throughput ≥ 50 MP/s (bench profile) |
 | GM | M7 | Mac CI build + UNVALIDATED release |
 | G8 | M8 | Smart Tone & Balance (Auto Tone + analyzer v2) |
+| G9 | M9 | Lens profile pre-pass before Auto Tone |
 
 ## G0 — Infrastructure
 
@@ -112,4 +113,14 @@ Must-pass checklists before advancing milestones.
 
 **Passed:** 2026-06-08
 
-**Last updated:** 2026-06-08
+## G9 — Lens profile pre-pass
+
+- [x] `Core/Pipeline/LensProfile.lua` + SettingsIO lens restore on dry-run
+- [x] `m9_smoke.ps1` + `run-milestone-gate.ps1 -Milestone 9` pass
+- [x] Lens + Auto Tone covered by `m9_lr_smoke.ps1` harness `[LR]`
+- [x] Production menu path via `m5_menu_smoke.ps1` `[LR]` (run after `m9_lr_smoke` in same LR session)
+- [x] Tag v1.3.0 release (win64 + macOS arm64 UNVALIDATED)
+
+**Passed:** 2026-06-09
+
+**Last updated:** 2026-06-09

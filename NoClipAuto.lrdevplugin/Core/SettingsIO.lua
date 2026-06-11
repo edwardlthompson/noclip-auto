@@ -19,6 +19,27 @@ local PARAMETRIC_KEYS = {
   "ParametricHighlights",
 }
 
+local LENS_KEYS = {
+  "EnableLensCorrections",
+  "LensProfileEnable",
+  "AutoLateralCA",
+  "LensProfileName",
+  "LensProfileFilename",
+  "LensProfileSetup",
+  "LensManualDistortionAmount",
+  "LensManualVignettingAmount",
+  "LensProfileDistortionScale",
+  "LensProfileVignettingScale",
+}
+
+local SLIDER_SUMMARY_KEYS = {
+  "Exposure2012",
+  "Whites2012",
+  "Blacks2012",
+  "Highlights2012",
+  "Shadows2012",
+}
+
 function SettingsIO.ensurePV2012(settings)
   settings = settings or {}
   settings.ProcessVersion = "15.4"
@@ -71,11 +92,65 @@ function SettingsIO.extractToneSettings(settings)
   return out
 end
 
-function SettingsIO.syncToPhoto(catalog, photo, settings, historyName)
+function SettingsIO.extractLensSettings(settings)
+  local out = {}
+  settings = settings or {}
+  for _, key in ipairs(LENS_KEYS) do
+    if settings[key] ~= nil then
+      out[key] = settings[key]
+    end
+  end
+  return out
+end
+
+function SettingsIO.readLensSettings(photo)
+  return SettingsIO.extractLensSettings(photo:getDevelopSettings() or {})
+end
+
+function SettingsIO.sliderSummary(before, after)
+  local summary = {}
+  local anyChange = false
+  for _, key in ipairs(SLIDER_SUMMARY_KEYS) do
+    local b = SettingsIO.getSlider(before, key)
+    local a = SettingsIO.getSlider(after, key)
+    summary[key] = { before = b, after = a }
+    if math.abs(a - b) > 0.001 then
+      anyChange = true
+    end
+  end
+  summary.anyChange = anyChange
+  return summary
+end
+
+function SettingsIO.applyTone(catalog, photo, settings, historyName, quiet)
   local toneOnly = SettingsIO.extractToneSettings(settings)
-  catalog:withWriteAccessDo(historyName or "NoClip Auto", function()
-    photo:applyDevelopSettings(toneOnly, historyName)
-  end, { timeout = 30 })
+  local label = quiet and nil or (historyName or "NoClip Auto")
+  catalog:withWriteAccessDo("NoClip Auto", function()
+    photo:applyDevelopSettings(toneOnly, label, true)
+  end, { timeout = 60 })
+end
+
+function SettingsIO.syncLensToPhoto(catalog, photo, settings, historyName)
+  local lensOnly = SettingsIO.extractLensSettings(settings)
+  local label = historyName or "NoClip Auto"
+  catalog:withWriteAccessDo(label, function()
+    photo:applyDevelopSettings(lensOnly, label, true)
+  end, { timeout = 60 })
+end
+
+function SettingsIO.restoreInitial(catalog, photo, toneSettings, lensSettings, historyName)
+  local merged = SettingsIO.extractToneSettings(toneSettings)
+  for key, value in pairs(SettingsIO.extractLensSettings(lensSettings)) do
+    merged[key] = value
+  end
+  local label = historyName or "NoClip Auto"
+  catalog:withWriteAccessDo(label, function()
+    photo:applyDevelopSettings(merged, label, true)
+  end, { timeout = 60 })
+end
+
+function SettingsIO.syncToPhoto(catalog, photo, settings, historyName, quiet)
+  SettingsIO.applyTone(catalog, photo, settings, historyName, quiet)
 end
 
 return SettingsIO

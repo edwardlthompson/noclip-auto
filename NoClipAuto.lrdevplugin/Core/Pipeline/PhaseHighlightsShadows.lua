@@ -14,7 +14,7 @@ function PhaseHighlightsShadows.adjust(settings, clipResult)
     settings, deltas[Config.SLIDER_KEYS.shadows] = SettingsIO.applyDelta(
       settings,
       Config.SLIDER_KEYS.shadows,
-      Config.SHADOWS_STEP,
+      Config.shadowsStep(),
       -100,
       100
     )
@@ -25,7 +25,7 @@ function PhaseHighlightsShadows.adjust(settings, clipResult)
     settings, deltas[Config.SLIDER_KEYS.highlights] = SettingsIO.applyDelta(
       settings,
       Config.SLIDER_KEYS.highlights,
-      Config.HIGHLIGHTS_STEP,
+      Config.highlightsStep(),
       -100,
       100
     )

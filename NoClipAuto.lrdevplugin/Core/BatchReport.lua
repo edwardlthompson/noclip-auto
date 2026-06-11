@@ -18,9 +18,15 @@ function BatchReport.resultEntry(photo, result)
     shadowAfter = result.after and result.after.shadowClipPct or 0,
     highlightAfter = result.after and result.after.highlightClipPct or 0,
     autoTone = result.autoTone == true,
+    lensProfileApplied = result.lensProfile and result.lensProfile.applied == true,
+    lensHadProfile = result.lensProfile and result.lensProfile.hadProfile == true,
     schemaVersion = result.before and result.before.schemaVersion,
     medianBefore = result.before and result.before.medianLuma,
     medianAfter = result.after and result.after.medianLuma,
+    dryRun = result.dryRun == true,
+    sliderDelta = result.sliderDelta,
+    before = result.before,
+    after = result.after,
     error = result.error,
   }
 end

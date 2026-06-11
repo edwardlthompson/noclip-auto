@@ -5,11 +5,13 @@ Tone pipeline driven by clipped-pixel counts and (optionally) histogram balance 
 ## Pipeline order
 
 1. Snapshot **NoClip Auto (before)**
-2. **Phase 0 — Auto Tone** (always): batch uses Auto* flags + `flattenAutoNow`; Develop uses `LrDevelopController.setAutoTone()`
-3. Snapshot **NoClip Auto (auto tone)**
-4. Measure → **Phases 1–3** clip prevention (apply settings after each adjustment)
-5. **Phase 4 — Balance** (opt-in): median target + parametric stretch when not clipped
-6. Dry-run: restore initial develop settings at end
+2. **Phase −1 — Lens profile** (opt-in pref, default on): `LensProfileEnable` + `AutoLateralCA` via EXIF match
+3. Snapshot **NoClip Auto (lens profile)** (when applied)
+4. **Phase 0 — Auto Tone** (always): batch uses Auto* flags + `flattenAutoNow`; Develop uses `LrDevelopController.setAutoTone()`
+5. Snapshot **NoClip Auto (auto tone)**
+6. Measure → **Phases 1–3** clip prevention (apply settings after each adjustment)
+7. **Phase 4 — Balance** (opt-in): median target + parametric stretch when not clipped
+8. Dry-run: restore initial tone **and lens** develop settings at end
 
 ## Measurement loop
 
@@ -22,9 +24,15 @@ Every adjustment iteration:
 
 **Clipping definition:** luminance ≤ 2 (shadow), luminance ≥ 253 (highlight).
 
+## Phase −1 — Lens profile (optional)
+
+Enabled via Plugin Manager pref `enableLensProfileCorrection` (default on). Runs before Auto Tone so vignette/distortion do not skew edge clip counts.
+
+Uses Lightroom's built-in EXIF lens profile match (`EnableLensCorrections`, `LensProfileEnable`, `AutoLateralCA`). No matching profile = no effective change; pipeline continues.
+
 ## Phase 0 — Auto Tone
 
-Always runs before measurement. Not user-disableable in v1.2.0.
+Always runs before measurement (after optional lens profile). Not user-disableable.
 
 ## Sliders (Process Version 2012)
 

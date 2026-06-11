@@ -1,11 +1,15 @@
 # NoClip Auto
 
+> **⚠️ ALPHA — NOT RECOMMENDED FOR USE**
+>
+> **This plugin is not working reliably.** Development has **ceased until further notice.** Known bugs include menu/shortcut issues, analyzer failures, slow batch processing, and edits that do not always apply as expected. In practice, **manually adjusting Develop sliders is faster** than running this plugin. Use at your own risk; no support is planned at this time.
+
 [![CI](https://github.com/edwardlthompson/noclip-auto/actions/workflows/ci.yml/badge.svg)](https://github.com/edwardlthompson/noclip-auto/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows%2011-blue)](docs/MAC.md)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue)](docs/CHANGELOG.md)
+[![Status](https://img.shields.io/badge/status-alpha%20%2F%20development%20paused-red)](docs/CHANGELOG.md)
 
-**Automatically recover clipped highlights and shadows in Adobe Lightroom Classic.**
+**Automatically recover clipped highlights and shadows in Adobe Lightroom Classic** *(experimental; see warning above)*.
 
 NoClip Auto is a free, open-source plugin that runs a 3-phase tone pipeline until clipped pixels are eliminated. It works locally on your machine—no cloud, no uploads, no subscription.
 
@@ -15,7 +19,8 @@ NoClip Auto is a free, open-source plugin that runs a 3-phase tone pipeline unti
 
 | | |
 |---|---|
-| **Version** | 0.1.0 (pre-release) |
+| **Status** | **Alpha — development paused** |
+| **Version** | See [docs/CHANGELOG.md](docs/CHANGELOG.md) (unstable) |
 | **License** | [Apache-2.0](LICENSE) |
 | **GitHub** | [edwardlthompson/noclip-auto](https://github.com/edwardlthompson/noclip-auto) |
 | **Changelog** | [docs/CHANGELOG.md](docs/CHANGELOG.md) |
@@ -31,7 +36,7 @@ See the full [changelog](docs/CHANGELOG.md) for version history.
 
 ### Support development
 
-NoClip Auto is free and open source. If it saves you time in your workflow, consider [donating via Venmo](https://venmo.com/code?user_id=1857304970395648420) to support ongoing development.
+NoClip Auto is free and open source. Development is currently paused; past contributors and donors are still appreciated.
 
 ---
 
@@ -102,23 +107,47 @@ Restart Lightroom Classic after install.
 ### Batch (Library)
 
 1. Select one or more photos in the Library.
-2. Go to **File → Plug-in Extras → NoClip Auto — Selected Photos**  
+2. Go to **Library → Plug-in Extras → NoClip Auto - Selected Photos**  
    (also available under **Export** menu).
 3. Wait for the progress dialog to finish.
 
-### Single photo (Develop)
+### Single photo
 
-1. Open a photo in the **Develop** module.
-2. Go to **Settings → NoClip Auto — Active Photo**.
+**From Library:** select one photo → **Library → Plug-in Extras → NoClip Auto - Active Photo**
+
+**From Develop:** open a photo → **File → Plug-in Extras → NoClip Auto - Active Photo (File)**
 
 ### Settings
 
 Open **File → Plug-in Manager → NoClip Auto** to configure:
 
+- Click **Done** after changing settings so they are saved for the next session.
+
 - **Clip threshold (%)** — stop when clipping falls below this (default 0.05%)
 - **Performance tier** — Auto, Low, Balanced, or High
 - **Dry run** — log changes without applying
 - **Max iterations** — safety cap per photo (default 60)
+
+### Keyboard shortcut
+
+Lightroom Classic has **no SDK API** for plugin keyboard shortcuts.
+
+Run `.\scripts\print-lr-shortcut-help.ps1` for exact menu titles and setup steps.
+
+**macOS:** System Settings → Keyboard → Keyboard Shortcuts → **App Shortcuts** → Adobe Lightroom Classic. Each menu title needs **three leading spaces**. File and Library Active Photo use **different titles** (shortcuts cannot share the same name):
+
+```
+   NoClip Auto - Active Photo (File)
+   NoClip Auto - Active Photo
+   NoClip Auto - Selected Photos
+```
+
+**Windows:** OS “App Shortcuts” in Settings **do not work** for Lightroom plugin menus. Use the included **AutoHotkey v2** script instead:
+
+1. Install [AutoHotkey v2](https://www.autohotkey.com/)
+2. Run `scripts\NoClipAuto-shortcuts.ahk` (defaults: **Ctrl+Alt+A** = Active Photo in Develop via File menu, **Ctrl+Alt+B** = batch)
+
+If a shortcut does nothing: restart Lightroom, confirm Plug-in Manager shows **1.3.7+**, dry run OFF, and photos are selected.
 
 ---
 

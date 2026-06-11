@@ -13,6 +13,8 @@ local PhaseRunner = require("Core.Pipeline.PhaseRunner")
 local PreviewPrefetch = require("Core.PreviewPrefetch")
 local BatchReport = require("Core.BatchReport")
 local ClippingClient = require("Core.ClippingClient")
+local RunSummary = require("Core.RunSummary")
+local Prefs = require("Core.Prefs")
 
 local BatchRunner = {}
 
@@ -28,6 +30,8 @@ function BatchRunner.runBatch(photos, opts)
   local tier = opts.tier or PerformanceTier.current()
   local dryRun = opts.dryRun == true
   local results = {}
+  local functionContext = opts.functionContext
+  local photoCount = #photos
 
   if not opts.skipAnalyzerCheck and not ClippingClient.analyzerExists() then
     return nil, "analyzer not found"
@@ -41,11 +45,15 @@ function BatchRunner.runBatch(photos, opts)
     end
 
     for i, photo in ipairs(photos) do
+      local basePortion = (i - 1) / photoCount
+
       if progress then
-        progress:setPortionComplete(i - 1, #photos)
-        if progress:isCanceled() then
-          break
-        end
+        progress:setPortionComplete(basePortion, 1)
+        progress:setCaption(string.format("Photo %d of %d", i, photoCount))
+      end
+
+      if progress and progress:isCanceled() then
+        break
       end
 
       if prefetch and i < #photos then
@@ -58,8 +66,15 @@ function BatchRunner.runBatch(photos, opts)
       if isVideo(photo) then
         table.insert(results, { id = photo.localIdentifier, ok = true, skipped = true, iterations = 0 })
       else
-        local result = Orchestrator.processPhoto(photo, tier.previewSize, dryRun)
-        table.insert(results, BatchReport.resultEntry(photo, result))
+        local orchResult = Orchestrator.processPhoto(photo, tier.previewSize, dryRun, {
+          onProgress = function(caption, iterFraction)
+            if progress then
+              progress:setCaption(string.format("Photo %d/%d — %s", i, photoCount, caption))
+              progress:setPortionComplete(basePortion + (iterFraction / photoCount), 1)
+            end
+          end,
+        })
+        table.insert(results, BatchReport.resultEntry(photo, orchResult))
       end
 
       PerformanceTier.maybeYield(i, tier)
@@ -74,7 +89,13 @@ function BatchRunner.runBatch(photos, opts)
     end
   end
 
-  if opts.useProgress then
+  if opts.useProgress and functionContext then
+    local progress = LrProgressScope({
+      title = dryRun and "NoClip Auto (dry run)" or "NoClip Auto",
+      functionContext = functionContext,
+    })
+    processPhotos(progress)
+  elseif opts.useProgress then
     LrFunctionContext.callWithContext("NoClip Auto Batch", function(context)
       local progress = LrProgressScope({
         title = dryRun and "NoClip Auto (dry run)" or "NoClip Auto",
@@ -90,7 +111,9 @@ function BatchRunner.runBatch(photos, opts)
   return results, reportPath
 end
 
-function BatchRunner.run()
+function BatchRunner.run(functionContext)
+  Prefs.syncToGlobals()
+
   if not ClippingClient.analyzerExists() then
     LrDialogs.message("NoClip Auto", "Analyzer binary not found. Reinstall the plugin package.")
     return
@@ -104,17 +127,32 @@ function BatchRunner.run()
   end
 
   local dryRun = NoClipAuto.prefs.dryRun == true
-  local results = BatchRunner.runBatch(photos, { dryRun = dryRun, useProgress = true })
+  if dryRun then
+    local proceed = LrDialogs.confirm(
+      "NoClip Auto",
+      "Dry run is ON — settings are measured and logged but NOT saved to your photos.\n\nContinue anyway?",
+      "Continue dry run",
+      "Cancel"
+    )
+    if proceed ~= "ok" then
+      return
+    end
+  end
+
+  local results, reportPath = BatchRunner.runBatch(photos, {
+    dryRun = dryRun,
+    useProgress = true,
+    functionContext = functionContext,
+  })
   if not results then
     LrDialogs.message("NoClip Auto", "Batch failed.")
     return
   end
 
   local processed, skipped = BatchReport.summarize(results)
-  LrDialogs.message(
-    "NoClip Auto",
-    string.format("Finished. Processed: %d, Skipped: %d%s", processed, skipped, dryRun and " (dry run)" or "")
-  )
+  local header = string.format("Finished. Processed: %d, Skipped: %d", processed, skipped)
+  local detail = RunSummary.formatBatchResults(results, dryRun)
+  LrDialogs.message("NoClip Auto", header .. "\n\n" .. detail .. "\nReport: " .. tostring(reportPath or ""))
 end
 
 return BatchRunner

@@ -6,12 +6,12 @@ local LrDialogs = import "LrDialogs"
 local LrPathUtils = import "LrPathUtils"
 local LrTasks = import "LrTasks"
 
-LrFunctionContext.postAsyncTaskWithContext("NoClip Auto M8 Smoke", function(context)
+LrFunctionContext.postAsyncTaskWithContext("NoClip Auto M9 Smoke", function(context)
   LrDialogs.attachErrorDialogToFunctionContext(context)
   LrTasks.sleep(0.1)
 
   local LrApplication = import "LrApplication"
-  local trigger = LrPathUtils.child(LrPathUtils.child(_PLUGIN.path, "smoke"), "m8-smoke.trigger")
+  local trigger = LrPathUtils.child(LrPathUtils.child(_PLUGIN.path, "smoke"), "m9-smoke.trigger")
 
   for _ = 1, 60 do
     local catalog = LrApplication.activeCatalog()
@@ -29,5 +29,5 @@ LrFunctionContext.postAsyncTaskWithContext("NoClip Auto M8 Smoke", function(cont
 
   local Loader = dofile(LrPathUtils.child(_PLUGIN.path, "Core/Loader.lua"))
   Loader.setup(_PLUGIN.path)
-  require("Core.M8Smoke").runFromTrigger(trigger, true)
+  require("Core.M9Smoke").runFromTrigger(trigger, true)
 end)

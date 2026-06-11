@@ -12,6 +12,34 @@ Config.BLACKS_STEP = 1
 Config.HIGHLIGHTS_STEP = -2
 Config.SHADOWS_STEP = 2
 
+function Config.stepScale()
+  local tier = NoClipAuto.prefs and NoClipAuto.prefs.performanceTier
+  if tier == "Fast" then
+    return 2
+  end
+  return 1
+end
+
+function Config.exposureStep()
+  return Config.EXPOSURE_STEP * Config.stepScale()
+end
+
+function Config.whitesStep()
+  return Config.WHITES_STEP * Config.stepScale()
+end
+
+function Config.blacksStep()
+  return Config.BLACKS_STEP * Config.stepScale()
+end
+
+function Config.highlightsStep()
+  return Config.HIGHLIGHTS_STEP * Config.stepScale()
+end
+
+function Config.shadowsStep()
+  return Config.SHADOWS_STEP * Config.stepScale()
+end
+
 Config.WHITES_CAP = -25
 Config.BLACKS_CAP = 25
 
@@ -35,7 +63,11 @@ function Config.clipThresholdPct()
 end
 
 function Config.maxTotalIterations()
-  return NoClipAuto.prefs.maxTotalIterations or 60
+  local n = tonumber(NoClipAuto.prefs.maxTotalIterations)
+  if not n or n < 1 then
+    return 60
+  end
+  return math.floor(n)
 end
 
 function Config.isClipped(clipResult)

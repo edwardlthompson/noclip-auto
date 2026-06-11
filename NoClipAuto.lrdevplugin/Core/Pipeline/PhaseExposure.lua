@@ -17,14 +17,14 @@ function PhaseExposure.adjust(settings, clipResult)
 
   local delta = 0
   if shadow and not highlight then
-    delta = Config.EXPOSURE_STEP
+    delta = Config.exposureStep()
   elseif highlight and not shadow then
-    delta = -Config.EXPOSURE_STEP
+    delta = -Config.exposureStep()
   else
     if clipResult.shadowClipPx >= clipResult.highlightClipPx then
-      delta = Config.EXPOSURE_STEP
+      delta = Config.exposureStep()
     else
-      delta = -Config.EXPOSURE_STEP
+      delta = -Config.exposureStep()
     end
   end
 

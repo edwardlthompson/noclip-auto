@@ -14,7 +14,7 @@ Thumbs.db
 *.tmp
 .fixture-venv/
 docs/lr-env.json
-NoClipAuto.lrdevplugin/smoke/m3-smoke.trigger
+NoClipAuto.lrdevplugin/smoke/*.trigger
 NoClipAuto.lrdevplugin/bin/**/noclip-analyze*
 !NoClipAuto.lrdevplugin/bin/**/.gitkeep
 

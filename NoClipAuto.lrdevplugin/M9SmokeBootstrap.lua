@@ -1,12 +1,12 @@
 -- Copyright 2026 NoClip Auto contributors
 -- SPDX-License-Identifier: Apache-2.0
--- Init entry: sets package.path then runs Core.M8Smoke (full Orchestrator dry-run).
+-- Init entry: sets package.path then runs Core.M9Smoke (Orchestrator dry-run with lens pre-pass).
 
 local LrFileUtils = import "LrFileUtils"
 local LrPathUtils = import "LrPathUtils"
 local LrFunctionContext = import "LrFunctionContext"
 
-local M8SmokeBootstrap = {}
+local M9SmokeBootstrap = {}
 
 local function tempDir()
   local dir = LrPathUtils.child(LrPathUtils.getStandardFilePath("temp"), "NoClipAuto")
@@ -15,11 +15,11 @@ local function tempDir()
 end
 
 local function writeFail(err, triggerPath)
-  local path = LrPathUtils.child(tempDir(), "m8-smoke-result.json")
+  local path = LrPathUtils.child(tempDir(), "m9-smoke-result.json")
   local file = io.open(path, "w")
   if file then
     file:write(string.format(
-      '{"ok":false,"autoTone":false,"schemaVersion2":false,"error":"%s"}',
+      '{"ok":false,"autoTone":false,"schemaVersion2":false,"lensProfile":false,"error":"%s"}',
       tostring(err):gsub('"', "'")
     ))
     file:close()
@@ -29,17 +29,17 @@ local function writeFail(err, triggerPath)
   end
 end
 
-function M8SmokeBootstrap.run(triggerPath, pluginPath)
+function M9SmokeBootstrap.run(triggerPath, pluginPath)
   if not triggerPath or LrFileUtils.exists(triggerPath) ~= "file" then
     writeFail("trigger not found", triggerPath)
     return
   end
 
-  LrFunctionContext.postAsyncTaskWithContext("NoClip Auto M8 batch", function()
+  LrFunctionContext.postAsyncTaskWithContext("NoClip Auto M9 batch", function()
     local Loader = dofile(LrPathUtils.child(pluginPath, "Core/Loader.lua"))
     Loader.setup(pluginPath)
-    require("Core.M8Smoke").runFromTrigger(triggerPath, false)
+    require("Core.M9Smoke").runFromTrigger(triggerPath, false)
   end)
 end
 
-return M8SmokeBootstrap
+return M9SmokeBootstrap

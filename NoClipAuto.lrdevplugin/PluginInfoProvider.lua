@@ -3,15 +3,29 @@
 
 local LrView = import "LrView"
 local LrHttp = import "LrHttp"
+local LrPathUtils = import "LrPathUtils"
 local bind = LrView.bind
 
-local About = require("Core.About")
+local About = dofile(LrPathUtils.child(_PLUGIN.path, "Core/About.lua"))
+local Prefs = dofile(LrPathUtils.child(_PLUGIN.path, "Core/Prefs.lua"))
+local SettingsUI = dofile(LrPathUtils.child(_PLUGIN.path, "Core/SettingsUI.lua"))
 
 local function openUrl(url)
   LrHttp.openUrlInBrowser(url)
 end
 
+local function startDialog(propertyTable)
+  Prefs.loadToPropertyTable(propertyTable)
+end
+
+local function endDialog(propertyTable, why)
+  if why == "ok" then
+    Prefs.saveFromPropertyTable(propertyTable)
+  end
+end
+
 local function sectionsForTopOfDialog(f, propertyTable)
+  Prefs.loadToPropertyTable(propertyTable)
   return {
     {
       title = "About",
@@ -23,13 +37,10 @@ local function sectionsForTopOfDialog(f, propertyTable)
           font = "<system/bold>",
         },
         f:static_text {
-          title = "Release notes:",
-          font = "<system/small/bold>",
-        },
-        f:static_text {
           title = About.releaseNotesText(),
           width_in_chars = 60,
           height_in_lines = 4,
+          font = "<system/small>",
         },
         f:row {
           spacing = f:control_spacing(),
@@ -42,11 +53,6 @@ local function sectionsForTopOfDialog(f, propertyTable)
             action = function() openUrl(About.GITHUB_URL) end,
           },
         },
-        f:static_text {
-          title = "NoClip Auto is free and open source (Apache-2.0). If it saves you time, consider a donation to support development.",
-          width_in_chars = 60,
-          height_in_lines = 3,
-        },
         f:push_button {
           title = "Donate via Venmo",
           action = function() openUrl(About.VENMO_URL) end,
@@ -56,65 +62,16 @@ local function sectionsForTopOfDialog(f, propertyTable)
     {
       title = "Settings",
       synopsis = "Clip threshold, performance, and run options",
-      f:column {
-        spacing = f:control_spacing(),
-        f:row {
-          f:static_text { title = "Clip threshold (%):" },
-          f:edit_field {
-            value = bind("clipThresholdPct"),
-            width_in_chars = 8,
-            precision = 3,
-          },
-        },
-        f:row {
-          f:static_text { title = "Performance tier:" },
-          f:popup_menu {
-            value = bind("performanceTier"),
-            items = {
-              { title = "Auto", value = "Auto" },
-              { title = "Low", value = "Low" },
-              { title = "Balanced", value = "Balanced" },
-              { title = "High", value = "High" },
-            },
-          },
-        },
-        f:row {
-          f:static_text { title = "Dry run (log only, no apply):" },
-          f:checkbox { value = bind("dryRun") },
-        },
-        f:row {
-          f:static_text { title = "Max iterations per photo:" },
-          f:edit_field {
-            value = bind("maxTotalIterations"),
-            width_in_chars = 6,
-            integral = true,
-          },
-        },
-        f:static_text {
-          title = "Balance phase (optional, after clip prevention):",
-          font = "<system/small/bold>",
-        },
-        f:row {
-          f:static_text { title = "Enable balance phase:" },
-          f:checkbox { value = bind("enableBalancePhase") },
-        },
-        f:row {
-          f:static_text { title = "Target median luma (0–1):" },
-          f:edit_field {
-            value = bind("balanceTargetMedian"),
-            width_in_chars = 8,
-            precision = 2,
-          },
-        },
-        f:row {
-          f:static_text { title = "ETTR mode (brighter target):" },
-          f:checkbox { value = bind("balanceEttrMode") },
-        },
-      },
+      SettingsUI.buildSettingsSection(f, propertyTable, function()
+        Prefs.applyDefaultsToPropertyTable(propertyTable)
+        Prefs.saveFromPropertyTable(propertyTable)
+      end),
     },
   }
 end
 
 return {
+  startDialog = startDialog,
+  endDialog = endDialog,
   sectionsForTopOfDialog = sectionsForTopOfDialog,
 }

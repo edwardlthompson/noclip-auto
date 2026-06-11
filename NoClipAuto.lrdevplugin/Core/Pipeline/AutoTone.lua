@@ -16,6 +16,19 @@ local AUTO_FLAGS = {
   AutoBlacks = true,
 }
 
+local function toneChanged(before, after)
+  for _, key in ipairs(SettingsIO.toneKeys()) do
+    if key ~= "ProcessVersion" then
+      local b = SettingsIO.getSlider(before, key)
+      local a = SettingsIO.getSlider(after, key)
+      if math.abs(a - b) > 0.001 then
+        return true
+      end
+    end
+  end
+  return false
+end
+
 function AutoTone.isTargetPhoto(photo)
   local ok, target = pcall(function()
     return LrDevelopController.getTargetPhoto()
@@ -40,6 +53,21 @@ function AutoTone.apply(catalog, photo)
   end
 
   local after = SettingsIO.readToneSettings(photo)
+
+  if not toneChanged(before, after) and not AutoTone.isTargetPhoto(photo) then
+    catalog:withWriteAccessDo("NoClip Auto Auto Tone", function()
+      catalog:setSelectedPhotos({ photo })
+      LrDevelopController.revealPhoto(photo)
+      LrDevelopController.setAutoTone()
+    end, { timeout = 90 })
+    after = SettingsIO.readToneSettings(photo)
+  elseif not toneChanged(before, after) then
+    NoClipAuto.logger:warn(string.format(
+      "Auto Tone made no change on target photo=%s; continuing with current settings",
+      tostring(photo.localIdentifier)
+    ))
+  end
+
   NoClipAuto.logger:info(string.format(
     "Auto Tone applied photo=%s exposure %.2f -> %.2f",
     tostring(photo.localIdentifier),

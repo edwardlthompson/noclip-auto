@@ -20,12 +20,12 @@ function PhaseWhitesBlacks.adjust(settings, clipResult, state)
   local changed = false
 
   if Config.shadowClipped(clipResult) then
-    local nextAccum = state.blacksAccum + Config.BLACKS_STEP
+    local nextAccum = state.blacksAccum + Config.blacksStep()
     if nextAccum <= Config.BLACKS_CAP then
       settings, deltas[Config.SLIDER_KEYS.blacks] = SettingsIO.applyDelta(
         settings,
         Config.SLIDER_KEYS.blacks,
-        Config.BLACKS_STEP,
+        Config.blacksStep(),
         -100,
         100
       )
@@ -35,12 +35,12 @@ function PhaseWhitesBlacks.adjust(settings, clipResult, state)
   end
 
   if Config.highlightClipped(clipResult) then
-    local nextAccum = state.whitesAccum + math.abs(Config.WHITES_STEP)
+    local nextAccum = state.whitesAccum + math.abs(Config.whitesStep())
     if nextAccum <= math.abs(Config.WHITES_CAP) then
       settings, deltas[Config.SLIDER_KEYS.whites] = SettingsIO.applyDelta(
         settings,
         Config.SLIDER_KEYS.whites,
-        Config.WHITES_STEP,
+        Config.whitesStep(),
         -100,
         100
       )

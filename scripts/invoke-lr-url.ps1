@@ -1,5 +1,5 @@
 param(
-    [ValidateSet("m3-smoke", "m5-smoke", "m8-smoke")]
+    [ValidateSet("m3-smoke", "m5-smoke", "m8-smoke", "m9-smoke")]
     [string]$Command = "m3-smoke"
 )
 

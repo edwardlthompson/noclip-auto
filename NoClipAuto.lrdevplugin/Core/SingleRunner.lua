@@ -4,58 +4,94 @@
 local LrApplication = import "LrApplication"
 local LrDialogs = import "LrDialogs"
 local LrDevelopController = import "LrDevelopController"
+local LrProgressScope = import "LrProgressScope"
 
 local PerformanceTier = require("Core.PerformanceTier")
 local Orchestrator = require("Core.Pipeline.Orchestrator")
 local ClippingClient = require("Core.ClippingClient")
+local Prefs = require("Core.Prefs")
+local RunSummary = require("Core.RunSummary")
 
 local SingleRunner = {}
 
-function SingleRunner.run()
+local function resolveActivePhoto()
+  local ok, developPhoto = pcall(function()
+    return LrDevelopController.getTargetPhoto()
+  end)
+  if ok and developPhoto then
+    return developPhoto
+  end
+
+  local photos = LrApplication.activeCatalog():getTargetPhotos()
+  if #photos == 1 then
+    return photos[1]
+  end
+  if #photos > 1 then
+    return nil, "multiple"
+  end
+  return nil, "none"
+end
+
+function SingleRunner.run(functionContext)
+  Prefs.syncToGlobals()
+
   if not ClippingClient.analyzerExists() then
     LrDialogs.message("NoClip Auto", "Analyzer binary not found. Reinstall the plugin package.")
     return
   end
 
-  local photo = LrDevelopController.getTargetPhoto()
+  local photo, pickErr = resolveActivePhoto()
   if not photo then
-    LrDialogs.message("NoClip Auto", "No active photo in Develop.")
+    local msg = "Select one photo in Library (filmstrip or grid), or open Develop."
+    if pickErr == "multiple" then
+      msg = "Multiple photos selected. Select one photo, or use NoClip Auto - Selected Photos for batch."
+    end
+    LrDialogs.message("NoClip Auto", msg)
     return
   end
 
-  local tier = PerformanceTier.current()
   local dryRun = NoClipAuto.prefs.dryRun == true
-  local result = Orchestrator.processPhoto(photo, tier.previewSize, dryRun)
+  if dryRun then
+    local proceed = LrDialogs.confirm(
+      "NoClip Auto",
+      "Dry run is ON — settings are measured and logged but NOT saved to your photo.\n\nContinue anyway?",
+      "Continue dry run",
+      "Cancel"
+    )
+    if proceed ~= "ok" then
+      return
+    end
+  end
+
+  local tier = PerformanceTier.current()
+  local result
+
+  local function process(onProgress)
+    return Orchestrator.processPhoto(photo, tier.previewSize, dryRun, {
+      onProgress = onProgress,
+    })
+  end
+
+  if functionContext then
+    local progress = LrProgressScope({
+      title = dryRun and "NoClip Auto (dry run)" or "NoClip Auto",
+      functionContext = functionContext,
+    })
+    result = process(function(caption, iterFraction)
+      progress:setCaption(caption)
+      progress:setPortionComplete(iterFraction or 0, 1)
+    end)
+    progress:done()
+  else
+    result = process(nil)
+  end
 
   if not result.ok then
     LrDialogs.message("NoClip Auto", "Error: " .. tostring(result.error))
     return
   end
 
-  if result.skipped then
-    LrDialogs.message(
-      "NoClip Auto",
-      string.format(
-        "Auto Tone applied. No clip adjustments needed. Shadow clip: %.2f%%. Highlight clip: %.2f%%.",
-        result.after.shadowClipPct,
-        result.after.highlightClipPct
-      )
-    )
-    return
-  end
-
-  LrDialogs.message(
-    "NoClip Auto",
-    string.format(
-      "Done%s (Auto Tone + clip phases). Iterations: %d. Shadow clip: %.2f%% → %.2f%%. Highlight clip: %.2f%% → %.2f%%.",
-      dryRun and " (dry run)" or "",
-      result.iterations or 0,
-      result.before.shadowClipPct,
-      result.after.shadowClipPct,
-      result.before.highlightClipPct,
-      result.after.highlightClipPct
-    )
-  )
+  LrDialogs.message("NoClip Auto", RunSummary.formatPhotoResult(result))
 end
 
 return SingleRunner

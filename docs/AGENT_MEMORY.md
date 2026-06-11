@@ -48,9 +48,14 @@ Persistent facts for agents. Rolling log — older events may move to AGENT_MEMO
 - Windows: run `noclip-analyze --output` from PowerShell in `m3_smoke.ps1`; LR cannot spawn analyzer reliably
 - Manual M3 menu smoke PASS = preview JPEG valid; clip counts verified in automated gate
 - M5 automated smoke uses `M5SmokeBootstrap.lua` (Init dofile); production batch via `BatchRunner` + menu `ProcessM5Smoke.lua`
-- M8 LR smoke uses `M8SmokeBootstrap.lua` → `require("Core.M8Smoke")` after package.path setup; validates Auto Tone + analyzer v2 on 3-photo dry-run
+- Init cannot `require()` Core modules — **`package` is nil in Init**; use `dofile` for Prefs; `Core/Loader.lua` seeds `package` + `require` when nil (Init smoke bootstraps)
+- M8/M9 smoke bootstraps schedule batch via `postAsyncTaskWithContext` (no `pcall` around yields); smoke analyze fallback returns schema v2 fields
+- Lens profile keys: `EnableLensCorrections`, `LensProfileEnable`, `AutoLateralCA` (flat applyDevelopSettings)
 - M7 macOS: CI builds `aarch64-apple-darwin` analyzer; release via `release-macos.yml` (UNVALIDATED prerelease)
-- Init cannot `require()` Core modules — use dofile bootstrap or menu/URL toolkit entry points
+- Plugin Manager prefs: `propertyTable` ≠ auto-persist; use `startDialog`/`endDialog` + `Core/Prefs.lua` to load/save `LrPrefs.prefsForPlugin()`
+- **Menu scripts:** always `postAsyncTaskWithContext` + `attachErrorDialogToFunctionContext`; `Loader.setup` always polyfills `require` (LR native require cannot load `Core/*`)
+- **Do not** leave `smoke/*.trigger` in installed plugin — hijacked Library menu via old `ProcessLibrary` dev shortcut (removed v1.3.1)
+- **Settings UI:** every Plugin Manager pref needs hint text (range, default, behavior); use `Core/SettingsUI.lua` — see [SETTINGS_UI.md](SETTINGS_UI.md); never strip hints for line count
 - 3-phase order: Exposure → Whites/Blacks → Highlights/Shadows
 - Clip measurement: luminance ≤ 2 / ≥ 253 on preview JPEG
 - PV2012 slider keys only

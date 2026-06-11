@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path))
 
-Write-Host "M8 LR smoke: Auto Tone + analyzer v2 dry-run (3 photos, High-tier overlap)"
+Write-Host "M9 LR smoke: lens profile + Auto Tone dry-run (3 photos, High-tier overlap)"
 
 Get-Process -Name "Lightroom" -ErrorAction SilentlyContinue | ForEach-Object {
     Write-Host "Stopping Lightroom (PID $($_.Id))..."
@@ -34,15 +34,18 @@ if (-not (Test-Path $fixture)) {
 
 $pluginSmoke = Join-Path $root "NoClipAuto.lrdevplugin\smoke"
 New-Item -ItemType Directory -Force -Path $pluginSmoke | Out-Null
-$triggerPath = Join-Path $pluginSmoke "m8-smoke.trigger"
-@{ fixture = $fixture; count = 3; dryRun = $true } | ConvertTo-Json -Compress | Set-Content -Path $triggerPath -Encoding ASCII -NoNewline
 
 & (Join-Path $root "scripts\install-plugin.ps1") -Force
 & (Join-Path $root "scripts\enable-lr-plugin.ps1") -Force
 
+$triggerPath = Join-Path $pluginSmoke "m9-smoke.trigger"
+@{ fixture = $fixture; count = 3; dryRun = $true } | ConvertTo-Json -Compress | Set-Content -Path $triggerPath -Encoding ASCII -NoNewline
+$installedTrigger = Join-Path $env:APPDATA "Adobe\Lightroom\Modules\NoClipAuto.lrdevplugin\smoke\m9-smoke.trigger"
+Copy-Item -Force $triggerPath $installedTrigger
+
 $tempDir = Join-Path $env:TEMP "NoClipAuto"
 New-Item -ItemType Directory -Force -Path $tempDir | Out-Null
-$resultPath = Join-Path $tempDir "m8-smoke-result.json"
+$resultPath = Join-Path $tempDir "m9-smoke-result.json"
 $reportPath = Join-Path $tempDir "NoClipAuto-last-run.json"
 $dryRunLog = Join-Path $tempDir "NoClipAuto-dry-run.log"
 $markerPaths = @(
@@ -75,16 +78,26 @@ if (-not $pluginLoaded) {
     & (Join-Path $root "scripts\enable-lr-plugin-ui.ps1") -TimeoutSec 180
 }
 
-Write-Host "Waiting for M8 batch smoke (Init auto-run)..."
+Write-Host "Waiting for M9 batch smoke (Init auto-run)..."
 
-$deadline = (Get-Date).AddSeconds(900)
+$invokeDeadline = (Get-Date).AddSeconds(360)
+while ((Get-Date) -lt $invokeDeadline) {
+    if (Test-Path $resultPath) { break }
+    Start-Sleep -Seconds 10
+}
+if (-not (Test-Path $resultPath) -and (Get-Process -Name "Lightroom" -ErrorAction SilentlyContinue)) {
+    Write-Host "Init did not finish M9 smoke within 6 min; invoking URL handler..."
+    & (Join-Path $root "scripts\invoke-lr-url.ps1") -Command m9-smoke
+}
+
+$deadline = (Get-Date).AddSeconds(1200)
 while ((Get-Date) -lt $deadline) {
     if (Test-Path $resultPath) {
         $raw = Get-Content $resultPath -Raw
         if ($raw -match '"ok"\s*:\s*false') {
-            throw "M8 LR smoke FAIL: $raw"
+            throw "M9 LR smoke FAIL: $raw"
         }
-        $batchOk = ($raw -match '"ok"\s*:\s*true') -and ($raw -match '"count"\s*:\s*3') -and ($raw -match '"dryRun"\s*:\s*true') -and ($raw -match '"autoTone"\s*:\s*true') -and ($raw -match '"schemaVersion2"\s*:\s*true')
+        $batchOk = ($raw -match '"ok"\s*:\s*true') -and ($raw -match '"count"\s*:\s*3') -and ($raw -match '"dryRun"\s*:\s*true') -and ($raw -match '"autoTone"\s*:\s*true') -and ($raw -match '"schemaVersion2"\s*:\s*true') -and ($raw -match '"lensProfile"\s*:\s*true')
         if ($batchOk) {
             if (-not (Test-Path $reportPath)) {
                 Write-Host "Waiting for batch report..."
@@ -105,7 +118,7 @@ while ((Get-Date) -lt $deadline) {
             Write-Host $raw
             Write-Host "Batch report: $reportPath ($($report.Count) entries)"
             Write-Host "Dry-run log: $dryRunLog"
-            Write-Host "M8 LR smoke PASS"
+            Write-Host "M9 LR smoke PASS"
             exit 0
         }
         Write-Host "Smoke result (waiting for success): $raw"
@@ -113,13 +126,13 @@ while ((Get-Date) -lt $deadline) {
 
     $lr = Get-Process -Name "Lightroom" -ErrorAction SilentlyContinue
     if (-not $lr) {
-        throw "M8 LR smoke FAIL: Lightroom exited before batch completed"
+        throw "M9 LR smoke FAIL: Lightroom exited before batch completed"
     }
 
     Start-Sleep -Seconds 10
 }
 
 if (Test-Path $resultPath) {
-    throw "M8 LR smoke FAIL: $(Get-Content $resultPath -Raw)"
+    throw "M9 LR smoke FAIL: $(Get-Content $resultPath -Raw)"
 }
-throw "M8 LR smoke FAIL: timed out waiting for $resultPath"
+throw "M9 LR smoke FAIL: timed out waiting for $resultPath"

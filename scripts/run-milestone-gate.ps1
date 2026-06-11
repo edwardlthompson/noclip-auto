@@ -70,6 +70,12 @@ switch ($Milestone) {
         Invoke-Smoke "m4"
         Invoke-Smoke "m8"
     }
+    9 {
+        Invoke-Smoke "m0"
+        Invoke-Smoke "m2"
+        Invoke-Smoke "m4"
+        Invoke-Smoke "m9"
+    }
     default {
         Invoke-Smoke "m0"
         if ($Milestone -ge 2) { Invoke-Smoke "m2" }
