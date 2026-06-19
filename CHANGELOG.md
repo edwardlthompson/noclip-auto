@@ -14,14 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-
-- Bootstrap template alignment (agent-project-bootstrap v0.11.0): gates, 25 slash commands, CI security/CodeQL, root docs, modules, pre-commit, repo hygiene artifacts.
-
 ### Changed
 
+- Bootstrap template alignment (agent-project-bootstrap v0.11.0): gates, 25 slash commands, CI security/CodeQL, root docs, modules, pre-commit, repo hygiene artifacts.
 - README professional pass (badges, gate commands, milestone table); docs relocated to repo root with stub pointers.
 
+## [1.3.7] — 2026-06-18
 
 Fix Windows Active Photo analyze failure; fix keyboard shortcut docs and menu titles.
 

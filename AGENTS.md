@@ -16,7 +16,7 @@
 
 ## Stop conditions
 
-- Sprint TM gate exit 0 → TM sprint complete; optional parallel/human backlog remains in BUILD_PLAN.md
+- Sprint TM gate exit 0 → TM sprint complete; open tasks live in `BUILD_PLAN.md` Open section
 - H2 (LR not installed) + `[LR]` task → finish non-LR work, stop
 - H1 (gh not authed) + release task → finish local work, stop
 - 3-strike on same gate step → escalate to `[HUMAN]`

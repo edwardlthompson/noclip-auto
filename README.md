@@ -226,7 +226,7 @@ See [BUILD_PLAN.md](BUILD_PLAN.md), [docs/GATES.md](docs/GATES.md), and [AGENTS.
 
 ## Project status
 
-Development paused. Product milestones **M0–M9** are complete (v1.3.7 shipped). Active work is **Sprint TM** — bootstrap template alignment — see [BUILD_PLAN.md](BUILD_PLAN.md).
+Development paused. Product milestones **M0–M9** are complete (v1.3.7 in tree). **Sprint TM** (bootstrap template alignment) is complete — see [BUILD_PLAN.md](BUILD_PLAN.md).
 
 | Milestone | Status |
 |-----------|--------|

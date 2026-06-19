@@ -49,7 +49,7 @@
 
 ## Autonomous agent protocol
 
-After each `[AGENT]` BUILD_PLAN step during Sprint TM:
+After each `[AGENT]` BUILD_PLAN step (post-TM product work):
 
 ```powershell
 .\scripts\watch-agent-gates.ps1 -Once -Step tmN

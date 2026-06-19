@@ -27,6 +27,8 @@ jobs:
           paths: noclip-analyze
       - uses: dtolnay/rust-toolchain@stable
       - name: Build for CodeQL
+        env:
+          CARGO_NET_RETRY: 10
         run: cargo build
         working-directory: noclip-analyze
       - uses: github/codeql-action/analyze@v3

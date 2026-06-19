@@ -40,7 +40,7 @@ SessionStart → docs/START_HERE.md → BUILD_PLAN.md (Sequential)
 
 ## Parallel guardrails
 
-- One agent per isolated path (see Sprint TM Parallel table in BUILD_PLAN)
+- One agent per isolated path (see parallel guardrails in `BUILD_PLAN.md`)
 - **Never parallelize:** `Core/Pipeline/`, `noclip-analyze/src/`, `scripts/run-milestone-gate.ps1`
 - Shared schema (Prefs keys, JSON analyzer contract): sequential only
 

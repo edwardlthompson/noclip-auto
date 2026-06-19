@@ -24,4 +24,15 @@ Template migration (Sprint TM) archived 2026-06-18 via `scripts/run-milestone-tm
 - ✅ [AGENT] **TM.P3** — check-github-ci.ps1/.sh, setup-github-repo.ps1/.sh
 - ✅ [HUMAN] **TM.H3** — ADR-0001 approved
 - ✅ [HUMAN] **TM.H1** — setup-github-repo.ps1 (Dependabot + branch protection)
-- ⏳ [HUMAN] **TM.H2** — Visual README review on GitHub (pending push)
+- ✅ [HUMAN] **TM.H2** — Visual README review on GitHub confirmed
+
+## Sprint Audit — Ship readiness (2026-06-18)
+
+- ✅ [HUMAN] **Audit.1** — TM bootstrap pushed to `main`; CI + Security green
+- ✅ [AGENT] **Audit.2** — Stale assessment docs refreshed (BUILD_PLAN, START_HERE)
+- ✅ [HUMAN] **Audit.3** — README visual review confirmed (TM.H2)
+
+## Sprint Audit 2 — Post-ship hygiene (2026-06-18)
+
+- ✅ [AGENT] **Audit.4** — README + BUILD_PLAN + FEATURE_MODULES status copy refreshed
+- ✅ [AGENT] **Audit.5** — CodeQL `CARGO_NET_RETRY` for registry flake mitigation

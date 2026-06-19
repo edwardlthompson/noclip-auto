@@ -26,7 +26,7 @@ Apply @.cursor/rules/*.mdc. Do not relocate NoClipAuto.lrdevplugin/ or noclip-an
 **Prompt:**
 
 ```
-Read @docs/BOOTSTRAP_TEMPLATE_MAP.md and @BUILD_PLAN.md Sprint TM.
+Read @docs/BOOTSTRAP_TEMPLATE_MAP.md and @BUILD_PLAN.md (Open section).
 Preserve production paths. Run .\scripts\validate-bootstrap.ps1 -Quick after doc/scaffold changes.
 Append major decisions to @DECISION_LOG.md.
 ```
