@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main, master]
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   rust-test:
     runs-on: windows-latest
@@ -104,3 +108,31 @@ jobs:
         with:
           name: noclip-analyze-macos-arm64
           path: NoClipAuto.lrdevplugin/bin/macos-arm64/noclip-analyze
+
+  validate-bootstrap:
+    name: Validate Bootstrap
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate bootstrap artifacts
+        shell: pwsh
+        run: ./scripts/validate-bootstrap.ps1 -Quick
+
+  repo-hygiene:
+    name: Repo Hygiene
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check repo hygiene
+        shell: pwsh
+        run: ./scripts/check-repo-hygiene.ps1
+
+  feature-gate:
+    name: Feature Gate
+    runs-on: windows-latest
+    needs: [validate-bootstrap, repo-hygiene]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Feature gate (lightroom-rust CI profile)
+        shell: pwsh
+        run: ./scripts/feature-gate.ps1 -Stack lightroom-rust -Ci

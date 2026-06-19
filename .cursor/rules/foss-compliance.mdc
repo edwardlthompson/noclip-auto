@@ -1,0 +1,35 @@
+---
+description: FOSS compliance, privacy, and local-only constraints (NoClip Auto)
+alwaysApply: true
+---
+
+# FOSS & Privacy Compliance
+
+## License
+
+- **Apache-2.0** — see root `LICENSE`
+- Adobe Lightroom Classic SDK is **not** in this repo; download separately for local dev
+- No proprietary closed-source SDKs committed to the repository
+
+## Distribution
+
+- GitHub Releases: `NoClipAuto-v*-win64.lrdevplugin.zip` (+ macOS UNVALIDATED)
+- Install path: `%APPDATA%\Adobe\Lightroom\Modules\` (Windows)
+
+## Privacy & network
+
+- **No network calls** in plugin or analyzer v1
+- All processing is local (preview JPEG → analyzer → catalog develop settings)
+- Temp preview files deleted after analysis
+
+## Security
+
+- Secrets never committed; run `scripts/foss-audit.ps1` before release
+- Analyzer accepts file paths from plugin only — no arbitrary URL fetch
+- Report vulnerabilities via `SECURITY.md`
+
+## Lightroom SDK (Module D)
+
+- Lua production code uses `Lr*` namespaces only
+- No generic Lua `require` of non-SDK modules in shipped plugin code
+- See `modules/lightroom/MODULE.md`

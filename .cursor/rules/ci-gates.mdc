@@ -1,0 +1,32 @@
+---
+description: Post-push CI poll protocol and gate ordering (NoClip Auto)
+globs:
+  - ".github/workflows/**"
+  - "scripts/check-github-ci.*"
+  - "docs/BUILD_PLAN.md"
+  - "BUILD_PLAN.md"
+---
+
+# CI Gates
+
+## After each AGENT step (Sprint TM / features)
+
+```powershell
+.\scripts\watch-agent-gates.ps1 -Once -Step tmN
+```
+
+## Gate order (local, Windows-primary)
+
+1. `scripts/watch-agent-gates.ps1 -Once -Step <label>`
+2. `scripts/validate-bootstrap.ps1 -Quick` (scaffold/doc changes)
+3. `scripts/smoke/m0_smoke.ps1` + `scripts/smoke/m2_smoke.ps1` (product changes)
+4. `scripts/run-milestone-gate.ps1 -Milestone N` (milestone sign-off)
+5. Push → `scripts/check-github-ci.ps1 -WaitSeconds 300` (when installed, TM.P3)
+
+## Do not mark complete
+
+- BUILD_PLAN `[AGENT]` / `[AUTO]` items while CI is red
+- TM sprint steps without `validate-bootstrap.ps1` pass
+- Pipeline changes without `verify-tone-quality.ps1` when golden fixtures apply
+
+Push to remote requires `[HUMAN]` approval per `destructive-ops.mdc`.

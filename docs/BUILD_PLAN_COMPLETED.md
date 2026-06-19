@@ -1,6 +1,6 @@
 # BUILD_PLAN_COMPLETED
 
-Archived completed tasks moved from [BUILD_PLAN.md](BUILD_PLAN.md) by `scripts/archive-completed-tasks.ps1`.
+Archived completed tasks moved from [BUILD_PLAN.md](../BUILD_PLAN.md) by `scripts/archive-completed-tasks.ps1`.
 
 <!-- Archive entries appear below this line after first milestone gate pass -->
 
@@ -91,4 +91,26 @@ Gate G9 passed 2026-06-09. v1.3.0 win64 + macOS (UNVALIDATED) released.
 - [x] Pref `enableLensProfileCorrection` (default on) + Plugin Manager UI
 - [x] `m9_smoke.ps1`, `m9_lr_smoke.ps1`, `m5_menu_smoke.ps1`, Gate G9 automated
 - [x] Tag v1.3.0 release (win64 + macOS)
+
+
+## Sprint TM — Template Migration ✅ (2026-06-18)
+
+Bootstrap alignment to [agent-project-bootstrap](https://github.com/edwardlthompson/agent-project-bootstrap) v0.11.0 for **lightroom+rust** child repo.
+
+| Phase | Deliverables |
+|-------|--------------|
+| TM.0 | validate-bootstrap, watch-agent-gates, BOOTSTRAP_TEMPLATE_MAP |
+| TM.1 | modules/lightroom + rust, examples/golden-path |
+| TM.2 | DECISION_LOG, ADR-0001, KNOWLEDGE_BASE, agent docs |
+| TM.3 | 9 bootstrap .cursor/rules + CURSOR_MODES |
+| TM.4 | dependabot, security/codeql, CI jobs, feature-gate, repo-hygiene |
+| TM.5 | Root BUILD_PLAN, AGENTS, AGENT_MEMORY, CHANGELOG |
+| TM.6 | editorconfig, gitattributes, pre-commit, template provenance |
+| TM.7 | pre-release-gate, full feature-gate profile |
+| TM.8 | README badges/gates, KNOWLEDGE_BASE module index |
+| TM.9 | run-milestone-tm-gate closure |
+
+**Gate:** `scripts/run-milestone-tm-gate.ps1` exit 0 on 2026-06-18.
+
+Full task list: [COMPLETED_TASKS.md](../COMPLETED_TASKS.md).
 

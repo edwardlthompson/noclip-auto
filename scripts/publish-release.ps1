@@ -30,11 +30,11 @@ if (-not (Test-Path $zipPath)) {
 $about = "Auto-fix highlight and shadow clipping in Lightroom Classic. FOSS, local-only. Windows + macOS (UNVALIDATED). Apache-2.0."
 gh repo edit edwardlthompson/noclip-auto --description $about
 
-$changelog = Get-Content (Join-Path $root "docs\CHANGELOG.md") -Raw
+$changelog = Get-Content (Join-Path $root "CHANGELOG.md") -Raw
 if ($changelog -match "(?ms)## \[$([regex]::Escape($Version))\][^\#]*") {
     $section = $Matches[0].Trim()
 } else {
-    $section = "## v$Version`n`nSee docs/CHANGELOG.md"
+    $section = "## v$Version`n`nSee CHANGELOG.md"
 }
 Set-Content -Path $notesPath -Value $section -Encoding UTF8
 

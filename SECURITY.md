@@ -21,6 +21,8 @@ Do **not** disclose exploitable details in public issues before a fix is availab
 
 Out of scope: Adobe Lightroom Classic itself, third-party LR plugins.
 
+Operational security: [docs/SECURITY_TRIAGE.md](docs/SECURITY_TRIAGE.md), [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md).
+
 ## Safe defaults
 
 - Analyzer runs locally with file paths passed from the plugin only.

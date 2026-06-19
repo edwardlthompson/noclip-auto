@@ -4,7 +4,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$buildPlan = Join-Path $root "docs\BUILD_PLAN.md"
+$buildPlan = Join-Path $root "BUILD_PLAN.md"
 $completed = Join-Path $root "docs\BUILD_PLAN_COMPLETED.md"
 
 if (-not (Test-Path $buildPlan)) {

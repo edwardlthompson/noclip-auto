@@ -5,9 +5,12 @@
 > **This plugin is not working reliably.** Development has **ceased until further notice.** Known bugs include menu/shortcut issues, analyzer failures, slow batch processing, and edits that do not always apply as expected. In practice, **manually adjusting Develop sliders is faster** than running this plugin. Use at your own risk; no support is planned at this time.
 
 [![CI](https://github.com/edwardlthompson/noclip-auto/actions/workflows/ci.yml/badge.svg)](https://github.com/edwardlthompson/noclip-auto/actions/workflows/ci.yml)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-Windows%2011-blue)](docs/MAC.md)
-[![Status](https://img.shields.io/badge/status-alpha%20%2F%20development%20paused-red)](docs/CHANGELOG.md)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-2ea043?style=flat-square)](LICENSE)
+[![Template](https://img.shields.io/badge/template-0.11.0-0969da?style=flat-square)](.template-version)
+[![Stack](https://img.shields.io/badge/stack-lightroom%2Brust-31A8FF?style=flat-square)](modules/lightroom/MODULE.md)
+[![FOSS](https://img.shields.io/badge/FOSS-local--only-656d76?style=flat-square)](docs/FOSS.md)
+[![Platform](https://img.shields.io/badge/platform-Windows%2011-blue?style=flat-square)](docs/MAC.md)
+[![Status](https://img.shields.io/badge/status-alpha%20%2F%20paused-red?style=flat-square)](CHANGELOG.md)
 
 **Automatically recover clipped highlights and shadows in Adobe Lightroom Classic** *(experimental; see warning above)*.
 
@@ -20,19 +23,19 @@ NoClip Auto is a free, open-source plugin that runs a 3-phase tone pipeline unti
 | | |
 |---|---|
 | **Status** | **Alpha — development paused** |
-| **Version** | See [docs/CHANGELOG.md](docs/CHANGELOG.md) (unstable) |
+| **Version** | **1.3.7** — see [CHANGELOG.md](CHANGELOG.md) |
 | **License** | [Apache-2.0](LICENSE) |
 | **GitHub** | [edwardlthompson/noclip-auto](https://github.com/edwardlthompson/noclip-auto) |
-| **Changelog** | [docs/CHANGELOG.md](docs/CHANGELOG.md) |
+| **Changelog** | [CHANGELOG.md](CHANGELOG.md) |
+| **Modules** | [Lightroom](modules/lightroom/MODULE.md) · [Rust](modules/rust/MODULE.md) |
 
-### Release notes (0.1.0)
+### Latest release (1.3.7)
 
-- Initial pre-release: 3-phase tone pipeline for highlight and shadow recovery
-- Batch and Develop workflows with dry-run mode and develop snapshots
-- Bundled Rust analyzer, performance tiers, and Plugin Manager preferences
-- GitHub Actions CI, smoke tests, and full project documentation
+- Fix Windows Active Photo analyze failure (`LrTasks.startAsyncTask`, stdout-first)
+- Distinct File vs Library menu titles for keyboard shortcuts
+- AutoHotkey v2 shortcut script for Windows (`scripts/NoClipAuto-shortcuts.ahk`)
 
-See the full [changelog](docs/CHANGELOG.md) for version history.
+See the full [changelog](CHANGELOG.md) for version history.
 
 ### Support development
 
@@ -198,21 +201,46 @@ The analyzer ships **inside** the plugin folder—you never install it separatel
 # Run smoke tests (no Lightroom required)
 .\scripts\smoke\m0_smoke.ps1
 .\scripts\smoke\m2_smoke.ps1
+
+# Full local feature gate (cargo test/clippy, build, m2, size)
+.\scripts\feature-gate.ps1 -Stack lightroom-rust
 ```
+
+### Development gates
+
+| Gate | Command | When |
+|------|---------|------|
+| Quick bootstrap | `.\scripts\validate-bootstrap.ps1 -Quick` | After doc or scaffold changes |
+| Full bootstrap | `.\scripts\validate-bootstrap.ps1` | Before milestone closure |
+| Feature gate (CI) | `.\scripts\feature-gate.ps1 -Stack lightroom-rust -Ci` | Matches GitHub CI job |
+| Feature gate (local) | `.\scripts\feature-gate.ps1 -Stack lightroom-rust` | Pre-merge on Windows |
+| Pre-release | `.\scripts\pre-release-gate.ps1` | Before tagging a release |
+| M0 smoke | `.\scripts\smoke\m0_smoke.ps1` | FOSS + environment checks |
+| M2 smoke | `.\scripts\smoke\m2_smoke.ps1` | Analyzer JSON contract |
+
+Agent sprint steps: `.\scripts\watch-agent-gates.ps1 -Once -Step <tmN>`
+
+See [BUILD_PLAN.md](BUILD_PLAN.md), [docs/GATES.md](docs/GATES.md), and [AGENTS.md](AGENTS.md).
 
 ---
 
 ## Project status
 
-Active development. See [docs/BUILD_PLAN.md](docs/BUILD_PLAN.md) for milestone progress and [docs/CHANGELOG.md](docs/CHANGELOG.md) for release notes.
+Development paused. Product milestones **M0–M9** are complete (v1.3.7 shipped). Active work is **Sprint TM** — bootstrap template alignment — see [BUILD_PLAN.md](BUILD_PLAN.md).
 
 | Milestone | Status |
 |-----------|--------|
-| M0 — Infrastructure | Complete |
-| M1 — Plugin scaffold | Complete |
-| M2 — Clipping analyzer | Complete |
-| M3–M4 — Preview + pipeline | Code complete; LR validation pending |
-| M5–M6 — Batch tuning + v1.0 release | In progress |
+| M0 — Infrastructure | ✅ Complete |
+| M1 — Plugin scaffold | ✅ Complete |
+| M2 — Clipping analyzer | ✅ Complete |
+| M3 — Preview pipeline | ✅ Complete |
+| M4 — Tone quality | ✅ Complete |
+| M5 — Batch processing | ✅ Complete |
+| M6 — v1.0 release | ✅ Complete |
+| M7–M9 — Smart tone, lens pre-pass, regression | ✅ Complete |
+| TM — Template migration | ✅ Complete |
+
+Archived milestone detail: [docs/BUILD_PLAN_COMPLETED.md](docs/BUILD_PLAN_COMPLETED.md)
 
 ---
 
@@ -237,6 +265,8 @@ The Adobe Lightroom Classic SDK is **not** included in this repository. Download
 ## Links
 
 - [Algorithm](docs/ALGORITHM.md)
-- [Build plan](docs/BUILD_PLAN.md)
-- [Changelog](docs/CHANGELOG.md)
+- [Agent shortcuts](docs/help/BATCH_COMMANDS.md)
+- [Build plan](BUILD_PLAN.md)
+- [Changelog](CHANGELOG.md)
+- [Knowledge base](KNOWLEDGE_BASE.md)
 - [Security policy](SECURITY.md)

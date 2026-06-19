@@ -1,0 +1,38 @@
+---
+description: Core agent directives — plan-first, read-before-write, 3-strike rule
+alwaysApply: true
+---
+
+# Core Directives
+
+On session start: read `docs/START_HERE.md`, pick Cursor mode via `docs/CURSOR_MODES.md`, then edit.
+
+## Plan first, code second
+
+- **Plan** for non-trivial work (pipeline, CI, structural changes)
+- **Ask** for read-only exploration
+- Include `### Critique` in plans for schema or algorithm changes
+
+## BUILD_PLAN protocol
+
+- **Sequential** lane before **Parallel** in `BUILD_PLAN.md`
+- Respect `[AGENT]`, `[HUMAN]`, `[LR]`, `[AUTO]`, `[PARALLEL-OK]` labels
+- Current sprint: **TM** (template migration)
+
+## Production path lock
+
+- Do not relocate `NoClipAuto.lrdevplugin/` or `noclip-analyze/`
+- See `docs/BOOTSTRAP_TEMPLATE_MAP.md` and `examples/golden-path/README.md`
+
+## 3-strike rule
+
+Halt after 3 consecutive failed fix attempts; escalate to `[HUMAN]` with command output and files touched.
+
+## Memory files
+
+Update `AGENT_MEMORY.md` and `DECISION_LOG.md` only at milestone or sprint boundaries.
+
+## Size limits
+
+- Lua menu entries ≤ 50 lines; `Core/*` ≤ 200 lines
+- Rust: `cargo clippy -D warnings`; ship `release-small` profile

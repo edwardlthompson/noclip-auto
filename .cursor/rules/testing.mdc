@@ -1,0 +1,45 @@
+---
+description: Test and smoke conventions for lightroom+rust stack
+globs:
+  - "NoClipAuto.lrdevplugin/**"
+  - "noclip-analyze/**"
+  - "tests/**"
+  - "scripts/smoke/**"
+---
+
+# Testing Rules
+
+## Stack gates
+
+| Layer | Command | When |
+|-------|---------|------|
+| Infra | `scripts/smoke/m0_smoke.ps1` | Doc/CI/scaffold changes |
+| Analyzer | `cargo test` + `scripts/smoke/m2_smoke.ps1` | Rust or `ClippingClient` changes |
+| Pipeline | `scripts/verify-tone-quality.ps1` | `Core/Pipeline/*` changes |
+| Milestone | `scripts/run-milestone-gate.ps1 -Milestone N` | Sprint sign-off |
+| LR integration | `scripts/smoke/m*_lr_smoke.ps1` | Menu/catalog path changes `[LR]` |
+
+## When to add tests
+
+- **Rust:** unit tests in `noclip-analyze/src/`; update `tests/golden/*.json` when clip semantics change
+- **Lua pipeline:** golden fixture regression via `verify-tone-quality.ps1`
+- **Bug fixes:** add KB entry + smoke coverage when reproducible headless
+- **Doc-only TM tasks:** no new product tests required
+
+## Smoke pyramid
+
+- **Unit (many):** `cargo test`, golden JSON checks
+- **Smoke (few):** `m0`–`m9` PowerShell scripts
+- **LR (manual/auto):** `[LR]` labeled tasks — require Lightroom installed
+
+```powershell
+.\scripts\watch-agent-gates.ps1 -Once -Step tests
+```
+
+Do not start parallel feature work until the current Sequential step passes gates.
+
+## Size gates (shipped artifacts)
+
+- `scripts/check-lua-size.ps1 -ShippedOnly` — ≤ 200 lines per Lua file
+- `scripts/check-bundle-size.ps1` — exe ≤ 2 MB
+- `scripts/bench-analyzer.ps1` — ≥ 50 MP/s

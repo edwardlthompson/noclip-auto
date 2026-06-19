@@ -7,7 +7,7 @@ $required = @(
     "CONTRIBUTING.md",
     "SECURITY.md",
     "docs\FOSS.md",
-    "docs\BUILD_PLAN.md",
+    "BUILD_PLAN.md",
     "NoClipAuto.lrdevplugin\Info.lua"
 )
 

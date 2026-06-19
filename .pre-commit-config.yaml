@@ -1,0 +1,32 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+        args: [--maxkb=2048]
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: mixed-line-ending
+        args: [--fix=lf]
+
+  - repo: local
+    hooks:
+      - id: check-repo-hygiene
+        name: Repo hygiene checks
+        entry: pwsh -File scripts/check-repo-hygiene.ps1
+        language: system
+        pass_filenames: false
+      - id: validate-bootstrap-quick
+        name: Quick bootstrap validation
+        entry: pwsh -File scripts/validate-bootstrap.ps1 -Quick
+        language: system
+        pass_filenames: false
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks

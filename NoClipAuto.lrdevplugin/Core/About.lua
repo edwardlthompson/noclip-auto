@@ -7,7 +7,7 @@ local About = {}
 About.VERSION = { major = 1, minor = 3, revision = 7, build = 0 }
 
 About.GITHUB_URL = "https://github.com/edwardlthompson/noclip-auto"
-About.CHANGELOG_URL = "https://github.com/edwardlthompson/noclip-auto/blob/main/docs/CHANGELOG.md"
+About.CHANGELOG_URL = "https://github.com/edwardlthompson/noclip-auto/blob/main/CHANGELOG.md"
 About.VENMO_URL = "https://venmo.com/code?user_id=1857304970395648420"
 
 About.RELEASE_NOTES = {

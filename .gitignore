@@ -13,6 +13,7 @@ Thumbs.db
 # Temp
 *.tmp
 .fixture-venv/
+.env
 docs/lr-env.json
 NoClipAuto.lrdevplugin/smoke/*.trigger
 NoClipAuto.lrdevplugin/bin/**/noclip-analyze*
@@ -20,6 +21,11 @@ NoClipAuto.lrdevplugin/bin/**/noclip-analyze*
 
 # Logs
 *.log
+
+# Agent ephemeral outputs
+.cursor-session-state.json
+CODE_REVIEW.md
+RELEASE_NOTES.md
 
 # Release staging
 dist/

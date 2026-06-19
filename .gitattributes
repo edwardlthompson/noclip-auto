@@ -1,0 +1,21 @@
+# Normalize line endings (critical for Windows contributors)
+* text=auto eol=lf
+
+# Shell scripts always LF
+*.sh text eol=lf
+
+# Binary assets
+*.png binary
+*.gif binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.exe binary
+*.woff binary
+*.woff2 binary
+
+# Lockfiles (exclude from language stats)
+noclip-analyze/Cargo.lock linguist-generated=true

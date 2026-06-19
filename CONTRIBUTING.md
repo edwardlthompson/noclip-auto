@@ -26,7 +26,7 @@ Thank you for contributing to this FOSS Lightroom Classic plugin.
 ## Pull requests
 
 - One logical change per PR when possible.
-- Update `docs/CHANGELOG.md` under `[Unreleased]`.
+- Update `CHANGELOG.md` under `[Unreleased]`.
 - Ensure CI passes (Rust tests, FOSS audit, size gates).
 
 ## Mac validation

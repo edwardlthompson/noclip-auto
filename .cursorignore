@@ -1,0 +1,7 @@
+# Ephemeral and bulky paths — keep agents from indexing caches and build output
+**/target/
+dist/
+.fixture-venv/
+*.log
+NoClipAuto.lrdevplugin/bin/**/noclip-analyze*
+NoClipAuto.lrdevplugin/bin/**/noclip-analyze.exe

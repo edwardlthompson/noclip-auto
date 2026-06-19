@@ -5,7 +5,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$memoryPath = Join-Path $root "docs\AGENT_MEMORY.md"
+$memoryPath = Join-Path $root "AGENT_MEMORY.md"
 
 if ($LrStatus) {
     $content = Get-Content $memoryPath -Raw

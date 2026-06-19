@@ -1,6 +1,6 @@
 # GitHub repository metadata
 
-Two-tier About policy (see [BUILD_PLAN.md](BUILD_PLAN.md)):
+Two-tier About policy (see [BUILD_PLAN.md](../BUILD_PLAN.md)):
 
 | Tier | Where | Length | Contents |
 |------|-------|--------|----------|

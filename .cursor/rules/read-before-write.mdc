@@ -1,0 +1,29 @@
+---
+description: Require inspecting types and interfaces before code changes
+alwaysApply: true
+---
+
+# Read-Before-Write Rule
+
+Before modifying any file:
+
+1. Identify boundaries — JSON analyzer contract, prefs keys, pipeline phase order
+2. Read upstream via `@filename` (especially `Core/ClippingClient.lua`, `Orchestrator.lua`)
+3. State signatures / contracts in plan
+4. Then edit
+
+## Critique checklist
+
+- LR async context (`postAsyncTaskWithContext`, no `pcall` around yields)
+- Windows analyzer spawn (see KNOWLEDGE_BASE KB-002)
+- Init.lua `require` prohibition (KB-001)
+- Dry-run restore of lens + tone settings
+
+## Verification
+
+- Write text files as **UTF-8 without BOM** (never UTF-16 on Windows)
+- Never mark BUILD_PLAN tasks complete without running gate scripts
+- After scaffold changes: `.\scripts\validate-bootstrap.ps1 -Quick`
+- After pipeline changes: `.\scripts\verify-tone-quality.ps1`
+
+Architecture: `docs/adr/0001-core-architecture.md`

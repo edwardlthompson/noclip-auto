@@ -1,0 +1,21 @@
+{
+  "$comment": "Copy to .cursor-session-state.json to restore agent context after clearing chat.",
+  "version": 1,
+  "saved_at": "2026-06-18T12:00:00Z",
+  "mode": "reference",
+  "$comment_mode": "Repo mode (bootstrap|reference) — see docs/CURSOR_MODES.md",
+  "stack": "lightroom-rust",
+  "active_sprint": "none",
+  "sequential_step": null,
+  "parallel_tasks_in_flight": [],
+  "last_files_touched": [
+    "BUILD_PLAN.md",
+    "NoClipAuto.lrdevplugin/Core/Pipeline/Orchestrator.lua"
+  ],
+  "build_plan_lane": "sequential",
+  "autonomous_mode": true,
+  "current_feature": null,
+  "last_gate_exit": null,
+  "strikes": 0,
+  "notes": "Optional checkpoint. Product paused (alpha)."
+}

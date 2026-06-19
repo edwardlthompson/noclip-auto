@@ -1,0 +1,16 @@
+---
+description: Windows UTF-8 write rule for agents and editors
+alwaysApply: true
+---
+
+# Windows Encoding
+
+On Windows, never save repository text files as UTF-16 LE.
+
+- PowerShell writes: `[System.IO.File]::WriteAllText($path, $content, (New-Object System.Text.UTF8Encoding $false))`
+- Or `Set-Content -Encoding utf8` (verify no BOM issues on JSON/YAML)
+- UTF-16 corruption breaks `.gitignore`, JSON, YAML, and `cargo`/`npm` parsers
+
+After bulk edits on Windows, spot-check affected files open correctly in git diff.
+
+When `scripts/check-file-encoding.py` lands (TM.6), run it before push.

@@ -1,0 +1,33 @@
+---
+description: Track source only; purge gitignored caches; commit discipline
+alwaysApply: true
+---
+
+# Repo Hygiene
+
+## Track in git
+
+- Source (Lua, Rust), tests, docs, CI workflows, `*.example` configs
+- `Cargo.lock`, `.gitkeep` in `bin/` platform folders
+- Scripts under `scripts/`
+
+## Never track
+
+- `noclip-analyze/target/`, `dist/`, `.fixture-venv/`
+- Built analyzers: `NoClipAuto.lrdevplugin/bin/**/noclip-analyze*` (gitignored; build in CI)
+- `docs/lr-env.json`, `NoClipAuto.lrdevplugin/smoke/*.trigger`
+- `.env` (use `.env.example`)
+- OS junk: `.DS_Store`, `Thumbs.db`
+
+## Agent commit discipline
+
+1. Review `git status` before every commit
+2. Stage **explicit paths** — avoid blind `git add -A`
+3. Run `scripts/foss-audit.ps1` before release-related commits
+4. `scripts/check-repo-hygiene.ps1` before hygiene-related commits
+
+## Policies
+
+- No Git LFS or submodules without `[HUMAN]` approval
+- Release binaries via GitHub Releases — not committed to git history
+- See `docs/BOOTSTRAP_TEMPLATE_MAP.md` for path conventions
