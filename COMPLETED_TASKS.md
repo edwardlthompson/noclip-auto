@@ -36,3 +36,4 @@ Template migration (Sprint TM) archived 2026-06-18 via `scripts/run-milestone-tm
 
 - ✅ [AGENT] **Audit.4** — README + BUILD_PLAN + FEATURE_MODULES status copy refreshed
 - ✅ [AGENT] **Audit.5** — CodeQL `CARGO_NET_RETRY` for registry flake mitigation
+- ✅ [HUMAN] **Audit.6** — Shipped v1.3.7 (`d76e2b5`); CI + CodeQL green; GitHub Release published

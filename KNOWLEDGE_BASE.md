@@ -102,4 +102,13 @@
 | **Symptom** | Agent proposes moving plugin to `examples/lightroom/` |
 | **Cause** | Bootstrap template defaults to `examples/{stack}/` Golden Path stubs |
 | **Fix** | Keep `NoClipAuto.lrdevplugin/` and `noclip-analyze/` at repo root; document in `examples/golden-path/README.md` |
-| **Prevention** | Read [docs/BOOTSTRAP_TEMPLATE_MAP.md](BOOTSTRAP_TEMPLATE_MAP.md) before structural changes |
+| **Prevention** | Read [docs/BOOTSTRAP_TEMPLATE_MAP.md](docs/BOOTSTRAP_TEMPLATE_MAP.md) before structural changes |
+
+### KB-009 — Parallel gates lock `noclip-analyze.exe` on Windows
+
+| Field | Detail |
+|-------|--------|
+| **Symptom** | `build-analyzer.ps1` fails: "process cannot access the file … noclip-analyze.exe" |
+| **Cause** | Two gate scripts (`pre-release-gate` + `run-milestone-gate`) ran concurrently; LR or prior build holds the exe |
+| **Fix** | Re-run the failed gate alone after the other completes |
+| **Prevention** | Run `pre-release-gate.ps1` and `run-milestone-gate.ps1` sequentially post-ship |

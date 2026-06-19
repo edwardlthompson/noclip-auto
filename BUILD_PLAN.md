@@ -2,19 +2,11 @@
 
 Active tasks only. Completed work archives to [COMPLETED_TASKS.md](COMPLETED_TASKS.md) (TM, audits) and [docs/BUILD_PLAN_COMPLETED.md](docs/BUILD_PLAN_COMPLETED.md) (M0–M9).
 
-**Status:** Bootstrap aligned @ v0.11.0 · M0–M9 + Sprint TM complete · product paused (v1.3.7 in tree, GitHub Release latest v1.3.0)
+**Status:** Bootstrap aligned @ v0.11.0 · M0–M9 + Sprint TM complete · **v1.3.7 released** (2026-06-18) · product paused (alpha)
 
 **Labels:** `[AGENT]` scriptable · `[LR]` needs Lightroom · `[HUMAN]` human developer · `[AUTO]` CI/scripts · `[PARALLEL-OK]` safe to parallelize
 
 **Agent rule:** Sequential lane first. After each `[AGENT]` step: `scripts/watch-agent-gates.ps1 -Once -Step <label>`. Major decisions → `DECISION_LOG.md`.
-
----
-
-## Open
-
-| ID | Task | Owner | Gate |
-|----|------|-------|------|
-| **Audit.6** | ⬜ Commit + push TM.H2 closure + Audit 2 doc/CI fixes | [HUMAN] | CI + CodeQL green |
 
 ---
 

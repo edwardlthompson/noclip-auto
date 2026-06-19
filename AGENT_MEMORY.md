@@ -41,6 +41,7 @@ Persistent facts for agents. Rolling log — older events may move to AGENT_MEMO
 | 2026-06-18 | **/ship** pushed TM bootstrap to `main` (`3051df2`); trivy hotfix (`7d35e85`); CI green |
 | 2026-06-18 | **TM.H2** README visual review confirmed on GitHub |
 | 2026-06-18 | **/audit** Audit 2: gates PASS; stale docs fixed; CodeQL retry added |
+| 2026-06-18 | **/ship** v1.3.7 published (`d76e2b5`); M9 regress PASS; Release zip on GitHub |
 
 ## Blockers
 

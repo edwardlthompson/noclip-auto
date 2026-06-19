@@ -111,3 +111,11 @@
 - **Decision:** `scripts/run-milestone-tm-gate.ps1` runs validate-bootstrap + full feature-gate + M9 regression, then archives to `COMPLETED_TASKS.md` and `docs/BUILD_PLAN_COMPLETED.md`
 - **Alternatives considered:** Reuse `archive-completed-tasks.ps1` only (rejected: TM tasks use table format, not `- [x]` checklist)
 - **Consequences:** TM sprint marked complete in BUILD_PLAN; optional TM.P1–P3 / TM.H1–H3 remain non-blocking backlog
+
+### 2026-06-18 — v1.3.7 GitHub Release
+
+- **Status:** Accepted
+- **Context:** Info.lua at 1.3.7 but CHANGELOG lacked `[1.3.7]`; GitHub Release stuck at v1.3.0
+- **Decision:** Ship `chore(release): prepare v1.3.7` with CHANGELOG fix + audit doc closure; `publish-release.ps1 -Version 1.3.7`
+- **Alternatives considered:** Infra-only push without release tag (rejected: pre-release gate requires version coherence)
+- **Consequences:** Latest release is v1.3.7 win64 zip; bootstrap changes remain in CHANGELOG `[Unreleased]`
