@@ -20,8 +20,8 @@ jobs:
       contents: read
       security-events: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: github/codeql-action/init@v3
+      - uses: actions/checkout@v7
+      - uses: github/codeql-action/init@v4
         with:
           languages: rust
           paths: noclip-analyze
@@ -31,4 +31,4 @@ jobs:
           CARGO_NET_RETRY: 10
         run: cargo build
         working-directory: noclip-analyze
-      - uses: github/codeql-action/analyze@v3
+      - uses: github/codeql-action/analyze@v4

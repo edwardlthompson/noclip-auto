@@ -23,7 +23,7 @@ jobs:
   release-macos:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -46,7 +46,7 @@ jobs:
           ./scripts/package-release-macos.sh "$VERSION"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: noclip-auto-macos-release
           path: dist/NoClipAuto-v*-macos-arm64.lrdevplugin.zip
