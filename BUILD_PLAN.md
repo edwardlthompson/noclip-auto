@@ -16,9 +16,9 @@ Source: `/audit` — see local `CODE_REVIEW.md` (gitignored).
 
 | ID | Task | Owner | Gate |
 |----|------|-------|------|
-| **Audit.1** | ⬜ Commit + push TM/bootstrap migration (~70 files); run `check-github-ci.ps1 -WaitSeconds 300` | [HUMAN] | Remote CI + Security Scan + CodeQL green |
+| **Audit.1** | ✅ Commit + push TM/bootstrap (`3051df2`, hotfix `7d35e85`) | [HUMAN] | Security Scan + CodeQL green; CI pending macOS jobs |
 | **Audit.2** | ✅ Refresh stale assessment docs (BUILD_PLAN, START_HERE) | [AGENT] | `validate-bootstrap.ps1 -Quick` |
-| **Audit.3** | ⬜ Visual README review on GitHub homepage (TM.H2) | [HUMAN] | — |
+| **Audit.3** | ⬜ Visual README review on GitHub homepage (TM.H2) | [HUMAN] | https://github.com/edwardlthompson/noclip-auto |
 
 ---
 

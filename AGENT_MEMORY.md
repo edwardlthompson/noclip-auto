@@ -38,7 +38,7 @@ Persistent facts for agents. Rolling log — older events may move to AGENT_MEMO
 | 2026-06-18 | **TM.7** release gates: `pre-release-gate.ps1`, full `feature-gate.ps1` (cargo test/clippy, m2, size) |
 | 2026-06-18 | **TM.8** README polish + KNOWLEDGE_BASE module/gate index |
 | 2026-06-18 | **TM.9** Sprint TM closure: `run-milestone-tm-gate.ps1`; archived to COMPLETED_TASKS |
-| 2026-06-18 | **TM backlog** P1–P3 security docs, batch commands, GitHub CI scripts; H3 ADR approved |
+| 2026-06-18 | **/ship** pushed TM bootstrap to `main` (`3051df2`); trivy-action hotfix (`7d35e85`); M9 regress PASS |
 
 ## Blockers
 
