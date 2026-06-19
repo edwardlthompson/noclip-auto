@@ -14,7 +14,7 @@ jobs:
   rust-test:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - name: Cargo test
         run: cargo test
@@ -26,7 +26,7 @@ jobs:
   foss-audit:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: FOSS audit
         shell: pwsh
         run: ./scripts/foss-audit.ps1
@@ -34,7 +34,7 @@ jobs:
   m0-smoke:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: M0 smoke
         shell: pwsh
         run: ./scripts/smoke/m0_smoke.ps1
@@ -43,12 +43,12 @@ jobs:
     runs-on: windows-latest
     needs: [rust-test]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - name: Build analyzer
         shell: pwsh
         run: ./scripts/build-analyzer.ps1 -Profile release-small
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: noclip-analyze-win-x64
           path: NoClipAuto.lrdevplugin/bin/win-x64/noclip-analyze.exe
@@ -57,7 +57,7 @@ jobs:
     runs-on: windows-latest
     needs: [build-analyzer]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - name: Build analyzer
         shell: pwsh
@@ -70,7 +70,7 @@ jobs:
     runs-on: windows-latest
     needs: [build-analyzer]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - name: Build analyzer
         shell: pwsh
@@ -85,7 +85,7 @@ jobs:
     runs-on: windows-latest
     needs: [build-analyzer]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - name: Build bench analyzer
         shell: pwsh
@@ -94,7 +94,7 @@ jobs:
   build-analyzer-macos-arm64:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - name: Prepare scripts
         run: chmod +x scripts/*.sh scripts/smoke/*.sh
@@ -104,7 +104,7 @@ jobs:
         run: ./scripts/generate-fixtures.sh
       - name: M7 smoke
         run: ./scripts/smoke/m7_smoke.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: noclip-analyze-macos-arm64
           path: NoClipAuto.lrdevplugin/bin/macos-arm64/noclip-analyze
@@ -113,7 +113,7 @@ jobs:
     name: Validate Bootstrap
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Validate bootstrap artifacts
         shell: pwsh
         run: ./scripts/validate-bootstrap.ps1 -Quick
@@ -122,7 +122,7 @@ jobs:
     name: Repo Hygiene
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Check repo hygiene
         shell: pwsh
         run: ./scripts/check-repo-hygiene.ps1
@@ -132,7 +132,7 @@ jobs:
     runs-on: windows-latest
     needs: [validate-bootstrap, repo-hygiene]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Feature gate (lightroom-rust CI profile)
         shell: pwsh
         run: ./scripts/feature-gate.ps1 -Stack lightroom-rust -Ci
