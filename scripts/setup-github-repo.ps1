@@ -16,7 +16,7 @@ MANUAL SETUP CHECKLIST (GitHub UI - API returned 422 or insufficient permissions
   2. Settings -> Code security and analysis -> Dependabot security updates: ON
   3. Settings -> Code security and analysis -> Private vulnerability reporting: ON
   4. Settings -> Branches -> Branch protection rules -> main:
-     - Require status checks: CI, Security Scan, CodeQL, Repo Hygiene, Feature Gate
+     - Require status checks: CI, Security Scan, CodeQL, Repo Hygiene, Feature Gate, Scorecard analysis, Dependency Review
   5. Re-run: .\scripts\setup-github-repo.ps1
 "@
 }
@@ -67,7 +67,15 @@ $checks = if ($env:GITHUB_REQUIRED_CHECKS) {
     $env:GITHUB_REQUIRED_CHECKS -split "," | ForEach-Object { $_.Trim() } | Where-Object { $_ }
 }
 else {
-    @("CI", "Security Scan", "CodeQL", "Repo Hygiene", "Feature Gate")
+    @(
+        "CI",
+        "Security Scan",
+        "CodeQL",
+        "Repo Hygiene",
+        "Feature Gate",
+        "Scorecard analysis",
+        "Dependency Review"
+    )
 }
 
 Write-Host "Setting up GitHub repo security for $Repo (branch: $Branch)"

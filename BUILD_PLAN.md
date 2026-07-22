@@ -46,10 +46,9 @@ Full matrix: [docs/GATES.md](docs/GATES.md) · Agent ops: [docs/FOR_AGENTS.md](d
 
 ---
 
-## Open (human / device only)
+## Open
 
-1. 🔲 [HUMAN] **BA.H2** — Optional: promote Scorecard / weekly-health to required status checks after green runs on `main`
-2. 🔲 [LR] **BA.L1** — Optional smoke `m0`/`m2` with Cursor hooks enabled
+> No open automation rows. Optional BA.H2 / BA.L1 completed 2026-07-21.
 
 ---
 

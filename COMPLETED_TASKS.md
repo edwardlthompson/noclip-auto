@@ -10,7 +10,8 @@ Template migration (Sprint TM) archived 2026-06-18 via `scripts/run-milestone-tm
 - ✅ [AUTO] **BA.6** — `validate-bootstrap.ps1 -Quick` PASS (encoding + batch-commands + template-index)
 - ✅ [HUMAN] **BA.H1** — hooks on; Scorecard/stale/weekly-health on; automerge/Release Please off
 - ✅ [AUTO] **/push** — v1.3.8 (`0f2dcdf`); CI/Security/CodeQL green; GitHub Release published
-- 🔲 [HUMAN] **BA.H2** / [LR] **BA.L1** — remain optional on active `BUILD_PLAN.md`
+- ✅ [HUMAN] **BA.H2** — Required checks: + `Scorecard analysis`, `Dependency Review`; Scorecard on push/PR; Weekly Health verified (schedule; not required — too heavy for every PR)
+- ✅ [LR] **BA.L1** — `m0_smoke` + `m2_smoke` PASS with hooks present
 
 ## Sprint TM — Complete (2026-06-18)
 

@@ -44,6 +44,7 @@ Persistent facts for agents. Rolling log — older events may move to AGENT_MEMO
 | 2026-06-18 | **/ship** v1.3.7 published (`d76e2b5`); M9 regress PASS; Release zip on GitHub |
 | 2026-07-21 | **Sprint BA** aligned bootstrap **0.11.0 → 0.15.0**: hooks/skills, `/cleanup`, Scorecard/stale/weekly-health, `TEMPLATE_INDEX.json`; `validate-bootstrap -Quick` PASS |
 | 2026-07-21 | **/push** v1.3.8 published (`0f2dcdf`); CI + Security + CodeQL green; Release zip on GitHub |
+| 2026-07-21 | **BA.H2/BA.L1** — m0/m2 PASS; Scorecard+Dependency Review required; `crossbeam-epoch` 0.9.20 for Weekly Health audit |
 
 ## Blockers
 

@@ -126,4 +126,12 @@
 - **Context:** Child repo was aligned at template 0.11.0; upstream reached 0.15.0 (hooks, local-compute, Scorecard, parallel `/cleanup`)
 - **Decision:** Adopt FOSS Cursor hooks/skills/agents, encoding + template-update scripts, slim `TEMPLATE_INDEX.json`, CI dependency-review + Scorecard + stale + weekly-health (LR+Rust adapted). Keep Apache-2.0, `[LR]` label, custom `publish-release.ps1`. Skip Release Please and Dependabot automerge (BA.H1).
 - **Alternatives considered:** Full TEMPLATE_INDEX parity (rejected: wrong-stack noise); Release Please (rejected: conflicts with plugin zip releases)
-- **Consequences:** `.template-version` = 0.15.0; see `docs/BOOTSTRAP_ALIGNMENT.md`; shipped as **v1.3.8** (`0f2dcdf`); optional BA.H2 (required checks) remains human
+- **Consequences:** `.template-version` = 0.15.0; see `docs/BOOTSTRAP_ALIGNMENT.md`; shipped as **v1.3.8** (`0f2dcdf`); BA.H2/BA.L1 completed after ship
+
+### 2026-07-21 — BA.H2 required checks + Weekly Health cargo-audit fix
+
+- **Status:** Accepted
+- **Context:** Scorecard dispatch green; Weekly Health failed on `RUSTSEC-2026-0204` (`crossbeam-epoch` 0.9.18 via `image`/`rayon`)
+- **Decision:** Bump `crossbeam-epoch` → 0.9.20 in `Cargo.lock`. Require **Scorecard analysis** + **Dependency Review** on `main` (Scorecard also runs on push/PR). Keep **Weekly Health** schedule-only (not required) — nested CI wait is too heavy for every PR.
+- **Alternatives considered:** Require Weekly Health on every PR (rejected: 10+ min + waits for CI); ignore cargo-audit vuln (rejected)
+- **Consequences:** `setup-github-repo.ps1` defaults updated; BA.L1 m0/m2 smokes PASS

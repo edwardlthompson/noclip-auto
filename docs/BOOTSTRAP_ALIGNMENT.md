@@ -204,9 +204,9 @@ BA.H1 confirmed: **(1) hooks on**, **(2) Scorecard + stale + weekly-health on**.
 
 | Item | Action |
 |------|--------|
-| BA.H2 | After workflows run green on `main`, optionally add Scorecard / weekly-health as required checks (not done automatically) |
-| BA.L1 | Optional LR `m0`/`m2` smoke with hooks enabled |
-| Push | Not performed — commit/push when you want CI to pick up new workflows |
+| BA.H2 | ✅ Required: Scorecard analysis + Dependency Review (Weekly Health schedule-only, verified after cargo-audit fix) |
+| BA.L1 | ✅ `m0_smoke` + `m2_smoke` PASS |
+| Push | ✅ v1.3.8 shipped; follow-up chore for BA.H2/BA.L1 |
 
 ### Intentionally not adopted
 
