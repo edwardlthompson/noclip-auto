@@ -1,0 +1,169 @@
+{
+  "template_version": "0.15.0",
+  "child_repo": "edwardlthompson/noclip-auto",
+  "upstream": "edwardlthompson/agent-project-bootstrap",
+  "stack": "lightroom-rust",
+  "license": "Apache-2.0",
+  "entry_points": [
+    "docs/START_HERE.md",
+    "AGENTS.md",
+    "BUILD_PLAN.md",
+    "docs/CURSOR_MODES.md",
+    "docs/FOR_AGENTS.md",
+    "docs/BOOTSTRAP_ALIGNMENT.md"
+  ],
+  "files": [
+    {
+      "path": "docs/START_HERE.md",
+      "purpose": "Session entry",
+      "read_when": "session_start",
+      "owner": "maintainer"
+    },
+    {
+      "path": "AGENTS.md",
+      "purpose": "Agent router",
+      "read_when": "session_start",
+      "owner": "maintainer"
+    },
+    {
+      "path": "BUILD_PLAN.md",
+      "purpose": "Active sprint board",
+      "read_when": "session_start",
+      "owner": "agent"
+    },
+    {
+      "path": "docs/BOOTSTRAP_ALIGNMENT.md",
+      "purpose": "0.15 alignment gap analysis",
+      "read_when": "upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "docs/BOOTSTRAP_TEMPLATE_MAP.md",
+      "purpose": "Template\u2192NoClip path map",
+      "read_when": "scaffold",
+      "owner": "maintainer"
+    },
+    {
+      "path": "docs/UPGRADING_FROM_TEMPLATE.md",
+      "purpose": "Cherry-pick upgrade guide",
+      "read_when": "upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "docs/INITIALIZATION_PROMPT.md",
+      "purpose": "Adapted init prompt",
+      "read_when": "onboarding",
+      "owner": "maintainer"
+    },
+    {
+      "path": "HUMAN_BACKLOG.md",
+      "purpose": "Deferred human tasks",
+      "read_when": "build",
+      "owner": "human"
+    },
+    {
+      "path": "TEMPLATE_INDEX.json",
+      "purpose": "Child-repo file index",
+      "read_when": "validate",
+      "owner": "agent"
+    },
+    {
+      "path": ".cursor/hooks.json",
+      "purpose": "FOSS Cursor hooks",
+      "read_when": "session_start",
+      "owner": "maintainer"
+    },
+    {
+      "path": ".cursor/stack-selection.json",
+      "purpose": "lightroom-rust stack selection",
+      "read_when": "session_start",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-template-updates.ps1",
+      "purpose": "Upstream version checker",
+      "read_when": "maintain",
+      "owner": "agent"
+    },
+    {
+      "path": "scripts/check-file-encoding.py",
+      "purpose": "UTF-8 encoding gate",
+      "read_when": "validate",
+      "owner": "agent"
+    },
+    {
+      "path": ".github/workflows/dependency-review.yml",
+      "purpose": "PR dependency review",
+      "read_when": "ci",
+      "owner": "ci"
+    },
+    {
+      "path": ".github/workflows/scorecard.yml",
+      "purpose": "OpenSSF Scorecard",
+      "read_when": "ci",
+      "owner": "ci"
+    },
+    {
+      "path": ".github/workflows/stale.yml",
+      "purpose": "Stale issue/PR bot",
+      "read_when": "ci",
+      "owner": "ci"
+    },
+    {
+      "path": ".github/workflows/weekly-health-check.yml",
+      "purpose": "Weekly health (LR+Rust)",
+      "read_when": "ci",
+      "owner": "ci"
+    },
+    {
+      "path": "NoClipAuto.lrdevplugin/Info.lua",
+      "purpose": "Shipped plugin manifest",
+      "read_when": "product",
+      "owner": "agent"
+    },
+    {
+      "path": "noclip-analyze/Cargo.toml",
+      "purpose": "Analyzer crate",
+      "read_when": "product",
+      "owner": "agent"
+    },
+    {
+      "path": "modules/lightroom/MODULE.md",
+      "purpose": "Lightroom module guide",
+      "read_when": "session_start",
+      "owner": "maintainer"
+    },
+    {
+      "path": "modules/rust/MODULE.md",
+      "purpose": "Rust module guide",
+      "read_when": "session_start",
+      "owner": "maintainer"
+    }
+  ],
+  "modules": {
+    "lightroom": {
+      "guide": "modules/lightroom/MODULE.md",
+      "production": "NoClipAuto.lrdevplugin/",
+      "activate_when": "always"
+    },
+    "rust": {
+      "guide": "modules/rust/MODULE.md",
+      "production": "noclip-analyze/",
+      "activate_when": "always"
+    }
+  },
+  "roadmap": {
+    "aligned_from": "0.11.0",
+    "aligned_to": "0.15.0",
+    "sprint": "BA",
+    "skipped": [
+      "release-please",
+      "dependabot-automerge",
+      "examples/web",
+      "examples/python",
+      "examples/android",
+      "design-tokens",
+      "commercial-compliance"
+    ]
+  }
+}

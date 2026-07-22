@@ -16,7 +16,7 @@
 
 ## Stop conditions
 
-- Sprint TM gate exit 0 → TM sprint complete; open tasks live in `BUILD_PLAN.md` Open section
+- Sprint BA gate (`validate-bootstrap.ps1 -Quick` + encoding) exit 0 → mark BA.6 ✅; archive via `/cleanup` when board is clean
 - H2 (LR not installed) + `[LR]` task → finish non-LR work, stop
 - H1 (gh not authed) + release task → finish local work, stop
 - 3-strike on same gate step → escalate to `[HUMAN]`

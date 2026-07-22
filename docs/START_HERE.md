@@ -6,15 +6,15 @@
 
 **NoClip Auto** is a FOSS Adobe Lightroom Classic plugin that recovers clipped highlights and shadows using a bundled Rust analyzer (`noclip-analyze`). Active stack: **lightroom + rust**.
 
-**Current work:** Sprint TM complete (bootstrap aligned). Product milestones M0–M9 done (v1.3.7); development paused (alpha).
+**Current work:** Sprint **BA** shipped in **v1.3.8** (bootstrap **v0.15.0**). Product milestones M0–M9 done; product development paused (alpha).
 
 **Agent shortcuts:** type `/` in chat — see [docs/help/BATCH_COMMANDS.md](help/BATCH_COMMANDS.md) (`/verify`, `/gates`, `/ship`, …).
 
 ## Which mode are you in?
 
-- **Ship / maintain:** Read `BUILD_PLAN.md` Sprint Audit → `/verify` or `/ship` after changes
+- **Ship / maintain:** Read `BUILD_PLAN.md` → `/verify` or `/ship` after changes
 - **Product fix / feature:** Read `docs/FOR_AGENTS.md` + `docs/ALGORITHM.md` — respect hexagonal boundaries in `docs/adr/0001-core-architecture.md`
-- **Bootstrap reference:** Read `docs/BOOTSTRAP_TEMPLATE_MAP.md` — do not move production paths
+- **Bootstrap / upgrade:** Read [docs/BOOTSTRAP_ALIGNMENT.md](BOOTSTRAP_ALIGNMENT.md) + [docs/UPGRADING_FROM_TEMPLATE.md](UPGRADING_FROM_TEMPLATE.md) — do not move production paths
 
 ## Agent read order
 
@@ -42,7 +42,7 @@
 |-------|-------|
 | `[AGENT]` | Cursor Agent — code, docs, scripts, CI |
 | `[HUMAN]` | Human — credentials, GitHub settings, approvals |
-| `[LR]` | Needs Lightroom installed — use smoke scripts |
+| `[LR]` | Needs Lightroom installed — use smoke scripts (template `[ADB]` analogue) |
 | `[AUTO]` | CI / bot scripts |
 | `[PARALLEL-OK]` | Safe to parallelize after schema lock |
 
@@ -53,6 +53,7 @@ Filter: `grep '\[AGENT\]' BUILD_PLAN.md`
 ```powershell
 .\scripts\watch-agent-gates.ps1 -Once -Step scaffold   # quick gate
 .\scripts\validate-bootstrap.ps1 -Quick
+python .\scripts\check-file-encoding.py .
 .\scripts\feature-gate.ps1 -Stack lightroom-rust -Ci
 .\scripts\smoke\m0_smoke.ps1
 .\scripts\smoke\m2_smoke.ps1

@@ -29,7 +29,7 @@ Grouped by life moment (use `/` menu for the full list).
 
 **Getting started:** `/init` · `/prune` · `/setup` · `/gates`
 
-**Building:** `/plan` · `/feature` · `/fix` (gates failed after `/build`) · `/scope` (parallel agents)
+**Building:** `/plan` · `/feature` · `/fix` (gates failed after `/build`) · `/cleanup` (archive done rows) · `/scope` (parallel agents)
 
 **Docs & checks:** `/docs` · `/ci` (CI poll only) · `/gates` (full local validation)
 
@@ -52,7 +52,7 @@ Grouped by life moment (use `/` menu for the full list).
 .\scripts\feature-gate.ps1 -Stack lightroom-rust -Ci
 .\scripts\feature-gate.ps1 -Stack lightroom-rust
 .\scripts\pre-release-gate.ps1
-.\scripts\publish-release.ps1 -Version 1.3.7
+.\scripts\publish-release.ps1 -Version 1.3.8
 ```
 
 ## Coming back after a break?

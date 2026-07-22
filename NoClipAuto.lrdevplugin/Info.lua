@@ -22,5 +22,5 @@ return {
 
   LrPluginInfoProvider = "PluginInfoProvider.lua",
   URLHandler = "UrlHandler.lua",
-  VERSION = { major = 1, minor = 3, revision = 7, build = 0 },
+  VERSION = { major = 1, minor = 3, revision = 8, build = 0 },
 }

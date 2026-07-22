@@ -1,0 +1,53 @@
+name: Weekly Health Check
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  health:
+    name: Weekly Workflow Health
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify CI + Security Scan + CodeQL green on HEAD
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          bash scripts/check-github-ci.sh "$(git rev-parse HEAD)" --wait 600
+
+      - name: Bootstrap + encoding + template update check
+        run: |
+          pwsh -File scripts/validate-bootstrap.ps1 -Quick
+          python3 scripts/check-file-encoding.py .
+          bash scripts/check-template-updates.sh || true
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Cargo audit (noclip-analyze)
+        working-directory: noclip-analyze
+        run: |
+          cargo install cargo-audit --locked || cargo install cargo-audit
+          cargo audit
+
+      - name: Child-repo upgrade smoke
+        run: bash scripts/simulate-template-upgrade.sh
+
+      - name: Cursor feature radar (non-blocking)
+        continue-on-error: true
+        run: bash scripts/cursor-feature-radar.sh
+
+      - name: Upload radar report
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: cursor-radar-report
+          path: CURSOR_RADAR_REPORT.md
+          if-no-files-found: warn

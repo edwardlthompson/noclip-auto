@@ -1,0 +1,28 @@
+{
+  "distribution_tier": "foss",
+  "stack": "lightroom-rust",
+  "cursor_features_enabled": [
+    "rules",
+    "commands",
+    "hooks",
+    "skills",
+    "subagents",
+    "modes",
+    "worktrees",
+    "permissions",
+    "parallel_scope",
+    "build_automation",
+    "feature_radar",
+    "cli_example"
+  ],
+  "cursor_features_hidden": [
+    "cloud_agents",
+    "bugbot",
+    "automations",
+    "approval_agents",
+    "mcp_commercial_example",
+    "android_commercial_patterns",
+    "plugin_pack"
+  ],
+  "cursor_features_synced_at": "2026-07-22T03:05:33+00:00"
+}

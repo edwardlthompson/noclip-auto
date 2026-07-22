@@ -119,3 +119,11 @@
 - **Decision:** Ship `chore(release): prepare v1.3.7` with CHANGELOG fix + audit doc closure; `publish-release.ps1 -Version 1.3.7`
 - **Alternatives considered:** Infra-only push without release tag (rejected: pre-release gate requires version coherence)
 - **Consequences:** Latest release is v1.3.7 win64 zip; bootstrap changes remain in CHANGELOG `[Unreleased]`
+
+### 2026-07-21 — Sprint BA bootstrap align to v0.15.0
+
+- **Status:** Accepted
+- **Context:** Child repo was aligned at template 0.11.0; upstream reached 0.15.0 (hooks, local-compute, Scorecard, parallel `/cleanup`)
+- **Decision:** Adopt FOSS Cursor hooks/skills/agents, encoding + template-update scripts, slim `TEMPLATE_INDEX.json`, CI dependency-review + Scorecard + stale + weekly-health (LR+Rust adapted). Keep Apache-2.0, `[LR]` label, custom `publish-release.ps1`. Skip Release Please and Dependabot automerge (BA.H1).
+- **Alternatives considered:** Full TEMPLATE_INDEX parity (rejected: wrong-stack noise); Release Please (rejected: conflicts with plugin zip releases)
+- **Consequences:** `.template-version` = 0.15.0; see `docs/BOOTSTRAP_ALIGNMENT.md`; optional BA.H2 (required checks) remains human

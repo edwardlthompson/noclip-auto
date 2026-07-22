@@ -1,26 +1,29 @@
 # Changelog
 
-
-
 All notable changes to this project will be documented in this file.
 
-
-
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-
 
 ## [Unreleased]
 
+## [1.3.8] — 2026-07-21
+
+Bootstrap tooling alignment to agent-project-bootstrap v0.15.0 (Sprint BA). No clipping-algorithm changes.
+
+### Added
+
+- Cursor FOSS hooks, skills, agents; /cleanup command; local-compute / security-triage / feature-modules rules
+- TEMPLATE_INDEX.json, HUMAN_BACKLOG.md, docs/BOOTSTRAP_ALIGNMENT.md, upgrade/init docs
+- Scripts: file-encoding check, template-update checker, parallel/maintainer helpers
+- CI: dependency-review, OpenSSF Scorecard, stale, weekly-health (lightroom-rust)
+
 ### Changed
 
-- Bootstrap template alignment (agent-project-bootstrap v0.11.0): gates, 25 slash commands, CI security/CodeQL, root docs, modules, pre-commit, repo hygiene artifacts.
-- README professional pass (badges, gate commands, milestone table); docs relocated to repo root with stub pointers.
+- .template-version **0.11.0 → 0.15.0**; validate-bootstrap expanded for BA artifacts
+- README agent workflow section; batch command registry (26 commands)
 
 ## [1.3.7] — 2026-06-18
-
 Fix Windows Active Photo analyze failure; fix keyboard shortcut docs and menu titles.
 
 ### Added

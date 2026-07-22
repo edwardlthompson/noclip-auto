@@ -26,6 +26,7 @@ $AtomicCmds = @(
     'restore'
     'compact'
     'scope'
+    'cleanup'
 )
 $SuperCmds = @(
     'bootstrap'
@@ -37,7 +38,7 @@ $SuperCmds = @(
 $SuperChains = @{
     bootstrap = @('init', 'prune', 'setup', 'gates')
     verify    = @('docs', 'gates', 'ci')
-    build     = @('plan', 'feature', 'gates')
+    build     = @('plan', 'feature', 'gates', 'cleanup')
     ship      = @('prerelease', 'push', 'regress')
     maintain  = @('triage', 'dependabot', 'audit')
 }

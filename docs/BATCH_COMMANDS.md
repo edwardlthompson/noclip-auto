@@ -2,7 +2,7 @@
 
 > Technical catalog for agents and maintainers. **Humans:** start with [docs/help/BATCH_COMMANDS.md](help/BATCH_COMMANDS.md).
 
-25 slash commands: **20 atomic** workflows + **5 super** orchestrators. Bare-word triggers: `.cursor/rules/batch-commands.mdc`.
+26 slash commands: **21 atomic** workflows + **5 super** orchestrators. Bare-word triggers: `.cursor/rules/batch-commands.mdc`.
 
 **Stack:** `lightroom-rust` only.
 
@@ -12,7 +12,7 @@
 |---------|-------|-------------|-------|
 | `/bootstrap` | init → prune → setup → gates | Agent | No |
 | `/verify` | docs → gates → ci | Agent | No |
-| `/build` | plan → approval → feature → gates | Plan then Agent | No |
+| `/build` | plan → approval → feature → gates → cleanup | Plan then Agent | No |
 | `/ship` | prerelease → push → regress | Agent | **Yes** |
 | `/maintain` | triage → dependabot → audit | Agent | No |
 
@@ -30,6 +30,7 @@
 | `/regress` | Post-release M9 + CI check | ship |
 | `/feature` | Vertical slice + gate loop | build |
 | `/fix` | `watch-agent-gates -Autofix` in feature scope | build |
+| `/cleanup` | Archive finished BUILD_PLAN rows → COMPLETED_TASKS | build |
 | `/init` | Child repo bootstrap verify | bootstrap |
 | `/prune` | lightroom+rust stack verification | bootstrap |
 | `/ci` | Post-push CI poll only | verify |

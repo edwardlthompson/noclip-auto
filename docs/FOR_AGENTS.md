@@ -28,7 +28,8 @@ SessionStart → docs/START_HERE.md → BUILD_PLAN.md (Sequential)
 4. Read-before-write: inspect file via `@path` before editing
 5. Sequential before Parallel in `BUILD_PLAN.md`
 6. Respect `.cursorignore` when present (TM.6)
-7. Agent shortcuts: [docs/help/BATCH_COMMANDS.md](help/BATCH_COMMANDS.md) — `/verify`, `/gates`, `/ship`, `/maintain` (25 commands)
+7. Agent shortcuts: [docs/help/BATCH_COMMANDS.md](help/BATCH_COMMANDS.md) — `/verify`, `/gates`, `/ship`, `/maintain`, `/cleanup` (26 commands)
+8. Prefer local compute (`.cursor/rules/local-compute.mdc`); Cursor FOSS hooks are enabled via `.cursor/hooks.json`
 
 ## BUILD_PLAN protocol
 

@@ -2,8 +2,9 @@
 
 Maps [agent-project-bootstrap](https://github.com/edwardlthompson/agent-project-bootstrap) expectations to this child repo's **lightroom+rust** layout.
 
-**Template version target:** 0.11.0  
-**Active stack:** `lightroom` + `rust` (production paths — not `examples/` stubs)
+**Template version target:** 0.15.0 (aligned from 0.11.0 in Sprint BA)  
+**Active stack:** `lightroom` + `rust` (production paths — not `examples/` stubs)  
+**Gap analysis:** [BOOTSTRAP_ALIGNMENT.md](BOOTSTRAP_ALIGNMENT.md)
 
 ## Root documentation
 
@@ -58,14 +59,20 @@ Maps [agent-project-bootstrap](https://github.com/edwardlthompson/agent-project-
 | `ci.yml` (Feature Gate, Repo Hygiene) | Extended `ci.yml` | TM.4 ✅ |
 | `security.yml` | Added | TM.4 ✅ |
 | `codeql.yml` | Added (Rust: `noclip-analyze/`) | TM.4 ✅ |
+| `dependency-review.yml` | Added | BA.5 ✅ |
+| `scorecard.yml` | Added (non-required) | BA.5 ✅ |
+| `stale.yml` | Added | BA.5 ✅ |
+| `weekly-health-check.yml` | LR+Rust adapted | BA.5 ✅ |
 | `release-macos.yml` | Keep project-specific | Done |
+| `release-please.yml` | **Skipped** (custom publish) | BA.H1 |
 
 ## Cursor rules
 
 | Template rule | NoClip | Status |
 |---------------|--------|--------|
 | `settings-ui-hints.mdc` | Project-specific | Done |
-| `ci-gates.mdc`, `foss-compliance.mdc`, etc. | 9 bootstrap rules in `.cursor/rules/` | TM.3 ✅ |
+| `ci-gates.mdc`, `foss-compliance.mdc`, etc. | Bootstrap rules in `.cursor/rules/` | TM.3 + BA.2 ✅ |
+| `local-compute.mdc`, `security-triage.mdc`, `feature-modules.mdc` | Added | BA.2 ✅ |
 
 ## Repo hygiene (TM.6)
 
@@ -76,7 +83,12 @@ Maps [agent-project-bootstrap](https://github.com/edwardlthompson/agent-project-
 | `.cursorignore` | `.cursorignore` | `target/`, plugin binaries |
 | `.pre-commit-config.yaml` | `.pre-commit-config.yaml` | pwsh local hooks + gitleaks |
 | `.template-update.json` | `.template-update.json` | Upstream sync config |
-| `.template-version` | `.template-version` | `0.11.0` |
+| `.template-version` | `.template-version` | `0.15.0` |
+| `TEMPLATE_INDEX.json` | `TEMPLATE_INDEX.json` | Child-repo slim index (BA) |
+| `HUMAN_BACKLOG.md` | `HUMAN_BACKLOG.md` | Deferred human tasks |
+| `.cursor/hooks.json` | `.cursor/hooks.json` | FOSS hooks (BA.H1) |
+| `.cursor/skills/` | `.cursor/skills/` | FOSS skills pack |
+| `.cursor/agents/` | `.cursor/agents/` | explorer / gate-fixer / verifier |
 | `.env.example` | `.env.example` | No secrets |
 | `CODE_OF_CONDUCT.md` | `CODE_OF_CONDUCT.md` | Contributor Covenant |
 | `THIRD_PARTY_LICENSES.md` | `THIRD_PARTY_LICENSES.md` | Rust deps + Adobe SDK note |
@@ -91,7 +103,7 @@ Maps [agent-project-bootstrap](https://github.com/edwardlthompson/agent-project-
 | `docs/RUNBOOK.md` | `docs/RUNBOOK.md` | TM.P1 ✅ |
 | `docs/help/BATCH_COMMANDS.md` | `docs/help/BATCH_COMMANDS.md` | TM.P2 ✅ |
 | `docs/BATCH_COMMANDS.md` | `docs/BATCH_COMMANDS.md` | TM.P2 ✅ |
-| `.cursor/commands/*.md` (25) | `.cursor/commands/*.md` | TM.P2 ✅ |
+| `.cursor/commands/*.md` (26, +cleanup) | `.cursor/commands/*.md` | TM.P2 + BA.2 ✅ |
 | `.cursor/rules/batch-commands.mdc` | `.cursor/rules/batch-commands.mdc` | TM.P2 ✅ |
 | `scripts/check-github-ci.ps1` | `scripts/check-github-ci.ps1` | TM.P3 ✅ |
 | `scripts/setup-github-repo.ps1` | `scripts/setup-github-repo.ps1` | TM.P3 ✅ |

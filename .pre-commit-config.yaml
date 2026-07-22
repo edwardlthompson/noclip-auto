@@ -20,6 +20,11 @@ repos:
         entry: pwsh -File scripts/check-repo-hygiene.ps1
         language: system
         pass_filenames: false
+      - id: file-encoding
+        name: UTF-8 encoding (no UTF-16)
+        entry: python scripts/check-file-encoding.py .
+        language: system
+        pass_filenames: false
       - id: validate-bootstrap-quick
         name: Quick bootstrap validation
         entry: pwsh -File scripts/validate-bootstrap.ps1 -Quick

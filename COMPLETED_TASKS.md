@@ -4,6 +4,13 @@
 
 Template migration (Sprint TM) archived 2026-06-18 via `scripts/run-milestone-tm-gate.ps1`.
 
+## Sprint BA — Bootstrap Align 0.15.0 (2026-07-21)
+
+- ✅ [AGENT] **BA.0–BA.5** — Gap analysis, docs, Cursor FOSS pack (hooks/skills/agents), scripts, `TEMPLATE_INDEX.json`, CI workflows; `.template-version` → 0.15.0
+- ✅ [AUTO] **BA.6** — `validate-bootstrap.ps1 -Quick` PASS (encoding + batch-commands + template-index)
+- ✅ [HUMAN] **BA.H1** — hooks on; Scorecard/stale/weekly-health on; automerge/Release Please off
+- 🔲 [HUMAN] **BA.H2** / [LR] **BA.L1** — remain optional on active `BUILD_PLAN.md`
+
 ## Sprint TM — Complete (2026-06-18)
 
 - ✅ [AGENT] **TM.0** — `COMPLETED_TASKS.md`, `docs/BOOTSTRAP_TEMPLATE_MAP.md`, `validate-bootstrap.ps1/.sh`, `watch-agent-gates.ps1/.sh`; gate PASS

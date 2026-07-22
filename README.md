@@ -6,7 +6,7 @@
 
 [![CI](https://github.com/edwardlthompson/noclip-auto/actions/workflows/ci.yml/badge.svg)](https://github.com/edwardlthompson/noclip-auto/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-2ea043?style=flat-square)](LICENSE)
-[![Template](https://img.shields.io/badge/template-0.11.0-0969da?style=flat-square)](.template-version)
+[![Template](https://img.shields.io/badge/template-0.15.0-0969da?style=flat-square)](.template-version)
 [![Stack](https://img.shields.io/badge/stack-lightroom%2Brust-31A8FF?style=flat-square)](modules/lightroom/MODULE.md)
 [![FOSS](https://img.shields.io/badge/FOSS-local--only-656d76?style=flat-square)](docs/FOSS.md)
 [![Platform](https://img.shields.io/badge/platform-Windows%2011-blue?style=flat-square)](docs/MAC.md)
@@ -23,17 +23,16 @@ NoClip Auto is a free, open-source plugin that runs a 3-phase tone pipeline unti
 | | |
 |---|---|
 | **Status** | **Alpha — development paused** |
-| **Version** | **1.3.7** — see [CHANGELOG.md](CHANGELOG.md) |
+| **Version** | **1.3.8** — see [CHANGELOG.md](CHANGELOG.md) |
 | **License** | [Apache-2.0](LICENSE) |
 | **GitHub** | [edwardlthompson/noclip-auto](https://github.com/edwardlthompson/noclip-auto) |
 | **Changelog** | [CHANGELOG.md](CHANGELOG.md) |
 | **Modules** | [Lightroom](modules/lightroom/MODULE.md) · [Rust](modules/rust/MODULE.md) |
 
-### Latest release (1.3.7)
+### Latest release (1.3.8)
 
-- Fix Windows Active Photo analyze failure (`LrTasks.startAsyncTask`, stdout-first)
-- Distinct File vs Library menu titles for keyboard shortcuts
-- AutoHotkey v2 shortcut script for Windows (`scripts/NoClipAuto-shortcuts.ahk`)
+- Bootstrap tooling aligned to agent-project-bootstrap **v0.15.0** (Cursor hooks/skills, CI Scorecard/stale/weekly-health, encoding gates)
+- No clipping-algorithm changes in this release
 
 See the full [changelog](CHANGELOG.md) for version history.
 
@@ -150,7 +149,7 @@ Run `.\scripts\print-lr-shortcut-help.ps1` for exact menu titles and setup steps
 1. Install [AutoHotkey v2](https://www.autohotkey.com/)
 2. Run `scripts\NoClipAuto-shortcuts.ahk` (defaults: **Ctrl+Alt+A** = Active Photo in Develop via File menu, **Ctrl+Alt+B** = batch)
 
-If a shortcut does nothing: restart Lightroom, confirm Plug-in Manager shows **1.3.7+**, dry run OFF, and photos are selected.
+If a shortcut does nothing: restart Lightroom, confirm Plug-in Manager shows **1.3.8+**, dry run OFF, and photos are selected.
 
 ---
 
@@ -224,9 +223,18 @@ See [BUILD_PLAN.md](BUILD_PLAN.md), [docs/GATES.md](docs/GATES.md), and [AGENTS.
 
 ---
 
+## How agents should work in this repo
+
+1. Read [docs/START_HERE.md](docs/START_HERE.md) → pick a Cursor mode ([docs/CURSOR_MODES.md](docs/CURSOR_MODES.md)).
+2. Execute [BUILD_PLAN.md](BUILD_PLAN.md) **Sequential** `[AGENT]` rows first; use `/` shortcuts ([docs/help/BATCH_COMMANDS.md](docs/help/BATCH_COMMANDS.md)).
+3. Prefer local compute (hooks + worktrees); do not relocate `NoClipAuto.lrdevplugin/` or `noclip-analyze/`.
+4. After scaffold/doc changes: `.\scripts\validate-bootstrap.ps1 -Quick` and `python .\scripts\check-file-encoding.py .`.
+
+Bootstrap upgrade notes: [docs/BOOTSTRAP_ALIGNMENT.md](docs/BOOTSTRAP_ALIGNMENT.md) · [docs/UPGRADING_FROM_TEMPLATE.md](docs/UPGRADING_FROM_TEMPLATE.md).
+
 ## Project status
 
-Development paused. Product milestones **M0–M9** are complete (v1.3.7 in tree). **Sprint TM** (bootstrap template alignment) is complete — see [BUILD_PLAN.md](BUILD_PLAN.md).
+Development paused. Product milestones **M0–M9** are complete. **v1.3.8** ships Sprint BA (bootstrap **v0.15.0**). See [BUILD_PLAN.md](BUILD_PLAN.md).
 
 | Milestone | Status |
 |-----------|--------|
@@ -238,7 +246,8 @@ Development paused. Product milestones **M0–M9** are complete (v1.3.7 in tree)
 | M5 — Batch processing | ✅ Complete |
 | M6 — v1.0 release | ✅ Complete |
 | M7–M9 — Smart tone, lens pre-pass, regression | ✅ Complete |
-| TM — Template migration | ✅ Complete |
+| TM — Template migration (0.11.0) | ✅ Complete |
+| BA — Bootstrap align (0.15.0) | ✅ Complete (optional BA.H2 / BA.L1 open) |
 
 Archived milestone detail: [docs/BUILD_PLAN_COMPLETED.md](docs/BUILD_PLAN_COMPLETED.md)
 

@@ -4,13 +4,14 @@
 
 local About = {}
 
-About.VERSION = { major = 1, minor = 3, revision = 7, build = 0 }
+About.VERSION = { major = 1, minor = 3, revision = 8, build = 0 }
 
 About.GITHUB_URL = "https://github.com/edwardlthompson/noclip-auto"
 About.CHANGELOG_URL = "https://github.com/edwardlthompson/noclip-auto/blob/main/CHANGELOG.md"
 About.VENMO_URL = "https://venmo.com/code?user_id=1857304970395648420"
 
 About.RELEASE_NOTES = {
+  "v1.3.8: Bootstrap tooling aligned to agent-project-bootstrap v0.15.0 (hooks, CI, gates).",
   "v1.3.7: Fix Windows analyzer spawn; unique File menu title; AutoHotkey shortcuts.",
   "v1.3.6: Fix analyzer race on Windows (unique output paths per measure).",
   "v1.3.5: Fast tier, progress on Active Photo, quieter loop sync, snapshots optional.",
