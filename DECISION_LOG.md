@@ -126,4 +126,4 @@
 - **Context:** Child repo was aligned at template 0.11.0; upstream reached 0.15.0 (hooks, local-compute, Scorecard, parallel `/cleanup`)
 - **Decision:** Adopt FOSS Cursor hooks/skills/agents, encoding + template-update scripts, slim `TEMPLATE_INDEX.json`, CI dependency-review + Scorecard + stale + weekly-health (LR+Rust adapted). Keep Apache-2.0, `[LR]` label, custom `publish-release.ps1`. Skip Release Please and Dependabot automerge (BA.H1).
 - **Alternatives considered:** Full TEMPLATE_INDEX parity (rejected: wrong-stack noise); Release Please (rejected: conflicts with plugin zip releases)
-- **Consequences:** `.template-version` = 0.15.0; see `docs/BOOTSTRAP_ALIGNMENT.md`; optional BA.H2 (required checks) remains human
+- **Consequences:** `.template-version` = 0.15.0; see `docs/BOOTSTRAP_ALIGNMENT.md`; shipped as **v1.3.8** (`0f2dcdf`); optional BA.H2 (required checks) remains human

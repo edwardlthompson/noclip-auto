@@ -2,7 +2,9 @@
 
 Active tasks only. Completed work archives to [COMPLETED_TASKS.md](COMPLETED_TASKS.md) (TM, audits, BA) and [docs/BUILD_PLAN_COMPLETED.md](docs/BUILD_PLAN_COMPLETED.md) (M0–M9).
 
-**Status:** Sprint **BA** ✅ shipped in **v1.3.8** (template 0.15.0) · optional BA.H2/BA.L1 open · M0–M9 + TM complete · product paused (alpha)
+**Status:** **v1.3.8** released (2026-07-21) · Sprint BA archived · optional BA.H2/BA.L1 open · M0–M9 + TM complete · product paused (alpha)
+
+> **BA** archived in COMPLETED_TASKS.md @ `0f2dcdf`.
 
 **Labels:** `[AGENT]` scriptable · `[LR]` needs Lightroom · `[HUMAN]` human developer · `[AUTO]` CI/scripts · `[PARALLEL-OK]` safe to parallelize
 
@@ -44,33 +46,10 @@ Full matrix: [docs/GATES.md](docs/GATES.md) · Agent ops: [docs/FOR_AGENTS.md](d
 
 ---
 
-## Sprint BA — Bootstrap Align 0.15.0
+## Open (human / device only)
 
-### Sequential
-
-1. ✅ [AGENT] **BA.0** — Gap analysis in `docs/BOOTSTRAP_ALIGNMENT.md`; open Sprint BA; map target 0.15.0
-2. ✅ [AGENT] **BA.1** — Core docs: UPGRADING, INITIALIZATION_PROMPT, HUMAN_BACKLOG, REPO_HYGIENE, FILE_SIZE_GUIDE, Cursor feature docs
-3. ✅ [AGENT] **BA.2** — Rules: `local-compute`, `security-triage`, `feature-modules`; `/cleanup` in batch registry
-4. ✅ [AGENT] **BA.3** — Cursor FOSS pack: hooks, skills, agents, permissions, stack-selection (`lightroom-rust`), worktrees
-5. ✅ [AGENT] **BA.4** — Scripts: template-update, file-encoding, parallel helpers, maintainer gates; expand `validate-bootstrap.ps1`
-6. ✅ [AGENT] **BA.5** — `TEMPLATE_INDEX.json`; CI: dependency-review, scorecard, stale, weekly-health (LR+Rust); `.template-version` → 0.15.0
-7. ✅ [AUTO] **BA.6** — `validate-bootstrap.ps1 -Quick` + encoding + batch-commands green (2026-07-21)
-
-### Parallel (after BA.2) — `[PARALLEL-OK]`
-
-| ID | Task | Status |
-|----|------|--------|
-| BA.P1 | PR + YAML issue templates from upstream | ✅ |
-| BA.P2 | README “How agents work” + migration notes pointer | ✅ |
-| BA.P3 | Soften `validate-template-index` for child_repo profile | ✅ |
-
-### Human & device (after automation)
-
-1. ✅ [HUMAN] **BA.H1** — Approved hooks + Scorecard/stale/weekly-health; skipped automerge + Release Please
-2. 🔲 [HUMAN] **BA.H2** — Optional: promote new workflows to required status checks after green runs on `main`
-3. 🔲 [LR] **BA.L1** — Optional smoke `m0`/`m2` after hooks land (not required for BA closure)
-
-> **BA** automation complete — archive via `/cleanup` when ready. Remaining rows are optional human/LR.
+1. 🔲 [HUMAN] **BA.H2** — Optional: promote Scorecard / weekly-health to required status checks after green runs on `main`
+2. 🔲 [LR] **BA.L1** — Optional smoke `m0`/`m2` with Cursor hooks enabled
 
 ---
 
@@ -92,3 +71,4 @@ Full matrix: [docs/GATES.md](docs/GATES.md) · Agent ops: [docs/FOR_AGENTS.md](d
 | M0–M9 — Product milestones | [docs/BUILD_PLAN_COMPLETED.md](docs/BUILD_PLAN_COMPLETED.md) |
 | TM — Template migration | [COMPLETED_TASKS.md](COMPLETED_TASKS.md) |
 | Audit — Ship readiness + Audit 2 | [COMPLETED_TASKS.md](COMPLETED_TASKS.md) |
+| BA — Bootstrap Align 0.15.0 | [COMPLETED_TASKS.md](COMPLETED_TASKS.md) |

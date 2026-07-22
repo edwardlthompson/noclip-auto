@@ -9,6 +9,7 @@ Template migration (Sprint TM) archived 2026-06-18 via `scripts/run-milestone-tm
 - ✅ [AGENT] **BA.0–BA.5** — Gap analysis, docs, Cursor FOSS pack (hooks/skills/agents), scripts, `TEMPLATE_INDEX.json`, CI workflows; `.template-version` → 0.15.0
 - ✅ [AUTO] **BA.6** — `validate-bootstrap.ps1 -Quick` PASS (encoding + batch-commands + template-index)
 - ✅ [HUMAN] **BA.H1** — hooks on; Scorecard/stale/weekly-health on; automerge/Release Please off
+- ✅ [AUTO] **/push** — v1.3.8 (`0f2dcdf`); CI/Security/CodeQL green; GitHub Release published
 - 🔲 [HUMAN] **BA.H2** / [LR] **BA.L1** — remain optional on active `BUILD_PLAN.md`
 
 ## Sprint TM — Complete (2026-06-18)
